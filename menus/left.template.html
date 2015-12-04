@@ -1,0 +1,20 @@
+<md-sidenav style="z-index:9999" layout="column" class="md-sidenav-left" md-component-id="able-left-menu">
+	<md-subheader>User: {{app.auth.user.id}}</md-subheader>
+
+	<md-list flex="none">
+    	<md-list-item ng-click="some()">Profile</md-list-item>
+		<md-list-item><md-button ui-sref="ordersPage" ng-click>Orders</md-button></md-list-item>
+		<md-list-item><md-button ui-sref="confirmationPage" ng-click>Confirmation</md-button></md-list-item>
+		<md-list-item><md-button ui-sref="feedbacksPage" ng-click>Feedbacks</md-button></md-list-item>
+		<md-list-item ng-click="some()">Payment Options</md-list-item>
+		<md-list-item ng-click="some()">Help</md-list-item>
+  	</md-list>
+
+	<div flex></div>
+
+	<md-list flex="none">
+		<md-divider></md-divider>
+		<md-list-item ng-click="app.auth.signout()">Logout</md-list-item>
+	</md-list>
+
+</md-sidenav>

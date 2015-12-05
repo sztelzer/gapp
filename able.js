@@ -13,13 +13,13 @@
 		'ngMap',
 	])
 
-
 	.value('config', {
 		api: 'https://api-dot-heartbend.appspot.com',
 		company_path: '/companies/5629499534213120',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6
 	})
+
 	.value('mock', {
 		device_latitude: -23.562482,
 		device_longitude: -46.691485,
@@ -29,9 +29,8 @@
 	})
 
 
-
-
-	.config(function ($stateProvider, $urlRouterProvider, $localStorageProvider, $mdThemingProvider, $httpProvider) {
+	.config(function ($stateProvider, $urlRouterProvider, $localStorageProvider, $mdThemingProvider, $httpProvider, $mdGestureProvider) {
+		$mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
 		$localStorageProvider.setKeyPrefix('able_');
 		$httpProvider.useApplyAsync(true);
 		$urlRouterProvider.otherwise("/");

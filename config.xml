@@ -34,8 +34,8 @@
   <splash src="res/ios/splash736h@3x.png" platform="ios" width="1242" height="2208"/>
   <plugin name="cordova-plugin-whitelist" version="1"/>
 
-  <access origin="*://debug.phonegap.com" subdomains="false"/>
-  <access origin="https://api-dot-heartbend.appspot.com" subdomains="false"/>
+  <access origin="debug.phonegap.com"/>
+  <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/>
 
   <allow-intent href="https:*"/>
   <allow-intent href="http:*"/>

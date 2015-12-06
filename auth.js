@@ -38,11 +38,10 @@
 				});
 		}
 
-		function signout(cart){
+		function signout(){
 			service.user.id = ''
 			service.user.token = ''
-			cart.empty();
-			$state.go('startPage')
+			window.location.href = "index.html"
 		}
 
 	}

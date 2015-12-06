@@ -43,6 +43,11 @@ html, body {
 	height:24px;
 }
 
+.main-toolbar > .md-button {
+	margin:0px 0px 0px -8px !important;
+}
+
+
 md-content.store {
 	overflow-x: hidden !important;
 	padding-bottom: 1.3em;

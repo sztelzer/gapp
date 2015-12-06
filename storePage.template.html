@@ -2,16 +2,37 @@
 <div element-feedbacks ng-show="app.showFeedbacks" class="fixed" flex layout-fill layout="column"></div> -->
 
 <div layout="column" flex="none" layout-fill style="position:fixed;top:0;">
-	<md-toolbar flex flex-padding element-toolbar md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar md-whiteframe-1dp" layout="row" layout-align="space-between center">
-		<md-button flex="none" able-left-menu-button ng-click="lmb.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu">
+	<md-toolbar toolbar flex flex-padding md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar md-whiteframe-1dp" layout="row" layout-align="space-between center">
+		<md-button flex="none" ng-show="$state.includes('storePage.offerPage')" ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu">
 		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg"></md-icon>
+		</md-button>
+		<md-button flex="none" ng-show="!$state.includes('storePage.offerPage')" ng-click="toolbar.back()" class="md-icon-button" aria-label="Voltar">
+			<md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg"></md-icon>
 		</md-button>
 		<span flex></span>
 		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo">
 		<span flex></span>
-		<span flex="none" style="width:48px"></span>
+		<span flex="none" style="width:40px"></span>
+
 	</md-toolbar>
 	<div ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" flex></div>
 	<div ui-view ng-show="!$state.includes('storePage.offerPage')" layout="column" flex></div>
 </div>
-<able-left-menu></able-left-menu>
+
+<md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left" md-component-id="able-left-menu">
+	<md-subheader>User: {{app.auth.user.id}}</md-subheader>
+
+	<md-list flex="none">
+    	<md-list-item ng-click="">Perfil</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">Loja</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.ordersPage')">Pedidos</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.confirmationPage')">Ultimo Pedido</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.feedbacksPage')">Feedbacks</md-list-item>
+		<md-list-item ng-click="">Cartões de Créditos</md-list-item>
+		<md-list-item ng-click="">Ajuda</md-list-item>
+		<div flex></div>
+		<md-divider></md-divider>
+		<md-list-item ng-click="app.auth.signout()">Desconectar Conta</md-list-item>
+  	</md-list>
+
+</md-sidenav>

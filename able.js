@@ -5,6 +5,7 @@
 
 	.module("able", [
 		'ui.router',
+		'ct.ui.router.extras',
 		'ngTouch',
 		'ngAnimate',
 		'ngStorage',
@@ -14,7 +15,8 @@
 	])
 
 	.value('config', {
-		api: 'https://api-dot-heartbend.appspot.com',
+		// api: 'https://api-dot-heartbend.appspot.com',
+		api: 'http://127.0.0.1:8081',
 		company_path: '/companies/5629499534213120',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6
@@ -54,12 +56,24 @@
 			.state('storePage', {
 				url: "/store",
 				templateUrl: "storePage.template.html",
+				deepStateRedirect: { default: "storePage.offerPage" },
 				data: {
 					requireLogin: true,
 					accessLogged: true
 				}
 			})
-			.state('feedbacksPage', {
+			.state('storePage.offerPage', {
+				url: "/offer",
+				sticky: true,
+				views: {
+					"offer": { templateUrl: "offerPage.template.html" }
+				},
+				data: {
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+			.state('storePage.feedbacksPage', {
 				url: "/feedbacks",
 				templateUrl: "feedbacksPage.template.html",
 				data: {
@@ -67,7 +81,7 @@
 					accessLogged: true
 				}
 			})
-			.state('ordersPage', {
+			.state('storePage.ordersPage', {
 				url: "/orders",
 				templateUrl: "ordersPage.template.html",
 				data: {
@@ -75,7 +89,7 @@
 					accessLogged: true
 				}
 			})
-			.state('confirmationPage', {
+			.state('storePage.confirmationPage', {
 				url: "/confirmation",
 				templateUrl: "confirmationPage.template.html",
 				data: {
@@ -178,6 +192,7 @@
 	})
 
 	.run(function ($rootScope, $state, app) {
+		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if (toState.data.requireLogin == true && app.auth.user.token == '') {
 				event.preventDefault();
@@ -185,7 +200,7 @@
 			} else
 			if (toState.data.accessLogged == false && app.auth.user.token != '') {
 				event.preventDefault();
-				$state.go('storePage');
+				$state.go('storePage.offerPage');
 			}
 		})
 

@@ -5,7 +5,7 @@
 		.module('able')
 		.factory('cart', cartService)
 		.directive('elementCart', cartDirective)
-
+		.directive('elementCartCheckout', cartCheckoutDirective)
 
 	function cartService(auth, offer, config, mock, confirmation, $http, $localStorage, $q, $state) {
 		var service = {
@@ -32,7 +32,6 @@
 			putOne: putOne,
 			takeOne: takeOne,
 			init: init,
-			endCart: endCart,
 			sendCart: sendCart,
 			checking: false,
 			// showConfirmation: showConfirmation,
@@ -44,7 +43,8 @@
 			service.estimated_time = offer.data.object.node_estimated + 900;
 		}
 
-		function endCart(){
+
+		function sendCart(){
 			//put the items array on the data payload
 			Object.keys(service.items_selected).forEach(function(key) {
 				service.data.items_selected.push({
@@ -57,12 +57,8 @@
 			service.data.total_quantity = service.quantity_total;
 			service.data.total_value = service.value_total;
 
-			service.checking = true;
-			// service.showConfirmation();
 			console.log(service.data)
-		}
 
-		function sendCart(){
 			var payload = service.data;
 			var req_config = {headers: {'Authorization': auth.user.token}};
 
@@ -150,9 +146,10 @@
 
 	function cartController($scope, cart, offer) {
 		var vm = this;
-		vm.endCart = cart.endCart;
 		vm.sendCart = cart.sendCart;
 		vm.estimated_time = cart.estimated_time;
+		vm.checking = false;
+
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
 			vm.estimated_time = cart.estimated_time;
 		});
@@ -163,12 +160,26 @@
 			vm.freight_total = cart.freight_total;
 			vm.quantity_total = cart.quantity_total;
 		});
-		vm.checking = false;
+
 		$scope.$watch(function w(scope){return( cart.checking )},function c(n,o){
 			vm.checking = cart.checking;
 		});
-
-
 	}
+
+	function cartCheckoutDirective() {
+		var directive = {
+			restrict: 'A',
+			templateUrl: 'cartCheckout.template.html',
+			controller: cartController,
+			controllerAs: 'cart',
+			bindToController: true
+		}
+		return directive
+	}
+
+
+
+
+
 
 })();

@@ -18,7 +18,6 @@
 	function confirmationDirective() {
 		var directive = {
 			restrict: 'A',
-			templateUrl: 'confirmation.template.html',
 			controller: confirmationController,
 			controllerAs: 'confirmation',
 			bindToController: true

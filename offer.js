@@ -111,19 +111,11 @@
 				)
 			}) // end q()
 		} // end updateOffer()
-
-
-
-
-
-
-
-	}
+	} // end service
 
 	function offerDirective() {
 		var directive = {
 			restrict: 'A',
-			templateUrl: 'offer.template.html',
 			controller: offerController,
 			controllerAs: 'offer',
 			bindToController: true
@@ -171,10 +163,6 @@
 				}
 			);
 		}
-
-
-
-
 	} // end controller
 
 

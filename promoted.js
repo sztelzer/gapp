@@ -19,13 +19,14 @@
 	function promotedController(cart){
 		var vm = this;
 		vm.quantity = 0;
-		vm.putOne = function(promoted){
-			cart.putOne(promoted);
-			vm.quantity = cart.items_selected[promoted.path];
+
+		vm.putOne = function(){
+			cart.putOne(vm.promoted);
+			vm.quantity = cart.items_selected[vm.promoted.path];
 		}
-		vm.takeOne = function(promoted){
-			cart.takeOne(promoted)
-			vm.quantity = cart.items_selected[promoted.path];
+		vm.takeOne = function(){
+			cart.takeOne(vm.promoted)
+			vm.quantity = cart.items_selected[vm.promoted.path];
 		}
 
 

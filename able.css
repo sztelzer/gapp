@@ -48,10 +48,14 @@ md-content.store {
 	padding-bottom: 1.3em;
 }
 
+.cart-group {
+	position: relative;
+}
+
 .carting {
 	z-index: 21;
-    position: fixed;
-    bottom: 1em;
+    position: absolute;
+    top: -9em;
     padding: 0 0 0 1em;
     background-color: rgb(40,47,61);
     color: white;
@@ -85,6 +89,18 @@ md-content.store {
 .carting-go > md-icon > svg {
 	fill: #26BD49;
 }
+
+.checkout {
+
+}
+
+
+
+
+
+
+
+
 
 
 

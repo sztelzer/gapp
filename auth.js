@@ -38,9 +38,10 @@
 				});
 		}
 
-		function signout(){
+		function signout(cart){
 			service.user.id = ''
 			service.user.token = ''
+			cart.empty();
 			$state.go('startPage')
 		}
 

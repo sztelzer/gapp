@@ -32,7 +32,8 @@
 			putOne: putOne,
 			takeOne: takeOne,
 			init: init,
-			sendCart: sendCart,
+			send: send,
+			empty: empty,
 			checking: false,
 			// showConfirmation: showConfirmation,
 		}
@@ -43,8 +44,18 @@
 			service.estimated_time = offer.data.object.node_estimated + 900;
 		}
 
+		function empty(){
+			service.estimated_time = 0
+			service.items_selected = []
+			service.freight_full = 22.80
+			service.freight_discount = 0
+			service.freight_total = 0
+			service.product_total = 0
+			service.value_total = 0
+			service.quantity_total = 0
+		}
 
-		function sendCart(){
+		function send(){
 			//put the items array on the data payload
 			Object.keys(service.items_selected).forEach(function(key) {
 				service.data.items_selected.push({
@@ -112,25 +123,6 @@
 				service.value_total = 0;
 			}
 		}
-
-
-		// function showConfirmation() {
-		//     $mdDialog.show(
-		//       $mdDialog.alert()
-		//         .parent(angular.element(document.querySelector('#bodyDialog')))
-		//         .clickOutsideToClose(true)
-		//         .title('Done!')
-		//         //.textContent('You can specify some description text in here.')
-		//         .ariaLabel('Alert Dialog Demo')
-		//         // .ok('Restart everything')
-		//         // .targetEvent()
-		//     );
-		//   };
-
-
-
-
-
 	}
 
 	function cartDirective() {
@@ -144,28 +136,6 @@
 		return directive
 	}
 
-	function cartController($scope, cart, offer) {
-		var vm = this;
-		vm.sendCart = cart.sendCart;
-		vm.estimated_time = cart.estimated_time;
-		vm.checking = false;
-
-		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
-			vm.estimated_time = cart.estimated_time;
-		});
-
-
-		$scope.$watch(function w(scope){return( cart.quantity_total )},function c(n,o){
-			vm.value_total = cart.value_total;
-			vm.freight_total = cart.freight_total;
-			vm.quantity_total = cart.quantity_total;
-		});
-
-		$scope.$watch(function w(scope){return( cart.checking )},function c(n,o){
-			vm.checking = cart.checking;
-		});
-	}
-
 	function cartCheckoutDirective() {
 		var directive = {
 			restrict: 'A',
@@ -177,6 +147,32 @@
 		return directive
 	}
 
+	function cartController($scope, cart, offer) {
+		var vm = this;
+		vm.send = cart.send;
+		vm.empty = empty;
+		vm.estimated_time = cart.estimated_time;
+		vm.checking = false;
+
+		function empty(){
+			cart.empty();
+			console.log(cart);
+		}
+
+		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
+			vm.estimated_time = cart.estimated_time;
+		});
+
+		$scope.$watch(function w(scope){return( cart.quantity_total )},function c(n,o){
+			vm.value_total = cart.value_total;
+			vm.freight_total = cart.freight_total;
+			vm.quantity_total = cart.quantity_total;
+		});
+
+		$scope.$watch(function w(scope){return( cart.checking )},function c(n,o){
+			vm.checking = cart.checking;
+		});
+	}
 
 
 

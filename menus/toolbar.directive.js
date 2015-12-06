@@ -21,15 +21,20 @@
 			restrict: 'E',
 			templateUrl: 'menus/left.template.html',
 			controller: LeftMenuController,
-			controllerAs: 'lm',
+			controllerAs: 'vm',
 			bindToController: true
 		}
 		return directive;
 	}
 
-	function LeftMenuController(auth) {
+	function LeftMenuController(auth, $state, $mdSidenav) {
 		var vm = this;
 		vm.user = auth.id;
+		vm.go = go
+		function go(state){
+			$state.go(state);
+			$mdSidenav('able-left-menu').toggle();
+		}
 	}
 
 	function LeftMenuButtonController($mdSidenav) {

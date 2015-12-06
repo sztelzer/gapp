@@ -1,8 +1,8 @@
 <!-- <div element-map ng-hide="app.addressKnown" class="fixed" flex layout-fill layout="column"></div>
 <div element-feedbacks ng-show="app.showFeedbacks" class="fixed" flex layout-fill layout="column"></div> -->
 
-<div layout="column" flex layout-fill style="position:fixed;top:0;">
-	<md-toolbar flex="none" flex-padding element-toolbar md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar md-whiteframe-1dp" layout="row" layout-align="space-between center">
+<div layout="column" flex="none" layout-fill style="position:fixed;top:0;">
+	<md-toolbar flex flex-padding element-toolbar md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar md-whiteframe-1dp" layout="row" layout-align="space-between center">
 		<md-button flex="none" able-left-menu-button ng-click="lmb.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu">
 		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg"></md-icon>
 		</md-button>
@@ -11,8 +11,7 @@
 		<span flex></span>
 		<span flex="none" style="width:48px"></span>
 	</md-toolbar>
-
-	<div ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" flex layout-fill></div>
-	<div ui-view layout="column" flex layout-fill></div>
+	<div ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" flex></div>
+	<div ui-view ng-show="!$state.includes('storePage.offerPage')" layout="column" flex></div>
 </div>
 <able-left-menu></able-left-menu>

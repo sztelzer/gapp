@@ -55,7 +55,7 @@ md-content.store {
 .carting {
 	z-index: 21;
     position: absolute;
-    top: -9em;
+    top: -4em;
     padding: 0 0 0 1em;
     background-color: rgb(40,47,61);
     color: white;
@@ -137,13 +137,14 @@ h1.counter {
 div.counter {
 	font-size: 3em;
     font-weight: 700;
-    border: 0.1em solid #282F3D;
-    color: #282F3D;
+    /*border: 0.1em solid #282F3D;*/
+    color: #ffffff;
+	background-color: #2680D9;
     width: 1.6em;
     height: 1.6em;
     text-align: center;
-    line-height: 1.45em;
-    border-radius: 100%;
+    line-height: 1.6em;
+    border-radius: 50%;
     padding: 0px;
     margin: 0.1em;
     overflow: hidden;

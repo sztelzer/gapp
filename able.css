@@ -153,6 +153,7 @@ div.counter {
     padding: 0px;
     margin: 0.1em;
     overflow: hidden;
+	box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 200, 1);
 }
 
 .maisum {

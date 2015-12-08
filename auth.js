@@ -11,7 +11,6 @@
 			user: $localStorage.$default({
 				'id':'',
 				'token':'',
-				'data':''
 			}),
 			signin: signin,
 			signout: signout

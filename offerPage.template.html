@@ -1,5 +1,5 @@
 <md-content element-offer flex class="store">
-	<md-progress-linear ng-show="offer.loading" md-mode="indeterminate" class="md-background"></md-progress-linear>
+	<md-progress-linear ng-show="offer.loading" md-mode="indeterminate" class="store-progress md-background"></md-progress-linear>
 	<div flex element-promoted ng-repeat="promoted in offer.data.object.promoteds" ng-init="vm.promoted = promoted;"></div>
 </md-content>
 <div class="cart-group">

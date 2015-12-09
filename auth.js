@@ -38,8 +38,8 @@
 		}
 
 		function signout(){
-			service.user.id = "";
-			service.user.token = "";
+			$localStorage.id = "";
+			$localStorage.token = "";
 			window.location.href = "index.html";
 			// $state.go('startPage')
 		}

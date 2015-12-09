@@ -38,9 +38,10 @@
 		}
 
 		function signout(){
-			service.user.id = ''
-			service.user.token = ''
-			window.location.href = "index.html"
+			service.user.id = "";
+			service.user.token = "";
+			window.location.href = "index.html";
+			// $state.go('startPage')
 		}
 
 	}

@@ -2,7 +2,7 @@
 
 		<div style="width:80%" flex layout-padding layout="column" layout-align="center center">
 			<!-- <h2>Entrar</h2> -->
-			<form style="width:100%" name="loginForm" ng-submit="app.auth.signin()">
+			<form style="width:100%" name="loginForm">
 				<md-input-container>
 			      <label>Email</label>
 			      <input required="" ng-model="app.auth.login.email" type="email" name="email"
@@ -22,7 +22,7 @@
 
 				<div style="width:100%" layout="row" layout-align="space-around center">
 					<md-button ui-sref="startPage" ng-click>Voltar</md-button>
-					<md-button class="md-raised md-primary" type="submit" ng-click>Entrar</md-button>
+					<md-button class="md-raised md-primary" ng-click="app.auth.signin()">Entrar</md-button>
 				</div>
 			</form>
 		</div>

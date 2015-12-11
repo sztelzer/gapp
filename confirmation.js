@@ -25,10 +25,9 @@
 		return directive
 	}
 
-	function confirmationController(confirmation) {
+	function confirmationController(confirmation, $localStorage) {
 		var vm = this;
-		vm.data = confirmation.data
-
+		vm.data = $localStorage.last_confirmation
 
 	} // end controller
 

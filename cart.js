@@ -16,6 +16,7 @@
 				offer: '',
 				voucher: mock.voucher,
 				total_freight: 0,
+				total_items: 0,
 				total_value: 0,
 				total_quantity: 0,
 				items_selected: []
@@ -65,6 +66,7 @@
 			});
 
 			service.data.total_freight = service.freight_total;
+			service.data.total_items = +(service.product_total).toFixed(2);
 			service.data.total_quantity = service.quantity_total;
 			service.data.total_value = service.value_total;
 
@@ -81,7 +83,8 @@
 						console.log(response.data);
 						resolve();
 						confirmation.data = response.data;
-						$state.go('confirmationPage');
+						$localStorage.last_confirmation = response.data;
+						$state.go('storePage.confirmationPage');
 
 					},
 					function errorCallback(response) {
@@ -99,9 +102,10 @@
  			if(promoted.object.wet > service.items_selected[promoted.path]) {
 					service.items_selected[promoted.path] += 1;
 					service.quantity_total += 1;
-					service.product_total += +(promoted.object.price).toFixed(2);
-					service.freight_discount += +(promoted.object.price*0.2).toFixed(2);
+					service.product_total = +(service.product_total + promoted.object.price).toFixed(2);
+ 					//service.freight_discount += +(promoted.object.price*0.15).toFixed(2);
 			}
+			service.freight_discount = +(service.product_total*0.15).toFixed(2);
 			var f = +(service.freight_full - service.freight_discount).toFixed(2);
 			service.freight_total = (f > 0 ? f : 0);
 			service.value_total = +(service.freight_total + service.product_total).toFixed(2);
@@ -112,9 +116,10 @@
 			if(service.items_selected[promoted.path] || service.items_selected[promoted.path] > 0){
 				service.items_selected[promoted.path] -= 1;
 				service.quantity_total -= 1;
-				service.product_total -= +(promoted.object.price).toFixed(2);
-				service.freight_discount -= +(promoted.object.price*0.2).toFixed(2);
+				service.product_total = +(service.product_total - promoted.object.price).toFixed(2);
+				//service.freight_discount -= +(promoted.object.price*0.15).toFixed(2);
 			}
+			service.freight_discount = +(service.product_total*0.15).toFixed(2);
 			var f = +(service.freight_full - service.freight_discount).toFixed(2);
 			service.freight_total = (f > 0 ? f : 0);
 			service.value_total = +(service.freight_total + service.product_total).toFixed(2);
@@ -150,14 +155,9 @@
 	function cartController($scope, cart, offer) {
 		var vm = this;
 		vm.send = cart.send;
-		vm.empty = empty;
+		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
 		vm.checking = false;
-
-		function empty(){
-			cart.empty();
-			console.log(cart);
-		}
 
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
 			vm.estimated_time = cart.estimated_time;

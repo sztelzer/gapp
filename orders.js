@@ -16,10 +16,10 @@
 		return directive
 	}
 
-	function ordersController(auth, config, $http) {
+	function ordersController(auth, config, $http, $localStorage) {
 		var vm = this;
 		vm.getAllOrders = getAllOrders();
-		vm.allOrders = {}
+		vm.list = $localStorage.orders
 
 		function getAllOrders(){
 			var req_config = {headers: {'Authorization': auth.user.token}};
@@ -27,7 +27,8 @@
 				.then(
 				function successCallback(response) {
 					console.log(response.data);
-					vm.allOrders = response.data.resources;
+					vm.list = response.data.resources;
+					$localStorage.orders = vm.list
 				},
 				function errorCallback(response) {
 					console.log(response.data);

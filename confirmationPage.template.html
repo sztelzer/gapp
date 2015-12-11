@@ -1,4 +1,8 @@
-<md-content element-confirmation>
+<md-content element-confirmation flex layout="column" layout-align="center center">
 	<div flex="none">Confirmation Element</div>
-	<div flex>{{confirmation.data}}</div>
+	<div flex="none">Hora do pedido: {{confirmation.data.created_at}}</div>
+	<div flex="none">Quantidade de Produtos: {{confirmation.data.object.total_quantity}}</div>
+	<div flex="none">Tempo estimado de entrega: {{confirmation.data.object.node_estimated+900}}</div>
+
+
 </md-content>

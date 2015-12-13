@@ -33,7 +33,7 @@
 			vm.quantity = cart.items_selected[vm.promoted.path];
 			if (vm.quantity == null) {
 				vm.quantity = 0;
-				cart.items_selected[vm.promoted.path] = vm.quantity;
+				//cart.items_selected[vm.promoted.path] = vm.quantity;
 			}
 		});
 

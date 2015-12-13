@@ -10,9 +10,6 @@
   <preference name="webviewbounce" value="false"/>
   <preference name="prerendered-icon" value="true"/>
   <preference name="stay-in-webview" value="true"/>
-  <preference name="StatusBarOverlaysWebView" value="true"/>
-  <preference name="StatusBarBackgroundColor" value="#0080FF"/>
-  <preference name="StatusBarStyle" value="blackopaque" />
   <preference name="detect-data-types" value="false"/>
   <preference name="exit-on-suspend" value="false"/>
   <preference name="show-splash-screen-spinner" value="false"/>
@@ -27,6 +24,7 @@
   <gap:plugin name="org.apache.cordova.media"/>
   <gap:plugin name="org.apache.cordova.network-information"/>
   <gap:plugin name="org.apache.cordova.splashscreen"/>
+
   <plugin name="cordova-plugin-whitelist"/>
   <icon src="icon.png"/>
   <splash src="splash.png"/>

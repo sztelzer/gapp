@@ -146,9 +146,9 @@ h1.counter {
 div.counter {
 	font-size: 3em;
     font-weight: 700;
-    /*border: 0.1em solid #282F3D;*/
+	/*border: 1px solid #34b7ff;*/
     color: #ffffff;
-	background-color: #2680D9;
+	background-color: #0080FF;
     width: 1.6em;
     height: 1.6em;
     text-align: center;
@@ -157,7 +157,7 @@ div.counter {
     padding: 0px;
     margin: 0.1em;
     overflow: hidden;
-	box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 200, 1);
+	box-shadow: inset 0px 2px 2px 0px rgba(0, 0, 255, 0.725);
 }
 
 .maisum {

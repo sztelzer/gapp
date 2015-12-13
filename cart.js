@@ -60,10 +60,12 @@
 			//put the items array on the data payload
 			service.data.items_selected = []
 			Object.keys(service.items_selected).forEach(function(key) {
-				service.data.items_selected.push({
-					promoted: key,
-					quantity: service.items_selected[key]
-				})
+				if(service.items_selected[key] > 0){
+					service.data.items_selected.push({
+						promoted: key,
+						quantity: service.items_selected[key]
+					})
+				}
 			});
 
 			service.data.total_freight = +(service.freight_total).toFixed(2);

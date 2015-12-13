@@ -15,7 +15,7 @@
 		<span flex="none" style="width:40px"></span>
 	</md-toolbar>
 	<div ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" flex ng-cloak></div>
-	<div ui-view ng-show="!$state.includes('storePage.offerPage')" layout="column" flex ng-cloak></div>
+	<div ui-view ng-hide="$state.includes('storePage.offerPage')" layout="column" flex ng-cloak></div>
 </div>
 
 <md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left" md-component-id="able-left-menu">

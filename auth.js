@@ -40,6 +40,9 @@
 		function signout(){
 			$localStorage.id = "";
 			$localStorage.token = "";
+			$localStorage.offer = "";
+			$localStorage.last_confirmation = "";
+			$localStorage.orders = "";
 			window.location.href = "index.html";
 			// $state.go('startPage')
 		}

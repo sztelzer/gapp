@@ -58,6 +58,7 @@
 
 		function send(){
 			//put the items array on the data payload
+			service.data.items_selected = []
 			Object.keys(service.items_selected).forEach(function(key) {
 				service.data.items_selected.push({
 					promoted: key,
@@ -65,10 +66,10 @@
 				})
 			});
 
-			service.data.total_freight = service.freight_total;
+			service.data.total_freight = +(service.freight_total).toFixed(2);
 			service.data.total_items = +(service.product_total).toFixed(2);
 			service.data.total_quantity = service.quantity_total;
-			service.data.total_value = service.value_total;
+			service.data.total_value = +(service.value_total).toFixed(2);
 
 			console.log(service.data)
 

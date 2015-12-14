@@ -35,11 +35,9 @@
 				});
 		}
 
-		//getAllOrders();
+
 
 	} // end controller
-
-
 
 
 })();

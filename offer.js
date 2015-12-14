@@ -155,7 +155,6 @@
 					vm.data = offer.data;
 					vm.loading = false;
 					cart.init();
-					console.log(vm.data)
 				},
 				function(reject) {
 					console.log('Failed loading offer: ' + reject);

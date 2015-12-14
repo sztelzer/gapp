@@ -1,12 +1,12 @@
 <md-content element-orders flex ng-cloak>
 
-	<md-list flex="none">
+	<md-list flex>
 		<md-list-item flex ng-repeat="order in orders.list">
-			<md-card flex-fill class="card-full md-whiteframe-1dp">
+			<md-card flex class="card-full md-whiteframe-1dp">
 				<md-card-content>
 				{{order.created_at}}
 				<div ng-repeat="item in order.object.items">
-					{{item.object.sku}}
+					{{item.object.sku.object.name}}
 					{{item.object.quantity}}
 				</div>
 				</md-card-content>

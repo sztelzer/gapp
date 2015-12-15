@@ -1,1 +1,14 @@
-<md-content element-feedbacks flex style="z-index:0"></md-content>
+<md-content element-feedbacks flex ng-cloak>
+
+	<md-list flex>
+		<md-list-item flex ng-repeat="feedback in feedbacks.list">
+			<md-card flex class="card-full md-whiteframe-1dp">
+				<md-card-content>
+					{{feedback.object.about}}
+				</md-card-content>
+
+			</md-card>
+		</md-list-item>
+	</md-list>
+
+</md-content>

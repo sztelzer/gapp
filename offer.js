@@ -142,8 +142,8 @@
 						console.log(vm.data)
 					},
 					function(reject) {
-						console.log('Failed updating offer: ' + reject);
 						vm.loading = false;
+
 					}
 				);
 				return

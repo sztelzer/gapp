@@ -1,34 +1,29 @@
 <md-content element-feedbacks flex ng-cloak>
 
-	<div ng-show="feedbacks.listSize > 0" style="width:100%" layout="row" layout-align="center center">
+	<div ng-show="feedbacks.len > 0" style="width:100%" layout="row" layout-align="center center">
 		O que você achou destas cervejas? Avalie para melhorar suas recomendações.
 	</div>
 
-	<div ng-show="feedbacks.allSent" style="width:100%" layout="row" layout-align="center center">
-		<p>Excelente!<br/>Todas as avaliações foram salvas e complementarão sua experiência na próxima compra.</p>
-	</div>
-
-
-	<div ng-hide="feedbacks.listSize > 0" style="width:100%" layout="row" layout-align="center center">
+	<div ng-show="feedbacks.len == 0" style="width:100%" layout="row" layout-align="center center">
 		Você não tem nenhuma avaliação pendente. Selecione novos produtos na loja e então você poderá avaliá-los.
 	</div>
 
-
-	<md-card flex class="card-full md-whiteframe-1dp" ng-repeat="feedback in feedbacks.list">
+	<md-card flex class="card-full md-whiteframe-1dp" ng-repeat="feedback in feedbacks.list" ng-hide="feedback.done">
 		<md-card-content>
 			{{feedback.path}}
 			{{feedback.object.about}}
 			{{feedback.object.generator}}
-			<!-- <form style="width:100%" name="ratingForm"> -->
-				<md-slider flex md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-change="feedbacks.toSend = feedbacks.toSend + 1"></md-slider>
-			<!-- </form> -->
+			<md-slider flex md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-change="feedbacks.touched = true"></md-slider>
 		</md-card-content>
 	</md-card>
 
-	<div ng-show="feedbacks.toSend" style="width:100%" layout="row" layout-align="end center">
+	<div ng-show="feedbacks.touched" style="width:100%" layout="row" layout-align="end center">
 		<md-button class="md-raised md-primary" ng-click="feedbacks.send()">Enviar</md-button>
 	</div>
 
+	<div ng-show="feedbacks.sent && !feedbacks.touched" style="width:100%" layout="row" layout-align="center center">
+		<p>Excelente!<br/>As avaliações foram salvas e complementarão sua experiência na próxima compra.</p>
+	</div>
 
 
 

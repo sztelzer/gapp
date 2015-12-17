@@ -1,18 +1,13 @@
 <md-content element-orders flex ng-cloak>
 
-	<md-list flex>
-		<md-list-item flex ng-repeat="order in orders.list">
-			<md-card flex class="card-full md-whiteframe-1dp">
-				<md-card-content>
-				{{order.created_at}}
-				<div ng-repeat="item in order.object.items">
-					{{item.object.sku.object.name}}
-					{{item.object.quantity}}
-				</div>
-				</md-card-content>
-
-			</md-card>
-		</md-list-item>
-	</md-list>
+	<md-card flex ng-repeat="order in orders.list" class="card-full md-whiteframe-1dp">
+		<md-card-content>
+		{{order.created_at}}
+		<div ng-repeat="item in order.object.items">
+			{{item.object.sku.object.name}}
+			{{item.object.quantity}}
+		</div>
+		</md-card-content>
+	</md-card>
 
 </md-content>

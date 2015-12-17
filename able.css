@@ -31,15 +31,20 @@ html, body {
 }
 
 .main-toolbar {
-	padding-top: 20px !important;
+	padding: 20px 4px 0 4px !important;
 }
 
 .main-toolbar-logo {
 	height:24px;
 }
 
-.main-toolbar > .md-button {
-	margin:0px 0px 0px -8px !important;
+md-sidenav {
+	min-width: 18em !important;
+	max-width: 18em !important;
+}
+
+md-backdrop.md-opaque {
+	background-color: #000000 !important;
 }
 
 .store-progress {
@@ -118,24 +123,6 @@ md-content.store {
 .navbar-fixed-top {
 	padding: 20pt 0 0 0;
 }
-.navbar-fixed-bottom {
-	padding: 0 0 0 0;
-}
-
-@keyframes fadeIn {
-	from 	{ bottom: -1em; opacity: 0%; }
-	to 		{ bottom: 1em; opacity: 100%; }
-}
-
-@keyframes fadeOut {
-	from 	{ bottom: 1em; opacity: 100%; }
-    to 		{ bottom: -1em; opacity: 0%; }
-}
-
-
-.carting.ng-hide { bottom: -1em; opacity:0 }
-.carting.ng-leave { animation: 1s fadeOut }
-.carting.ng-enter { animation: 1s fadeIn }
 
 
 h1.counter {

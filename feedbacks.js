@@ -11,6 +11,7 @@
 	function feedbacks($http, $q, $localStorage, config, auth){
 		var service = {
 			list: "",
+			len: 0,
 			get: get
 		}
 		return service
@@ -23,11 +24,13 @@
 					function successCallback(response) {
 						console.log(response.data);
 						service.list = response.data.resources;
+						service.len = response.data.count;
 						//$localStorage.feedbacks = response.data.resources;
 						resolve();
 					},
 					function errorCallback(response) {
 						service.list = "";
+						service.len = 0;
 						reject(response.data.errors);
 					}
 				); //end then
@@ -50,11 +53,14 @@
 
 	function feedbacksController(feedbacks, auth, $http, config, $q){
 		var vm = this;
+		vm.loading = true;
 		vm.list = feedbacks.list;
+		vm.len = 0;
 		vm.touched = false;
 		vm.sent = false;
-		vm.len = 0;
 		vm.get = get;
+		vm.send = send;
+		vm.clean = clean;
 		vm.get();
 
 		function get(){
@@ -62,31 +68,42 @@
 			get.then(
 				function(resolve) {
 					vm.list = feedbacks.list;
-					vm.len = vm.list.length;
+					vm.len = feedbacks.len;
+					vm.loading = false;
 				},
 				function(reject) {
 				}
 			);
 		}
 
-		vm.send = send;
 		function send(){
-			Object.keys(vm.list).forEach(function(key){
-				var feedback = vm.list[key];
-				if (feedback.object.float != 0) {
+			vm.touched = false;
+			vm.list.slice().reverse().forEach(function(item, index, object) {
+				if (item.object.float > 0) {
 					vm.sent = true;
-					feedback.done = true;
-					put(feedback).then(
+					item.done = true;
+					put(item).then(
 						function(resolve){
-							vm.list[key].object = resolve.object;
+							item.done = true;
+							vm.clean();
 						},
 						function(reject){
-							vm.list[key].object.open = "false";
+							item.done = false;
+							vm.clean();
 						}
 					);
 				} //end if
-			});
-			vm.touched = false;
+			}); //end foreach
+		}
+
+		function clean(){
+			vm.len = vm.list.length
+			vm.list.slice().reverse().forEach(function(item, index, object) {
+				if (item.done == true) {
+					vm.list.splice(object.length - 1 - index, 1);
+					vm.len -= 1;
+				}
+			})
 		}
 
 

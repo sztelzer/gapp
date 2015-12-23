@@ -1,30 +1,17 @@
-<md-content flex layout-fill layout="column" layout-align="center center">
+<md-content flex layout-fill layout="column">
 
-		<div style="width:80%" flex layout-padding layout="column" layout-align="center center">
-			<!-- <h2>Entrar</h2> -->
-			<form style="width:100%" name="loginForm">
 				<md-input-container>
 			      <label>Email</label>
-			      <input required="" ng-model="app.auth.login.email" type="email" name="email"
-				  minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
-				  <!-- <div ng-messages="loginForm.email.$error" role="alert">
-					  <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-			              Your email must be between 10 and 100 characters long and look like an e-mail address.
-					  </div>
-				  </div> -->
 			    </md-input-container>
-
 
 				<md-input-container>
 			      <label>Senha</label>
-			      <input ng-model="app.auth.login.password" type="password">
 			    </md-input-container>
 
 				<div style="width:100%" layout="row" layout-align="space-around center">
 					<md-button ui-sref="startPage" ng-click>Voltar</md-button>
 					<md-button class="md-raised md-primary" ng-click="app.auth.signin()">Entrar</md-button>
 				</div>
-			</form>
 		</div>
 
 

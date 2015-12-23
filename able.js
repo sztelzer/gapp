@@ -6,7 +6,6 @@
 	.module("able", [
 		'ui.router',
 		'ct.ui.router.extras',
-		'ngTouch',
 		'ngAnimate',
 		'ngStorage',
 		'ngMaterial',
@@ -44,6 +43,20 @@
 					accessLogged: false
 				}
 			})
+
+
+			.state('questPage', {
+				url: "/quest",
+				templateUrl: "questPage.template.html",
+				data: {
+					requireLogin: false,
+					accessLogged: false
+				}
+			})
+
+
+
+
 			.state('signinPage', {
 				url: "/signin",
 				templateUrl: "signinPage.template.html",
@@ -190,14 +203,14 @@
 
 	})
 
-	.run(function ($rootScope, $state, app) {
+	.run(function ($rootScope, $state, auth) {
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-			if (toState.data.requireLogin == true && app.auth.user.token == '') {
+			if (toState.data.requireLogin == true && auth.user.token == '') {
 				event.preventDefault();
 				$state.go('startPage');
 			} else
-			if (toState.data.accessLogged == false && app.auth.user.token != '') {
+			if (toState.data.accessLogged == false && auth.user.token != '') {
 				event.preventDefault();
 				$state.go('storePage.offerPage');
 			}
@@ -220,26 +233,6 @@
 	        return Math.round(seconds/60);
     	}
 	})
-
-
-
-
-	.factory('app', app)
-	.controller('appController', appController)
-
-	function app(auth){
-		var vm = this;
-		vm.auth = auth;
-		// vm.addressKnown = true;
-		// vm.showFeedbacks = false;
-		// vm.showOffers = true;
-		return vm
-	}
-
-	function appController(app){
-		return app
-	}
-
 
 
 })();

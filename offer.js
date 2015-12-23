@@ -66,18 +66,11 @@
 				$http.post(config.api + '/users/' + auth.user.id + '/offers', payload, req_config).then(
 					function successCallback(response) {
 						service.data = response.data;
-
-						// var date = new Date();
-						// date.setTime(service.data.object.now_go);
-						// service.data.object.created_at = date;
-
 						var date = new Date();
 						date.setTime(service.data.object.good_until);
 						service.data.object.good_until_date = date;
-
 						$localStorage.offer = service.data;
 						resolve();
-						console.log(service.data)
 					},
 					function errorCallback(response) {
 						service.data = '';

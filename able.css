@@ -47,6 +47,10 @@ md-backdrop.md-opaque {
 	background-color: #000000 !important;
 }
 
+md-list-item > button, md-list-item > button > * {
+	border-radius: 0px !important;
+}
+
 .store-progress {
 	position:absolute;
 	top: 0px;
@@ -159,4 +163,9 @@ div.counter {
 
 #mapmap {
 	height: 100%;
+}
+
+
+md-card.card-tag {
+	background-color: #ffffff;
 }

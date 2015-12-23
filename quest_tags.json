@@ -1,0 +1,46 @@
+[
+	{
+		"i":"i1",
+		"q":"Suco de limão sem açucar",
+		"c":"#ffffff",
+		"t":"#000000",
+		"a":[
+			{"v":1,"s":"Não gosto"},
+			{"v":2,"s":"Se o limão estiver maduro"},
+			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+		]
+	},
+	{
+		"i":"i2",
+		"q":"Suco de limão sem açucar",
+		"c":"#ffffff",
+		"t":"#000000",
+		"a":[
+			{"v":1,"s":"Não gosto"},
+			{"v":2,"s":"Se o limão estiver maduro"},
+			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+		]
+	},
+	{
+		"i":"i3",
+		"q":"Suco de limão sem açucar",
+		"c":"#ffffff",
+		"t":"#000000",
+		"a":[
+			{"v":1,"s":"Não gosto"},
+			{"v":2,"s":"Se o limão estiver maduro"},
+			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+		]
+	},
+	{
+		"i":"i4",
+		"q":"Suco de limão sem açucar",
+		"c":"#ffffff",
+		"t":"#000000",
+		"a":[
+			{"v":1,"s":"Não gosto"},
+			{"v":2,"s":"Se o limão estiver maduro"},
+			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+		]
+	}
+]

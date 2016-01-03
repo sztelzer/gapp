@@ -1,46 +1,181 @@
 [
 	{
 		"i":"i1",
-		"q":"Suco de limão sem açucar",
-		"c":"#ffffff",
-		"t":"#000000",
+		"q":"Frutas",
+		"c":"#9D80CC",
+		"t":"#FFFFFF",
 		"a":[
-			{"v":1,"s":"Não gosto"},
-			{"v":2,"s":"Se o limão estiver maduro"},
-			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+			{"v":1,"s":"Não gosto."},
+			{"v":2,"s":"Gosto, como algumas de vez em quando."},
+			{"v":3,"s":"Adoro, queria ter um pomar só para mim."}
 		]
 	},
 	{
 		"i":"i2",
-		"q":"Suco de limão sem açucar",
-		"c":"#ffffff",
-		"t":"#000000",
+		"q":"Água de Coco",
+		"c":"#58C6CC",
+		"t":"#FFFFFF",
 		"a":[
-			{"v":1,"s":"Não gosto"},
-			{"v":2,"s":"Se o limão estiver maduro"},
-			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+			{"v":1,"s":"Não gosto."},
+			{"v":2,"s":"Gosto de vez em quando."},
+			{"v":3,"s":"Sempre tomo água de coco!"}
 		]
 	},
 	{
 		"i":"i3",
-		"q":"Suco de limão sem açucar",
-		"c":"#ffffff",
-		"t":"#000000",
+		"q":"Geléia de Frutas",
+		"c":"#EC5F7F",
+		"t":"#FFFFFF",
 		"a":[
-			{"v":1,"s":"Não gosto"},
-			{"v":2,"s":"Se o limão estiver maduro"},
-			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+			{"v":1,"s":"Não gosto."},
+			{"v":2,"s":"Gosto quando tem."},
+			{"v":3,"s":"Sempre tem que ter!"}
 		]
 	},
 	{
 		"i":"i4",
-		"q":"Suco de limão sem açucar",
-		"c":"#ffffff",
+		"q":"Beringela",
+		"c":"#9195B3",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"NÃO!"},
+			{"v":2,"s":"Depende como é feita, mas sim."},
+			{"v":3,"s":"Muito, como de todas as formas!"}
+		]
+	},
+	{
+		"i":"i5",
+		"q":"Chá de Ervas",
+		"c":"#88BB62",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Não, nem tomo chá."},
+			{"v":2,"s":"Sim, é refrescante, apesar de quente."},
+			{"v":3,"s":"Claro, chá é de ervas! Sempre."}
+		]
+	},
+	{
+		"i":"i6",
+		"q":"Aceto Balsâmico",
+		"c":"#7750B5",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Não uso, gosto da minha salada simples."},
+			{"v":2,"s":"Gosto, adiciono às vezes."},
+			{"v":3,"s":"Salada sem Aceto não é salada."}
+		]
+	},
+	{
+		"i":"i7",
+		"q":"Caldo de Cana",
+		"c":"#986E30",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Puro açúcar, prefiro água."},
+			{"v":2,"s":"Sim, já tomei, curti."},
+			{"v":3,"s":"Sempre no final de semana com pastel."}
+		]
+	},
+	{
+		"i":"i8",
+		"q":"Suco de frutas com açucar",
+		"c":"#B71C3F",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Pra que açúcar?!"},
+			{"v":2,"s":"Claro, sem açúcar não dá."},
+			{"v":3,"s":"Gosto mesmo é do açúcar, tira a fruta por favor."}
+		]
+	},
+	{
+		"i":"i9",
+		"q":"Chocolate meio-amargo",
+		"c":"#5D5550",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Só como chocolate ao leite."},
+			{"v":2,"s":"Sim, mas dá pra variar."},
+			{"v":3,"s":"Muito! Menos de 70% de cacau não é chocolate!"}
+		]
+	},
+	{
+		"i":"i10",
+		"q":"Tempero-verde (salsa, cebolinha, coentro)",
+		"c":"#31A54C",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Não gosto de mato."},
+			{"v":2,"s":"Funciona, ajuda em alguns pratos."},
+			{"v":3,"s":"Essencial!"}
+		]
+	},
+	{
+		"i":"i11",
+		"q":"Suco de limão sem açúcar",
+		"c":"#72C129",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Não gosto nem de limão, imagina sem açúcar."},
+			{"v":2,"s":"Se o limão estiver maduro, bebo sim."},
+			{"v":3,"s":"Açúcar é um crime no suco de limão."}
+		]
+	},
+	{
+		"i":"i12",
+		"q":"Trufa de licor (bombom)",
+		"c":"#440707",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Sério? Tanta coisa melhor para experimentar."},
+			{"v":2,"s":"Um ou outro, ainda tenho que dirigir."},
+			{"v":3,"s":"Vim de taxi, quero três."}
+		]
+	},
+	{
+		"i":"i13",
+		"q":"Bomba de Chocolate",
+		"c":"#CE0026",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Bomba é uma bomba. Essa eu pulo."},
+			{"v":2,"s":"De vez em quando eu gosto."},
+			{"v":3,"s":"É o melhor doce que existe!"}
+		]
+	},
+	{
+		"i":"i14",
+		"q":"Café expresso sem açúcar",
+		"c":"#29211C",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Não! Nem com açúcar."},
+			{"v":2,"s":"De vez em quando sem açúcar."},
+			{"v":3,"s":"Café, sempre sem açúcar."}
+		]
+	},
+	{
+		"i":"i15",
+		"q":"Gengibre",
+		"c":"#00BFA5",
+		"t":"#FFFFFF",
+		"a":[
+			{"v":1,"s":"Não, muito forte."},
+			{"v":2,"s":"Sim, é um bom tempero."},
+			{"v":3,"s":"Sempre, até demais."}
+		]
+	},
+
+	{
+		"i":"i16",
+		"q":"Qual é a sua experiência com cervejas artesanais?",
+		"c":"#ffdc4a",
 		"t":"#000000",
 		"a":[
-			{"v":1,"s":"Não gosto"},
-			{"v":2,"s":"Se o limão estiver maduro"},
-			{"v":3,"s":"Amo limão, mesmo verde não faço careta!"}
+			{"v":1,"s":"Nenhuma, só tomei cervejas comerciais."},
+			{"v":2,"s":"Pequena, já bebi algumas, mas ainda fico perdido."},
+			{"v":3,"s":"Média/Grande, já bebi várias e sei escolher as que eu gosto."},
+			{"v":4,"s":"Altíssima, sei o que é \"Lambic\" e tenho opinião formada."}
 		]
 	}
+
 ]

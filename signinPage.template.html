@@ -1,22 +1,32 @@
-<md-content flex layout-fill layout="column">
+<div signin-element flex layout-fill layout="column">
+	<md-toolbar flex="none" class="clean-toolbar md-whiteframe-4dp" layout="row" layout-align="start center" ng-cloak>
+		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
+		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-black"></md-icon>
+		</md-button>
+		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo-small">
+		<div flex class="toolbar-title" layout="row" layout-align="center center">Login</div>
+		<div flex="none" style="width:83px"></div>
+	</md-toolbar>
 
-				<md-input-container>
-			      <label>Email</label>
-			    </md-input-container>
+	<md-content flex layout="column">
+		<form name="signinForm" flex layout-padding layout="column" layout-align="center center" ng-cloak>
+			<md-input-container style="width:90%">
+		      <label>Email</label>
+		      <input novalidate type="email" name="email" ng-model="signin.email" minlength="10" maxlength="256" ng-pattern="/^.+@.+\..+$/">
+		    </md-input-container>
 
-				<md-input-container>
-			      <label>Senha</label>
-			    </md-input-container>
+			<md-input-container style="width:90%">
+		      <label>Senha</label>
+		      <input novalidate type="password" name="password" ng-model="signin.password" minlength="6" maxlength="24">
+		    </md-input-container>
 
-				<div style="width:100%" layout="row" layout-align="space-around center">
-					<md-button ui-sref="startPage" ng-click>Voltar</md-button>
-					<md-button class="md-raised md-primary" ng-click="app.auth.signin()">Entrar</md-button>
-				</div>
-		</div>
+			<div style="width:90%" layout="row" layout-align="space-between center">
+				<a ui-sref="recoverPage" ng-click>Recuperar Senha</a>
+				<md-button class="md-raised md-accent" ng-click="signin.signin()">Entrar</md-button>
+			</div>
+		</form>
 
+		<div flex="none" style="height:60px;"></div>
 
-		<div flex="10" layout-padding layout="row" layout-align="space-around end">
-			<md-button ui-sref="recoverPage" ng-click>Recuperar Senha</md-button>
-		</div>
-
-</md-content>
+	</md-content>
+</div>

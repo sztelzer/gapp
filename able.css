@@ -30,12 +30,36 @@ html, body {
   padding-left: 5%;
 }
 
-.main-toolbar {
-	padding: 20px 4px 0 4px !important;
+.main-toolbar, .clean-toolbar {
+	padding: 20px 0 0 0 !important;
+	margin: 0px !important;
+	height: 60px !important;
+	/*min-height: 40px !important;
+	max-height: 40px !important;*/
 }
 
 .main-toolbar-logo {
 	height:24px;
+}
+
+.main-toolbar-logo-small {
+	height:18px;
+}
+
+.toolbar-title {
+	font-size: 0.6em;
+	font-family: 'Roboto Slab';
+	font-weight: 600;
+	color: #FFFFFF;
+	padding-top: 0.5em;
+}
+
+.clean-toolbar {
+	background-color: #F4F2EF !important;
+}
+
+.clean-toolbar > .toolbar-title {
+	color: #0080FF;
 }
 
 md-sidenav {
@@ -112,14 +136,25 @@ md-content.store {
 
 }
 
+.svg-black > svg {
+	fill: #000000 !important;
+}
 
+.svg-white > svg {
+	fill: #FFFFFF !important;
+}
 
+.svg-blue > svg {
+	fill: #0080FF !important;
+}
 
+.svg-green > svg {
+	fill: #26BD49 !important;
+}
 
-
-
-
-
+.md-icon-button {
+	margin:0 !important;
+}
 
 
 
@@ -161,11 +196,18 @@ div.counter {
 	margin: 0.1em;
 }
 
-#mapmap {
-	height: 100%;
+
+.card-title {
+	font-size: 1.2em;
+    padding: 1em 1em;
+    font-family: "roboto slab";
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	border-top: 1px solid rgba(255, 255, 255, 0.9);
+	border-radius: 3px 3px 0px 0px;
 }
 
-
-md-card.card-tag {
-	background-color: #ffffff;
+.card-content {
+	padding: 1em 1em 0.5em 1em;
+	font-family: "roboto slab";
+	border-top: 1px solid rgba(256, 256, 256, 0.9);
 }

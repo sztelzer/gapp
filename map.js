@@ -8,12 +8,6 @@
 
 
 
-	// function mapService(config, mock, $http, $localStorage, $q) {
-	// 	var service = {
-	//
-	// 	}
-	// 	return service
-	// }
 
 
 	function mapDirective() {

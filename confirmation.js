@@ -3,16 +3,7 @@
 
 	angular
 		.module('able')
-		.directive('elementConfirmation', confirmationDirective)
-		.factory('confirmation', confirmationService)
-
-	function confirmationService() {
-		var service = {
-			data:''
-		}
-		return service
-
-	}
+		.directive('confirmationElement', confirmationDirective)
 
 
 	function confirmationDirective() {
@@ -25,9 +16,9 @@
 		return directive
 	}
 
-	function confirmationController(confirmation, $localStorage) {
+	function confirmationController(orders) {
 		var vm = this;
-		vm.data = $localStorage.last_confirmation
+
 
 	} // end controller
 

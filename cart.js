@@ -7,7 +7,7 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, offer, config, mock, confirmation, $http, $localStorage, $q, $state) {
+	function cartService(auth, offer, config, mock, $http, $q, $state, orders) {
 		var service = {
 			data: {
 				latitude: mock.device_latitude,
@@ -73,20 +73,17 @@
 			service.data.total_quantity = service.quantity_total;
 			service.data.total_value = +(service.value_total).toFixed(2);
 
-			console.log(service.data)
-
 			var payload = service.data;
-			var req_config = {headers: {'Authorization': auth.user.token}};
+			var req_config = {headers: {'Authorization': auth.token}};
 
 			//return a promissssssse
 			return $q(function(resolve, reject) {
-				$http.post(config.api + '/users/' + auth.user.id + '/orders', payload, req_config).then(
+				$http.post(config.api + '/users/' + auth.id + '/orders', payload, req_config).then(
 					function successCallback(response) {
 						// service.data = response.data;
-						console.log(response.data);
+						// console.log(response.data);
 						resolve();
-						confirmation.data = response.data;
-						$localStorage.last_confirmation = response.data;
+						orders.last = response.data.path;
 						$state.go('storePage.confirmationPage');
 
 					},

@@ -18,7 +18,6 @@
 
 	function questController($http, auth, config, $q, $scope) {
 		var vm = this;
-		vm.userPayload = {'name':'','email':'','new_password':''};
 		vm.questPayload = {};
 		vm.send = send;
 

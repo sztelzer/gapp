@@ -1,12 +1,11 @@
-<md-content element-feedbacks flex ng-cloak layout="column">
+<md-content element-feedbacks flex ng-cloak layout-padding layout="column">
 
-	<div ng-show="!feedbacks.loading && feedbacks.len >= 1" flex="none" layout-padding ng-cloak>
+	<div ng-show="!feedbacks.loading && feedbacks.len >= 1" flex="none" ng-cloak>
 		<center>O que você achou destas cervejas?</center>
 	</div>
 
-	<div ng-show="feedbacks.len == 0" flex="none" layout-padding ng-cloak>
-		<strong>Nenhuma avaliação pendente.</strong>
-		Quando você receber nossos produtos você poderá avaliá-los aqui. É muito importante que você tenha experimentado cada cerveja,
+	<div ng-show="feedbacks.len == 0" flex="none" ng-cloak>
+		<strong>Nenhuma avaliação pendente.</strong> Quando você receber nossos produtos você poderá avaliá-los aqui. É muito importante que você tenha experimentado cada cerveja,
 		pois sua avaliação impactará diretamente e automaticamente no ranking dos produtos selecionados para você.
 	</div>
 

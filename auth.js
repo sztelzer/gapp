@@ -5,61 +5,64 @@
 		.module('able')
 		.factory('auth', auth)
 
-	function auth($http, $state, $localStorage, config, $q){
+	function auth($http, $state, config, $q, $localStorage){
 		var service = {
-			login: {'email':'', 'password':''},
-			user: $localStorage.$default({'id':'','token':''}),
+			id: '',
+			token: '',
+			email: '',
+			password: '',
 			signup: signup,
 			signin: signin,
 			signout: signout
 		}
 		return service
 
-		function signup(payload){
+		function signup(name, email, password){
+			var payload = {'name':name,'email':email,'new_password':password};
 			return $q(function(resolve, reject) {
 				$http.post(config.api + '/users', payload, {})
 					.then(
 					function successCallback(response) {
-						service.login.email = payload.email;
-						service.login.password = payload.new_password;
-						resolve();
+						service.id = response.data.object.user;
+						$localStorage.id = response.data.object.user;
+						service.token = response.data.object.token;
+						$localStorage.token = response.data.object.token;
+						resolve(response);
 					},
 					function errorCallback(response) {
-						console.log(response.data.errors);
-						reject();
+						reject(response);
 					}
 				);
 			});
 		}
 
 
-		function signin(){
+		function signin(email, password){
+			var login = {'email':email, 'password':password};
 			return $q(function(resolve, reject) {
-				$http.post(config.api + '/tokens', service.login)
+				$http.post(config.api + '/tokens', login)
 					.then(
 					function successCallback(response) {
-						service.user.id = response.data.object.user
-						service.user.token = response.data.object.token
-						service.login = {}
-						resolve();
-						// $state.go('storePage')
+						service.id = response.data.object.user;
+						$localStorage.id = response.data.object.user;
+						service.token = response.data.object.token;
+						$localStorage.token = response.data.object.token;
+						resolve(response);
 					},
 					function errorCallback(response) {
-						service.user = {}
-						service.login = {}
-						reject();
-						// $state.go('signinPage')
+						service.email = '';
+						service.password = '';
+						reject(response);
 					});
 			})
 		}
 
 		function signout(){
-			$localStorage.id = "";
-			$localStorage.token = "";
-			$localStorage.offer = "";
-			$localStorage.last_confirmation = "";
-			$localStorage.orders = "";
-			window.location.href = "index.html";
+			$localStorage.id = '';
+			$localStorage.token = '';
+			$localStorage.offer = '';
+			$localStorage.orders = '';
+			window.location.href = "/";
 			// $state.go('startPage')
 		}
 

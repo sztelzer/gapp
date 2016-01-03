@@ -4,7 +4,7 @@
 	angular
 		.module('able')
 		.directive('leftMenu', leftMenuDirective)
-		.directive('toolbar', toolbarDirective)
+		.directive('toolbarElement', toolbarDirective)
 
 	function toolbarDirective() {
 		var directive = {

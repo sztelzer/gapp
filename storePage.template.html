@@ -1,30 +1,20 @@
-<!-- <div element-map ng-hide="app.addressKnown" class="fixed" flex layout-fill layout="column"></div>
-<div element-feedbacks ng-show="app.showFeedbacks" class="fixed" flex layout-fill layout="column"></div> -->
-
-<div layout="column" flex="none" layout-fill style="position:fixed;top:0;">
-	<md-toolbar toolbar flex md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar md-whiteframe-1dp" layout="row" layout-align="space-between center" ng-cloak>
-		<!-- <md-button flex="none" ng-show="$state.includes('storePage.offerPage')" ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
-		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg"></md-icon>
-		</md-button>
-		<md-button flex="none" ng-show="!$state.includes('storePage.offerPage')" ng-click="toolbar.back()" class="md-icon-button" aria-label="Voltar" ng-cloak>
-			<md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg"></md-icon>
-		</md-button> -->
-		<md-button flex="none" ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
-		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg"></md-icon>
+<div layout="column" flex="none" layout-fill>
+	<md-toolbar toolbar-element flex md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar" layout="row" layout-align="space-between center" ng-cloak>
+		<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
+		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
 
-		<span flex></span>
-		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo">
-		<span flex></span>
-		<span flex="none" style="width:40px"></span>
+		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo-small">
+		<div flex class="toolbar-title" layout="row" layout-align="center center">{{app.state.current.data.title}}</div>
+		<div flex="none" style="width:83px"></div>
+
 	</md-toolbar>
 	<div ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" flex ng-cloak></div>
 	<div ui-view ng-hide="$state.includes('storePage.offerPage')" layout="column" flex ng-cloak></div>
 </div>
 
 <md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left" md-component-id="able-left-menu">
-	<md-subheader>User: {{app.auth.user.id}}</md-subheader>
-
+	<md-subheader>{{app.auth.safe.id}}</md-subheader>
 	<md-list flex="none">
 		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">Loja</md-list-item>
     	<md-list-item ng-click="">Perfil</md-list-item>
@@ -37,5 +27,4 @@
 		<md-divider></md-divider>
 		<md-list-item ng-click="app.auth.signout()">Desconectar Conta</md-list-item>
   	</md-list>
-
 </md-sidenav>

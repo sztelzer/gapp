@@ -4,13 +4,12 @@
 	angular
 
 	.module("able", [
-		'ui.router',
-		'ct.ui.router.extras',
+		'ngMaterial',
 		'ngAnimate',
 		'ngStorage',
-		'ngMaterial',
-		'ngAria',
-		'ngMap',
+		'ui.router',
+		'ct.ui.router.extras',
+		'ngAria'
 	])
 
 	.value('config', {
@@ -29,9 +28,9 @@
 		voucher:''
 	})
 
-	.config(function ($stateProvider, $urlRouterProvider, $localStorageProvider, $mdThemingProvider, $httpProvider, $mdGestureProvider) {
-		$mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
+	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider) {
 		$localStorageProvider.setKeyPrefix('able_');
+		// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
 		$httpProvider.useApplyAsync(true);
 		$urlRouterProvider.otherwise("/");
 		$stateProvider
@@ -39,6 +38,7 @@
 				url: "/",
 				templateUrl: "startPage.template.html",
 				data: {
+					title: "Início",
 					requireLogin: false,
 					accessLogged: false
 				}
@@ -49,18 +49,17 @@
 				url: "/quest",
 				templateUrl: "questPage.template.html",
 				data: {
+					title: "Criar Perfil",
 					requireLogin: false,
 					accessLogged: false
 				}
 			})
 
-
-
-
 			.state('signinPage', {
 				url: "/signin",
 				templateUrl: "signinPage.template.html",
 				data: {
+					title: "Entrar",
 					requireLogin: false,
 					accessLogged: false
 				}
@@ -70,6 +69,7 @@
 				templateUrl: "storePage.template.html",
 				deepStateRedirect: { default: "storePage.offerPage" },
 				data: {
+					title: "Loja",
 					requireLogin: true,
 					accessLogged: true
 				}
@@ -81,6 +81,7 @@
 					"offer": { templateUrl: "offerPage.template.html" }
 				},
 				data: {
+					title: "Indicações",
 					requireLogin: true,
 					accessLogged: true
 				}
@@ -89,6 +90,7 @@
 				url: "/feedbacks",
 				templateUrl: "feedbacksPage.template.html",
 				data: {
+					title: "Avaliações",
 					requireLogin: true,
 					accessLogged: true
 				}
@@ -97,6 +99,7 @@
 				url: "/orders",
 				templateUrl: "ordersPage.template.html",
 				data: {
+					title: "Pedidos",
 					requireLogin: true,
 					accessLogged: true
 				}
@@ -105,6 +108,7 @@
 				url: "/confirmation",
 				templateUrl: "confirmationPage.template.html",
 				data: {
+					title: "Último Pedido",
 					requireLogin: true,
 					accessLogged: true
 				}
@@ -206,11 +210,11 @@
 	.run(function ($rootScope, $state, auth) {
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-			if (toState.data.requireLogin == true && auth.user.token == '') {
+			if (toState.data.requireLogin == true && auth.token === '') {
 				event.preventDefault();
 				$state.go('startPage');
 			} else
-			if (toState.data.accessLogged == false && auth.user.token != '') {
+			if (toState.data.accessLogged == false && auth.token !== '') {
 				event.preventDefault();
 				$state.go('storePage.offerPage');
 			}
@@ -233,6 +237,27 @@
 	        return Math.round(seconds/60);
     	}
 	})
+
+
+	.directive('appElement', appDirective)
+
+	function appDirective() {
+		var directive = {
+			restrict: 'A',
+			controller: appController,
+			controllerAs: 'app',
+			bindToController: true
+		}
+		return directive
+	}
+
+	function appController(auth, $state){
+		var vm = this;
+		vm.auth = auth;
+		vm.state = $state;
+	}
+
+
 
 
 })();

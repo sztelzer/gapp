@@ -7,12 +7,12 @@
 		.directive('elementOffer', offerDirective)
 
 
-	function offerService(auth, config, mock, $http, $localStorage, $q) {
+	function offerService(auth, config, mock, $http, $q, $localStorage) {
 		var service = {
 			loadOffer: loadOffer,
 			checkOffer: checkOffer,
 			updateOfferStocks: updateOfferStocks,
-			data: $localStorage.offer
+			data: ''
 		}
 		return service
 
@@ -28,7 +28,7 @@
 			// check if is too old
 			var now = new Date();
 			now = now.getTime();
-			var exp = storedOffer.object.good_until
+			var exp = storedOffer.object.good_until;
 			if (now > exp) {
 				return false;
 			}
@@ -59,47 +59,45 @@
 				list_size: config.offers_count
 			}
 
-			var req_config = {headers: {'Authorization': auth.user.token}}
+			var req_config = {headers: {'Authorization': auth.token}}
 
 			//return a promissssssse
 			return $q(function(resolve, reject) {
-				$http.post(config.api + '/users/' + auth.user.id + '/offers', payload, req_config).then(
+				$http.post(config.api + '/users/' + auth.id + '/offers', payload, req_config).then(
 					function successCallback(response) {
 						service.data = response.data;
+						$localStorage.offer = response.data;
 						var date = new Date();
 						date.setTime(service.data.object.good_until);
 						service.data.object.good_until_date = date;
-						$localStorage.offer = service.data;
-						resolve();
+						resolve(response);
 					},
 					function errorCallback(response) {
 						service.data = '';
 						$localStorage.offer = '';
-						reject(response.data.errors);
+						reject(response);
 					}
 				)
 			}) // end q()
 		} // end loadOffer()
 
 		function updateOfferStocks(offerPath) {
-			var req_config = {headers: {'Authorization': auth.user.token}}
+			var req_config = {headers: {'Authorization': auth.token}}
 
 			return $q(function(resolve, reject) {
 				$http.get(config.api + offerPath, req_config).then(
 					function successCallback(response) {
 						service.data = response.data;
+						$localStorage.offer = response.data;
 						var date = new Date();
 						date.setTime(service.data.object.good_until);
 						service.data.object.good_until_date = date;
-
-						$localStorage.offer = service.data;
-						resolve();
-						// console.log(service.data)
+						resolve(response);
 					},
 					function errorCallback(response) {
 						service.data = '';
 						$localStorage.offer = '';
-						reject(response.data.errors);
+						reject(response);
 					}
 				)
 			}) // end q()
@@ -116,17 +114,14 @@
 		return directive
 	}
 
-	function offerController(offer, $localStorage, cart) {
+	function offerController(offer, cart) {
 		var vm = this;
-		vm.init = init;
 		init();
-
 
 		function init(){
 			vm.loading = true;
 			if (offer.checkOffer() == true) {
-
-				var updateOfferStocks = offer.updateOfferStocks($localStorage.offer.path)
+				var updateOfferStocks = offer.updateOfferStocks(offer.data.path)
 				updateOfferStocks.then(
 					function(resolve) {
 						vm.data = offer.data;

@@ -15,31 +15,37 @@
 		return directive
 	}
 
-	function signinController(auth, $state, $scope) {
+	function signinController(auth, $state, $scope, $mdToast) {
 		var vm = this;
-		vm.signin = Signin
+		vm.email = '';
+		vm.password = '';
+		vm.signin = signin;
 
-		function Signin(){
-			auth.login.email = $scope.signinForm.email;
-			auth.login.password = $scope.signinForm.password;
-			var signin = auth.signin();
+		function signin(){
+			var signin = auth.signin(vm.email, vm.password);
 			signin.then(
 				function(resolve){
-					$state.go('storePage')
+					$state.go('storePage.offerPage');
+					vm.email = '';
+					vm.password = '';
 				},
 				function(reject){
-					$scope.signinForm.email = '';
-					$scope.signinForm.password = '';
-					window.alert('invalid login');
-
+					vm.email = '';
+					vm.password = '';
+					//window.alert(reject.data.errors[0].reference);
+					toast("That's a no-no :(");
 				}
-
 			)
-
-
-
-
 		}
+
+		function toast(msg) {
+		    $mdToast.show(
+		    	$mdToast.simple()
+			    .textContent(msg)
+			    .hideDelay(3000)
+			);
+		};
+
 
 	} // end controller
 

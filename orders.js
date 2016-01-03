@@ -4,6 +4,36 @@
 	angular
 		.module('able')
 		.directive('elementOrders', ordersDirective)
+		.factory('orders', orders)
+
+	function orders($http, $q, config, auth, $localStorage){
+		var service = {
+			list: $localStorage.orders,
+			last: '',
+			get: get,
+			last: last
+		}
+		return service
+
+		function get(){
+			var req_config = {headers: {'Authorization': auth.token}};
+			$http.get(config.api + '/users/' + auth.id + '/orders', req_config)
+			.then(
+			function successCallback(response) {
+				service.list = response.data.resources;
+				$localStorage.orders = response.data.resources;
+			},
+			function errorCallback(response) {
+			})
+		}
+
+
+		function last(){
+
+		}
+
+
+	}
 
 
 	function ordersDirective() {
@@ -16,27 +46,13 @@
 		return directive
 	}
 
-	function ordersController(auth, config, $http, $localStorage) {
+	function ordersController($scope, orders) {
 		var vm = this;
-		vm.getAllOrders = getAllOrders();
-		vm.list = $localStorage.orders
+		orders.get();
 
-		function getAllOrders(){
-			var req_config = {headers: {'Authorization': auth.user.token}};
-			$http.get(config.api + '/users/' + auth.user.id + '/orders', req_config)
-				.then(
-				function successCallback(response) {
-					console.log(response.data);
-					vm.list = response.data.resources;
-					$localStorage.orders = vm.list
-				},
-				function errorCallback(response) {
-					console.log(response.data);
-				});
-		}
-
-
-
+		// $scope.$watch(function w(scope){return( orders.list )},function c(n,o){
+		// 	vm.list = orders.list;
+		// });
 	} // end controller
 
 

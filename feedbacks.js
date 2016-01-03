@@ -8,7 +8,7 @@
 
 
 
-	function feedbacks($http, $q, $localStorage, config, auth){
+	function feedbacks($http, $q, config, auth){
 		var service = {
 			list: "",
 			len: 0,
@@ -17,15 +17,14 @@
 		return service
 
 		function get() {
-			var req_config = {headers: {'Authorization': auth.user.token}};
+			var req_config = {headers: {'Authorization': auth.safe.token}};
 			return $q(function(resolve, reject) {
-				$http.get(config.api + '/users/' + auth.user.id + '/feedbacks', req_config)
+				$http.get(config.api + '/users/' + auth.safe.id + '/feedbacks', req_config)
 					.then(
 					function successCallback(response) {
 						console.log(response.data);
 						service.list = response.data.resources;
 						service.len = response.data.count;
-						//$localStorage.feedbacks = response.data.resources;
 						resolve();
 					},
 					function errorCallback(response) {

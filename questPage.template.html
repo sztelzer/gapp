@@ -1,23 +1,27 @@
 <div element-quest flex layout-fill layout="column">
-	<div flex="none">
-		<md-button ui-sref="startPage" ng-click>Sair</md-button>
-		You are in a quest.
-	</div>
+	<md-toolbar flex="none" class="clean-toolbar md-whiteframe-4dp" layout="row" layout-align="start center" ng-cloak>
+		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
+		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-black"></md-icon>
+		</md-button>
+		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo-small">
+		<div flex class="toolbar-title" layout="row" layout-align="center center">Criar Perfil</div>
+		<div flex="none" style="width:78px"></div>
+	</md-toolbar>
 
 	<md-content>
-		<form name="questForm" novalidate>
-			<!-- <md-card flex class="card-tag md-whiteframe-1dp" ng-repeat="tag in quest.tags">
-				<md-card-content flex layout="column">
-					<h2>{{tag.q}}</h2>
+		<form name="questForm" novalidate ng-cloak>
+
+			<md-card flex class="card-tag md-whiteframe-8dp" ng-repeat="tag in quest.tags">
+				<div class="card-title" style="background-color:{{tag.c}};color:{{tag.t}}">{{tag.q}}</div>
+				<div flex layout="column" class="card-content">
 					<md-radio-group name="{{tag.i}}" ng-required="true" required>
 						<md-radio-button ng-repeat="a in tag.a" value="{{a.v}}">{{a.s}}</md-radio-button>
 					</md-radio-group>
-				</md-card-content>
-			</md-card> -->
+				</div>
+			</md-card>
 
 
 			<div flex layout-padding layout="column">
-
 				<md-input-container>
 				  <label>Nome</label>
 				  <input name="name" minlength="5" maxlength="40" ng-required="true">
@@ -36,7 +40,6 @@
 				<div style="width:100%" layout="row" layout-align="space-around center">
 					<md-button class="md-raised md-accent wider" ng-click="quest.send()">Criar Perfil</md-button>
 				</div>
-
 			</div>
 
 

@@ -4,12 +4,12 @@
 	angular
 
 	.module("able", [
-		'ngMaterial',
 		'ngAnimate',
 		'ngStorage',
 		'ui.router',
 		'ct.ui.router.extras',
-		'ngAria'
+		'ngAria',
+		'ngMaterial'
 	])
 
 	.value('config', {

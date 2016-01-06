@@ -50,9 +50,9 @@
 		var vm = this;
 		orders.get();
 
-		// $scope.$watch(function w(scope){return( orders.list )},function c(n,o){
-		// 	vm.list = orders.list;
-		// });
+		$scope.$watch(function w(scope){return( orders.list )},function c(n,o){
+			vm.list = orders.list;
+		});
 	} // end controller
 
 

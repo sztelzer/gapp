@@ -7,8 +7,8 @@
 
 	function auth($http, $state, config, $q, $localStorage){
 		var service = {
-			id: '',
-			token: '',
+			id: $localStorage.id,
+			token: $localStorage.token,
 			email: '',
 			password: '',
 			signup: signup,

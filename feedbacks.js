@@ -17,9 +17,9 @@
 		return service
 
 		function get() {
-			var req_config = {headers: {'Authorization': auth.safe.token}};
+			var req_config = {headers: {'Authorization': auth.token}};
 			return $q(function(resolve, reject) {
-				$http.get(config.api + '/users/' + auth.safe.id + '/feedbacks', req_config)
+				$http.get(config.api + '/users/' + auth.id + '/feedbacks', req_config)
 					.then(
 					function successCallback(response) {
 						console.log(response.data);

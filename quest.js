@@ -16,9 +16,10 @@
 		return directive
 	}
 
-	function questController($http, auth, config, $q, $scope) {
+	function questController($http, auth, config, $q, $scope, $mdToast) {
 		var vm = this;
-		vm.questPayload = {};
+		vm.payload = {};
+		vm.user = {};
 		vm.send = send;
 
 		//load tags quest only when quest page is loaded.
@@ -27,13 +28,15 @@
 		});
 
 		function send(){
-			console.log($scope.questForm.email)
-			// //check if form is valid
-			// if(!$scope.questForm.$valid){
-			// 	console.log($scope.questForm.$valid)
-			// 	return;
+			// if (Object.keys(vm.payload).length < vm.tags.length){
+			// 	toast("Responda todos os items.")
+			// 	return
 			// }
-			return
+
+			//validate Name, Email, Password
+			
+
+
 
 			//both are valid, let's go
 			var signup = auth.signup(vm.userPayload);
@@ -44,6 +47,7 @@
 				},
 				function(reject) {
 					console.log(reject);
+					toast(reject.data.errors[0].reference)
 				}
 			);
 
@@ -89,6 +93,16 @@
 				);
 			});
 		}
+
+		function toast(msg) {
+		    $mdToast.show(
+		    	$mdToast.simple()
+			    .textContent(msg)
+			    .hideDelay(3000)
+			);
+		};
+
+
 
 
 	} // end questController

@@ -71,14 +71,14 @@
 		"c":"#986E30",
 		"t":"#FFFFFF",
 		"a":[
-			{"v":1,"s":"Puro açúcar, prefiro água."},
+			{"v":1,"s":"Muito doce, prefiro água."},
 			{"v":2,"s":"Sim, já tomei, curti."},
 			{"v":3,"s":"Sempre no final de semana com pastel."}
 		]
 	},
 	{
 		"i":"i8",
-		"q":"Suco de frutas com açucar",
+		"q":"Suco de Frutas com Açúcar",
 		"c":"#B71C3F",
 		"t":"#FFFFFF",
 		"a":[
@@ -89,7 +89,7 @@
 	},
 	{
 		"i":"i9",
-		"q":"Chocolate meio-amargo",
+		"q":"Chocolate Meio-Amargo",
 		"c":"#5D5550",
 		"t":"#FFFFFF",
 		"a":[
@@ -100,7 +100,7 @@
 	},
 	{
 		"i":"i10",
-		"q":"Tempero-verde (salsa, cebolinha, coentro)",
+		"q":"Tempero-Verde (Salsa, Cebolinha, Coentro)",
 		"c":"#31A54C",
 		"t":"#FFFFFF",
 		"a":[
@@ -111,7 +111,7 @@
 	},
 	{
 		"i":"i11",
-		"q":"Suco de limão sem açúcar",
+		"q":"Suco de Limão sem Açúcar",
 		"c":"#72C129",
 		"t":"#FFFFFF",
 		"a":[
@@ -122,7 +122,7 @@
 	},
 	{
 		"i":"i12",
-		"q":"Trufa de licor (bombom)",
+		"q":"Trufa de Licor (Bombom)",
 		"c":"#440707",
 		"t":"#FFFFFF",
 		"a":[
@@ -144,7 +144,7 @@
 	},
 	{
 		"i":"i14",
-		"q":"Café expresso sem açúcar",
+		"q":"Café Expresso sem Açúcar",
 		"c":"#29211C",
 		"t":"#FFFFFF",
 		"a":[

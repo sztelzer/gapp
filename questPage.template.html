@@ -14,31 +14,50 @@
 			<md-card flex class="card-tag md-whiteframe-8dp" ng-repeat="tag in quest.tags">
 				<div class="card-title" style="background-color:{{tag.c}};color:{{tag.t}}">{{tag.q}}</div>
 				<div flex layout="column" class="card-content">
-					<md-radio-group name="{{tag.i}}" ng-required="true" required>
+					<md-radio-group name="{{tag.i}}" ng-model="quest.payload[tag.i]" ng-required="true" required>
 						<md-radio-button ng-repeat="a in tag.a" value="{{a.v}}">{{a.s}}</md-radio-button>
 					</md-radio-group>
 				</div>
 			</md-card>
 
-
 			<div flex layout-padding layout="column">
+
+				<div ng-show="quest.least_tags">
+				  Todos os cartões devem ser respondidos!
+				</div>
+
+
 				<md-input-container>
 				  <label>Nome</label>
-				  <input name="name" minlength="5" maxlength="40" ng-required="true">
+				  <input name="name" ng-model="quest.user.name" minlength="5" maxlength="40" ng-required="true" required>
+			          <div ng-messages="questForm.name.$error">
+			            <div ng-message="required">This is required.</div>
+			          </div>
+				  </md-input-container>
+
+				<md-input-container>
+				  <label>E-mail</label>
+				  <input name="email" ng-model="quest.user.email" type="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" ng-required="true" required>
+				  <div ng-messages="questForm.email.$error">
+		            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+		              Your email must be between 10 and 100 characters long and look like an e-mail address.
+		            </div>
+		          </div>
+
 				</md-input-container>
 
 				<md-input-container>
-				  <label>Email</label>
-				  <input name="email" type="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
-				</md-input-container>
-
-				<md-input-container>
-				  <label>Senha</label>
-				  <input name="new_password" type="password">
+					<label>Senha</label>
+					<input name="password" ng-model="quest.user.password" type="password" minlength="8" maxlength="32" ng-required="true" required>
+					<div ng-messages="questForm.password.$error">
+					  <div ng-message-exp="['required', 'minlength', 'maxlength']">
+						  Please create a password with at least 8 characters.
+					  </div>
+					</div>
 				</md-input-container>
 
 				<div style="width:100%" layout="row" layout-align="space-around center">
-					<md-button class="md-raised md-accent wider" ng-click="quest.send()">Criar Perfil</md-button>
+					<md-button class="md-raised md-accent wider" ng-click="quest.send()" ng-disabled="questForm.$invalid">Criar Perfil</md-button>
 				</div>
 			</div>
 

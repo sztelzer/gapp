@@ -12,7 +12,7 @@
 			loadOffer: loadOffer,
 			checkOffer: checkOffer,
 			updateOfferStocks: updateOfferStocks,
-			data: ''
+			data: $localStorage.offer,
 		}
 		return service
 

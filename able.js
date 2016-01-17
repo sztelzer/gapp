@@ -9,7 +9,8 @@
 		'ui.router',
 		'ct.ui.router.extras',
 		'ngAria',
-		'ngMaterial'
+		'ngMaterial',
+		'angularPayments'
 	])
 
 	.value('config', {
@@ -86,15 +87,7 @@
 					accessLogged: true
 				}
 			})
-			.state('storePage.feedbacksPage', {
-				url: "/feedbacks",
-				templateUrl: "feedbacksPage.template.html",
-				data: {
-					title: "Avaliações",
-					requireLogin: true,
-					accessLogged: true
-				}
-			})
+
 			.state('storePage.ordersPage', {
 				url: "/orders",
 				templateUrl: "ordersPage.template.html",
@@ -109,6 +102,24 @@
 				templateUrl: "confirmationPage.template.html",
 				data: {
 					title: "Último Pedido",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+			.state('storePage.creditPage', {
+				url: "/credit",
+				templateUrl: "creditPage.template.html",
+				data: {
+					title: "Cartões",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+			.state('storePage.feedbacksPage', {
+				url: "/feedbacks",
+				templateUrl: "feedbacksPage.template.html",
+				data: {
+					title: "Avaliações",
 					requireLogin: true,
 					accessLogged: true
 				}

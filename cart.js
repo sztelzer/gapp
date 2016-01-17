@@ -19,7 +19,9 @@
 				total_items: 0,
 				total_value: 0,
 				total_quantity: 0,
-				items_selected: []
+				items_selected: [],
+				adyen_encrypted: '',
+				adyen_token: '',
 			},
 			estimated_time: 0,
 			items_selected: [],
@@ -158,6 +160,8 @@
 		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
 		vm.checking = false;
+
+
 
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
 			vm.estimated_time = cart.estimated_time;

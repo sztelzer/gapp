@@ -90,9 +90,9 @@ md-content.store {
 	padding-bottom: 1.3em;
 }
 
-md-card {
+/*md-card {
 	margin: 0px 0px 8px 0px !important;
-}
+}*/
 
 input.ng-touched.ng-invalid {
 	border-color: red !important;
@@ -159,9 +159,6 @@ md-input-container {
 	fill: #26BD49;
 }
 
-.checkout {
-
-}
 
 .svg-black > svg {
 	fill: #000000 !important;
@@ -244,7 +241,6 @@ div.counter {
 }
 
 .card-credit {
-	padding: 1em 1em 1em 1em;
 	font-family: "roboto";
 	border-top: 1px solid rgba(256, 256, 256, 0.9);
 }

@@ -12,22 +12,37 @@
 		if (typeof $localStorage.credits == 'undefined'){
 			$localStorage.credits = {}
 		}
+		if (typeof $localStorage.active == 'undefined'){
+			$localStorage.active = {}
+		}
 
 		var service = {
+			saveNewCardOncredits: saveNewCardOncredits,
 			active: $localStorage.active,
+			credits: $localStorage.credits,
 			new: {
-				mask: {
-					created: '',
-					number: '',
-					expiry: '',
-					token: '',
-					active: '',
-					encrypted: '',
-				},
-			},
-			list: $localStorage.credits,
+				created: '',
+				mask: '',
+				expiry: '',
+				encrypted: '',
+			}
 		}
 		return service
+
+		function saveNewCardOncredits(){
+			service.new.encrypted = "";
+			service.credits[service.new.created] = angular.copy(service.new)
+			$localStorage.credits = service.credits
+			service.discardNewCard();
+		}
+		function discardNewCard(){
+			service.new = {
+				created: '',
+				mask: '',
+				expiry: '',
+				encrypted: '',
+			}
+		}
 
 	}
 
@@ -46,64 +61,90 @@
 		vm.number;
 		vm.expiry;
 		vm.cvc;
-		vm.new = newCard
+		vm.saveNewCard = saveNewCard
+		vm.removeNewCard = removeNewCard
 		vm.setActive = setActive
 		vm.remove = remove
 
-		vm.list = credit.list
-		vm.count = Object.size(vm.list)
-		vm.count < 3 ? vm.free = true : vm.free = false
+		vm.credits = credit.credits
 		vm.active = credit.active
+		vm.new = credit.new
 
-		function newCard(){
+		vm.created = 0
+		vm.count = Object.size(vm.credits)
+
+		// used mainly on reloads
+		// as it starts, credit.new must be null.
+		// if credits don't have credits[active], unset active
+		if (!credit.credits.hasOwnProperty(credit.active.created)) {
+			credit.active = {}
+			$localStorage.active = {}
+			vm.active = {}
+		}
+
+
+
+		function saveNewCard(){
 			var a = angular.copy(vm.number)
 			var b = angular.copy(vm.cvc)
 			var c = angular.copy(vm.holder)
 			var d = angular.copy(vm.expiry)
-			credit.new.mask.encrypted = encryptForAdyen(a, b, c, d)
+			credit.new.encrypted = encryptForAdyen(a, b, c, d)
 
 			var now = new Date();
-			credit.new.mask.created = now.getTime()
-			credit.new.mask.number = maskCard(a)
-			credit.new.mask.expiry = d
-			credit.new.mask.token = ''
-			credit.list[credit.new.mask.created] = angular.copy(credit.new.mask)
-			vm.list = credit.list
-			vm.count = Object.size(vm.list)
-			vm.count < 3 ? vm.free = true : vm.free = false
-			$localStorage.credits = credit.list
+			credit.new.created = now.getTime()
+			credit.new.mask = maskCard(a)
+			credit.new.expiry = d
+			credit.new.token = ''
 
-			setActive(credit.new.mask.created)
+			setActive(credit.new.created, credit.new.mask, credit.new.expiry)
 
 			vm.number = null
 			vm.expiry = null
 			vm.cvc = null
+			vm.created = 1
 
 			$scope.creditForm.$setPristine()
 			$scope.creditForm.$setUntouched()
-
-			console.log($scope.creditForm)
-			// if (credit.goback != '') {
-			// 	$state.go(credit.goback);
-			// }
 		}
 
-		function setActive(card){
-			credit.active = card
-			vm.active = card
-			$localStorage.active = card
+		function setActive(created, mask, expiry){
+			credit.active = {
+				created: created,
+				mask: mask,
+				expiry: expiry,
+			}
+			vm.active = credit.active
+			$localStorage.active = credit.active
 		}
 
 		function remove(card){
-			delete credit.list[card]
+			delete credit.credits[card]
 			if (credit.active == card){
 				credit.active = ''
 				$localStorage.active = ''
 			}
-			vm.list = credit.list
-			vm.count = Object.size(vm.list)
-			vm.count < 3 ? vm.free = true : vm.free = false
-			$localStorage.credits = credit.list
+			vm.credits = credit.credits
+			vm.count = Object.size(vm.credits)
+			$localStorage.credits = credit.credits
+		}
+
+		function removeNewCard(){
+			if (credit.active.created = credit.new.created) {
+				credit.active = {created:"", mask:"", expiry:""}
+				$localStorage.active = ''
+			}
+
+			credit.new = {
+				created: '',
+				number: '',
+				expiry: '',
+				token: '',
+				active: '',
+				encrypted: '',
+			}
+			vm.new = credit.new
+			vm.created = 0
 		}
 
 
@@ -132,6 +173,10 @@
 			console.log(cse.encrypt(data))
 			return cse.encrypt(data)
 		}
+
+
+
+
 	}
 
 

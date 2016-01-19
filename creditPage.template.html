@@ -1,52 +1,86 @@
-<md-content credit-element flex ng-cloak layout="column" layout-padding>
+<md-content credit-element flex ng-cloak layout="column" style="">
 
 
-		<div flex="none" layout="column" class="md-caption" ng-cloak ng-show="credit.count > 0">
-			Escolha o cartão que você quer utilizar.
-		</div>
-
-		<div flex="none" layout="row" ng-show="credit.count > 0">
-			<div flex class="md-caption">Final</div>
-			<div flex class="md-caption">Validade</div>
-			<div flex></div>
-			<div flex></div>
-		</div>
-
-		<md-card flex="none" layout="row" class="card-credit card-tag md-whiteframe-8dp" ng-repeat="card in credit.list track by card.created">
-			<div flex layout="row">
-				<div flex layout="column">
-					<div class="md-body-2">{{card.number}}</div>
-				</div>
-				<div flex layout="column">
-					<div class="md-body-2">{{card.expiry}}</div>
-				</div>
+		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;" ng-cloak ng-show="credit.count > 0">
+			<div>
+				Escolha o cartão que você quer utilizar.
 			</div>
+			<div flex="none" layout="row">
+				<div flex class="md-caption">Final</div>
+				<div flex class="md-caption">Validade</div>
+				<div flex></div>
+				<div flex></div>
+			</div>
+		</div>
 
-			<div flex layout="row" layout-align="end center">
-				<div flex ng-cloak>
+		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.created == card.created ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-repeat="card in credit.credits track by card.created">
+				<div flex layout="row" layout-align="start start" class="md-body-2">
+					{{card.mask}}
+				</div>
+				<div flex layout="row" layout-align="start start" class="md-body-2">
+					{{card.expiry}}
+				</div>
+
+				<div flex layout="row" layout-align="center center">
 					<md-button class="card-action" style="color:red" ng-click="credit.remove(card.created)">Deletar</md-button>
 				</div>
 
-				<div flex ng-cloak>
-					<md-button class="md-accent card-action" ng-click="credit.setActive(card.created)" ng-show="credit.active != card.created">Ativar</md-button>
-					<md-button class="card-action" ng-show="credit.active == card.created">Ativo</md-button>
+				<div flex layout="row" layout-align="center center">
+					<md-button class="card-action" ng-class="credit.active.created == card.created ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(card.created, card.mask, card.expiry)" ng-disable="credit.active.created == card.created">
+						{{credit.active == card.created ? "Ativo" : "Ativar"}}
+					</md-button>
 				</div>
-			</div>
+		</md-card>
 
+
+
+		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;" ng-cloak ng-show="credit.created == 1">
+			<div>
+				Este cartão será salvo se você o utilizar na próxima compra. Caso não utilize, será apagado.
+			</div>
+			<div flex="none" layout="row">
+				<div flex class="md-caption">Final</div>
+				<div flex class="md-caption">Validade</div>
+				<div flex></div>
+				<div flex></div>
+			</div>
+		</div>
+
+		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.created == credit.new.created ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-show="credit.created == 1">
+				<div flex layout="row" layout-align="start start" class="md-body-2">
+					{{credit.new.mask}}
+				</div>
+				<div flex layout="row" layout-align="start start" class="md-body-2">
+					{{credit.new.expiry}}
+				</div>
+
+				<div flex layout="row" layout-align="center center">
+					<md-button class="card-action" style="color:red" ng-click="credit.removeNewCard()">Deletar</md-button>
+				</div>
+
+				<div flex layout="row" layout-align="center center">
+					<md-button class="card-action" ng-class="credit.active.created == credit.new.created ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(credit.new.created, credit.new.mask, credit.new.expiry)" ng-disable="credit.active.created == credit.new.created">
+						{{credit.active.created == credit.new.created ? "Em uso" : "Usar"}}
+					</md-button>
+				</div>
 		</md-card>
 
 
 
 
-		<md-card flex="none" class="card-credit card-tag md-whiteframe-8dp">
+
+
+		<md-card flex="none" class="card-credit md-padding">
 
 			<div flex="none" layout="column" ng-cloak>
 				<span class="md-body-2">Adicionar cartão.</span>
-				<span class="md-caption" ng-show="credit.count == 0">Registre um novo cartão de crédito para utilizar em suas compras.</span>
-				<span class="md-caption" ng-hide="credit.free">Você pode ter no máximo 3 cartões salvos. Delete um cartão para cadastrar outro.</span>
+				<span class="md-caption" ng-show="credit.count < 3 && credit.created == 0">Registre um novo cartão de crédito para utilizar em suas compras.</span>
+				<span class="md-caption" ng-show="credit.created == 1">Você só pode registrar um cartão novo antes de uma nova compra.</span>
+				<span class="md-caption" ng-show="credit.count + credit.created >= 3">Você pode ter no máximo 3 cartões salvos. Delete um cartão para cadastrar outro.</span>
+
 			</div>
 
-			<form name="creditForm" flex="none" layout="column" ng-show="credit.free" ng-cloak>
+			<form name="creditForm" flex="none" layout="column" ng-show="credit.count < 3 && credit.created == 0" ng-cloak>
 				<md-input-container>
 					<label>Número do Cartão</label>
 					<input type="tel" name="number" ng-model="credit.number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class='creditForm.number.$card.type' ng-required="true" required/>
@@ -69,11 +103,14 @@
 					<input type="text" ng-model="credit.holder" minlength="5" maxlength="40" ng-required="true" required/>
 				</md-input-container> -->
 				<div style="width:100%; height:5em" layout="row" layout-align="space-around center">
-					<md-button class="md-raised md-accent wider" ng-click="credit.new()" ng-disabled="creditForm.$invalid">Inserir Cartão</md-button>
+					<md-button class="md-raised md-accent wider" ng-click="credit.saveNewCard()" ng-disabled="creditForm.$invalid">Inserir Cartão</md-button>
 				</div>
 
 			</form>
 		</md-card>
+		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;margin-right:8px;" ng-cloak>
+			Cartões cadastrados só serão salvos após o primeiro uso na loja. Cartões não salvos serão removidos automaticamente se não utilizados.
+		</div>
 
 
 </md-content>

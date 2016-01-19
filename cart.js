@@ -7,7 +7,7 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, offer, config, mock, $http, $q, $state, orders) {
+	function cartService(auth, offer, config, mock, $http, $q, $state, orders, $localStorage) {
 		var service = {
 			data: {
 				latitude: mock.device_latitude,
@@ -21,7 +21,7 @@
 				total_quantity: 0,
 				items_selected: [],
 				adyen_encrypted: '',
-				adyen_token: '',
+				adyen_active: $localStorage.active,
 			},
 			estimated_time: 0,
 			items_selected: [],
@@ -85,6 +85,7 @@
 						// service.data = response.data;
 						// console.log(response.data);
 						resolve();
+						credit.saveNewCardOnList();
 						orders.last = response.data.path;
 						$state.go('storePage.confirmationPage');
 
@@ -154,13 +155,17 @@
 		return directive
 	}
 
-	function cartController($scope, cart, offer) {
+	function cartController($scope, cart, offer, credit) {
 		var vm = this;
 		vm.send = cart.send;
 		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
 		vm.checking = false;
 
+		vm.card = credit.active
+		$scope.$watch(function w(scope){return( credit.active )},function c(n,o){
+			vm.card = credit.active;
+		});
 
 
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){

@@ -8,7 +8,7 @@
 
 
 
-	function creditService($localStorage) {
+	function creditService($localStorage, $state) {
 		if (typeof $localStorage.credits == 'undefined'){
 			$localStorage.credits = {}
 		}
@@ -17,34 +17,56 @@
 		}
 
 		var service = {
-			saveNewCardOncredits: saveNewCardOncredits,
+			saveNewCardOnCredits: saveNewCardOnCredits,
+			discardNewCard: discardNewCard,
+			gotoCredits: gotoCredits,
+			gotoBack: gotoBack,
+			back: "",
 			active: $localStorage.active,
 			credits: $localStorage.credits,
 			new: {
-				created: '',
+				self_key: '',
 				mask: '',
 				expiry: '',
 				encrypted: '',
+				token: '',
 			}
 		}
 		return service
 
-		function saveNewCardOncredits(){
+		function saveNewCardOnCredits(key){
 			service.new.encrypted = "";
-			service.credits[service.new.created] = angular.copy(service.new)
+			service.new.token = "";
+			service.new.self_key = key;
+			service.credits[service.new.self_key] = angular.copy(service.new)
 			$localStorage.credits = service.credits
 			service.discardNewCard();
 		}
+
 		function discardNewCard(){
 			service.new = {
-				created: '',
+				self_key: '',
 				mask: '',
 				expiry: '',
 				encrypted: '',
+				token:'',
 			}
 		}
 
-	}
+		function gotoCredits(back){
+			service.back = back;
+			$state.go('storePage.creditPage')
+		}
+
+		function gotoBack(){
+			if (service.back != "") {
+				$state.go(service.back);
+				service.back = "";
+				console.log(service)
+			}
+		}
+
+	}//end service
 
 	function creditDirective() {
 		var directive = {
@@ -70,13 +92,13 @@
 		vm.active = credit.active
 		vm.new = credit.new
 
-		vm.created = 0
+		vm.self_key = 0
 		vm.count = Object.size(vm.credits)
 
 		// used mainly on reloads
 		// as it starts, credit.new must be null.
 		// if credits don't have credits[active], unset active
-		if (!credit.credits.hasOwnProperty(credit.active.created)) {
+		if (!credit.credits.hasOwnProperty(credit.active.self_key)) {
 			credit.active = {}
 			$localStorage.active = {}
 			vm.active = {}
@@ -89,33 +111,37 @@
 			var b = angular.copy(vm.cvc)
 			var c = angular.copy(vm.holder)
 			var d = angular.copy(vm.expiry)
-			credit.new.encrypted = encryptForAdyen(a, b, c, d)
+
+			encryptForAdyen(a, b, c, d)
+			tokenForStripe(a, b, c, d)
 
 			var now = new Date();
-			credit.new.created = now.getTime()
+			credit.new.self_key = now.getTime().toString()
 			credit.new.mask = maskCard(a)
 			credit.new.expiry = d
-			credit.new.token = ''
 
-			setActive(credit.new.created, credit.new.mask, credit.new.expiry)
+			setActive(credit.new.self_key, credit.new.mask, credit.new.expiry)
 
 			vm.number = null
 			vm.expiry = null
 			vm.cvc = null
-			vm.created = 1
+			vm.self_key = 1
 
 			$scope.creditForm.$setPristine()
 			$scope.creditForm.$setUntouched()
 		}
 
-		function setActive(created, mask, expiry){
+		function setActive(self_key, mask, expiry){
 			credit.active = {
-				created: created,
+				self_key: self_key,
 				mask: mask,
 				expiry: expiry,
 			}
 			vm.active = credit.active
 			$localStorage.active = credit.active
+			if (credit.back != ""){
+				credit.gotoBack();
+			}
 		}
 
 		function remove(card){
@@ -130,13 +156,13 @@
 		}
 
 		function removeNewCard(){
-			if (credit.active.created = credit.new.created) {
-				credit.active = {created:"", mask:"", expiry:""}
+			if (credit.active.self_key = credit.new.self_key) {
+				credit.active = {self_key:"", mask:"", expiry:""}
 				$localStorage.active = ''
 			}
 
 			credit.new = {
-				created: '',
+				self_key: '',
 				number: '',
 				expiry: '',
 				token: '',
@@ -144,7 +170,7 @@
 				encrypted: '',
 			}
 			vm.new = credit.new
-			vm.created = 0
+			vm.self_key = 0
 		}
 
 
@@ -168,11 +194,33 @@
 				expiryYear: "20"+expiry.substring(expiry.length - 2, expiry.length),
 				generationtime: new Date().toISOString()
 			}
-
 			console.log(data)
 			console.log(cse.encrypt(data))
-			return cse.encrypt(data)
+			credit.new.encrypted = cse.encrypt(data)
 		}
+
+		function tokenForStripe(number, cvc, holder, expiry) {
+			var data = {
+				number: number,
+				cvc: cvc,
+				exp_month: expiry.substring(0, 2),
+				exp_year: "20"+expiry.substring(expiry.length - 2, expiry.length),
+			}
+			Stripe.card.createToken(data, stripeResponseHandler)
+		}
+
+		function stripeResponseHandler(status, response) {
+			console.log(response)
+			console.log(status)
+
+			if (status != 200) {
+				console.log("what?")
+			} else {
+				credit.new.token = response.id;
+				console.log(credit.new)
+			}
+		}
+
 
 
 

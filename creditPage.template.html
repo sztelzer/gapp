@@ -13,7 +13,7 @@
 			</div>
 		</div>
 
-		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.created == card.created ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-repeat="card in credit.credits track by card.created">
+		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.self_key == card.self_key ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-repeat="card in credit.credits track by card.self_key">
 				<div flex layout="row" layout-align="start start" class="md-body-2">
 					{{card.mask}}
 				</div>
@@ -22,19 +22,19 @@
 				</div>
 
 				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action" style="color:red" ng-click="credit.remove(card.created)">Deletar</md-button>
+					<md-button class="card-action" style="color:red" ng-click="credit.remove(card.self_key)">Deletar</md-button>
 				</div>
 
 				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action" ng-class="credit.active.created == card.created ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(card.created, card.mask, card.expiry)" ng-disable="credit.active.created == card.created">
-						{{credit.active == card.created ? "Ativo" : "Ativar"}}
+					<md-button class="card-action" ng-class="credit.active.self_key == card.self_key ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(card.self_key, card.mask, card.expiry)" ng-disable="credit.active.self_key == card.self_key">
+						{{credit.active == card.self_key ? "Ativo" : "Ativar"}}
 					</md-button>
 				</div>
 		</md-card>
 
 
 
-		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;" ng-cloak ng-show="credit.created == 1">
+		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;" ng-cloak ng-show="credit.self_key == 1">
 			<div>
 				Este cartão será salvo se você o utilizar na próxima compra. Caso não utilize, será apagado.
 			</div>
@@ -46,7 +46,7 @@
 			</div>
 		</div>
 
-		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.created == credit.new.created ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-show="credit.created == 1">
+		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.self_key == credit.new.self_key ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-show="credit.self_key == 1">
 				<div flex layout="row" layout-align="start start" class="md-body-2">
 					{{credit.new.mask}}
 				</div>
@@ -59,8 +59,8 @@
 				</div>
 
 				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action" ng-class="credit.active.created == credit.new.created ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(credit.new.created, credit.new.mask, credit.new.expiry)" ng-disable="credit.active.created == credit.new.created">
-						{{credit.active.created == credit.new.created ? "Em uso" : "Usar"}}
+					<md-button class="card-action" ng-class="credit.active.self_key == credit.new.self_key ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(credit.new.self_key, credit.new.mask, credit.new.expiry)" ng-disable="credit.active.self_key == credit.new.self_key">
+						{{credit.active.self_key == credit.new.self_key ? "Em uso" : "Usar"}}
 					</md-button>
 				</div>
 		</md-card>
@@ -74,13 +74,13 @@
 
 			<div flex="none" layout="column" ng-cloak>
 				<span class="md-body-2">Adicionar cartão.</span>
-				<span class="md-caption" ng-show="credit.count < 3 && credit.created == 0">Registre um novo cartão de crédito para utilizar em suas compras.</span>
-				<span class="md-caption" ng-show="credit.created == 1">Você só pode registrar um cartão novo antes de uma nova compra.</span>
-				<span class="md-caption" ng-show="credit.count + credit.created >= 3">Você pode ter no máximo 3 cartões salvos. Delete um cartão para cadastrar outro.</span>
+				<span class="md-caption" ng-show="credit.count < 3 && credit.self_key == 0">Registre um novo cartão de crédito para utilizar em suas compras.</span>
+				<span class="md-caption" ng-show="credit.self_key == 1">Você só pode registrar um cartão novo antes de uma nova compra.</span>
+				<span class="md-caption" ng-show="credit.count + credit.self_key >= 3">Você pode ter no máximo 3 cartões salvos. Delete um cartão para cadastrar outro.</span>
 
 			</div>
 
-			<form name="creditForm" flex="none" layout="column" ng-show="credit.count < 3 && credit.created == 0" ng-cloak>
+			<form name="creditForm" flex="none" layout="column" ng-show="credit.count < 3 && credit.self_key == 0" ng-cloak>
 				<md-input-container>
 					<label>Número do Cartão</label>
 					<input type="tel" name="number" ng-model="credit.number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class='creditForm.number.$card.type' ng-required="true" required/>

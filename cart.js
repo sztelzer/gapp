@@ -7,7 +7,7 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, offer, config, mock, $http, $q, $state, orders, $localStorage) {
+	function cartService(auth, offer, config, mock, $http, $q, $state, orders, $localStorage, credit) {
 		var service = {
 			data: {
 				latitude: mock.device_latitude,
@@ -20,8 +20,7 @@
 				total_value: 0,
 				total_quantity: 0,
 				items_selected: [],
-				adyen_encrypted: '',
-				adyen_active: $localStorage.active,
+				plastic: $localStorage.active,
 			},
 			estimated_time: 0,
 			items_selected: [],
@@ -75,6 +74,15 @@
 			service.data.total_quantity = service.quantity_total;
 			service.data.total_value = +(service.value_total).toFixed(2);
 
+			// set the credit card to use
+			// if active == new, set to send encrypted data.
+			// if active == {}, stop.
+			if (credit.active.self_key == credit.new.self_key){
+				service.data.given_plastic = credit.new
+			} else {
+				service.data.given_plastic = {"self_key":credit.active.self_key}
+			}
+
 			var payload = service.data;
 			var req_config = {headers: {'Authorization': auth.token}};
 
@@ -85,12 +93,16 @@
 						// service.data = response.data;
 						// console.log(response.data);
 						resolve();
-						credit.saveNewCardOnList();
+						$localStorage.active = {}
+						credit.saveNewCardOnCredits(response.data.object.payment.object.plastic.path);
+
 						orders.last = response.data.path;
 						$state.go('storePage.confirmationPage');
 
 					},
 					function errorCallback(response) {
+						credit.saveNewCardOnCredits(response.data.object.payment.object.plastic.path);
+
 						console.log(response.data);
 						reject();
 					}
@@ -161,6 +173,7 @@
 		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
 		vm.checking = false;
+		vm.gotoCredits = gotoCredits;
 
 		vm.card = credit.active
 		$scope.$watch(function w(scope){return( credit.active )},function c(n,o){
@@ -181,6 +194,11 @@
 		$scope.$watch(function w(scope){return( cart.checking )},function c(n,o){
 			vm.checking = cart.checking;
 		});
+
+		function gotoCredits(back){
+			credit.gotoCredits(back)
+			console.log(back)
+		}
 	}
 
 

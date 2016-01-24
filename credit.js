@@ -22,8 +22,8 @@
 			gotoCredits: gotoCredits,
 			gotoBack: gotoBack,
 			back: "",
-			active: $localStorage.active,
-			credits: $localStorage.credits,
+			active: angular.copy($localStorage.active),
+			credits: angular.copy($localStorage.credits),
 			new: {
 				self_key: '',
 				mask: '',
@@ -35,11 +35,16 @@
 		return service
 
 		function saveNewCardOnCredits(key){
-			service.new.encrypted = "";
-			service.new.token = "";
+			delete service.new.encrypted;
+			delete service.new.token;
 			service.new.self_key = key;
+
 			service.credits[service.new.self_key] = angular.copy(service.new)
+			service.active = service.credits[service.new.self_key]
+
 			$localStorage.credits = service.credits
+			$localStorage.active = service.active
+
 			service.discardNewCard();
 		}
 

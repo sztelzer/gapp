@@ -27,7 +27,7 @@
 
 				<div flex layout="row" layout-align="center center">
 					<md-button class="card-action" ng-class="credit.active.self_key == card.self_key ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(card.self_key, card.mask, card.expiry)" ng-disable="credit.active.self_key == card.self_key">
-						{{credit.active == card.self_key ? "Ativo" : "Ativar"}}
+						{{credit.active.self_key == card.self_key ? "Em Uso" : "Ativar"}}
 					</md-button>
 				</div>
 		</md-card>

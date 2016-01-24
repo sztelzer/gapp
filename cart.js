@@ -12,7 +12,17 @@
 			data: {
 				latitude: mock.device_latitude,
 				longitude: mock.device_longitude,
+				cep: mock.device_zip,
 				address: mock.device_address,
+				street: mock.device_street,
+				number: mock.device_number,
+				complement: mock.device_complement,
+				city: mock.device_city,
+				vicinity: mock.device_vicinity,
+				state: mock.device_state,
+				country: mock.device_country,
+				name: mock.device_name,
+
 				offer: '',
 				voucher: mock.voucher,
 				total_freight: 0,
@@ -90,20 +100,13 @@
 			return $q(function(resolve, reject) {
 				$http.post(config.api + '/users/' + auth.id + '/orders', payload, req_config).then(
 					function successCallback(response) {
-						// service.data = response.data;
-						// console.log(response.data);
 						resolve();
-						$localStorage.active = {}
 						credit.saveNewCardOnCredits(response.data.object.payment.object.plastic.path);
-
 						orders.last = response.data.path;
 						$state.go('storePage.confirmationPage');
-
 					},
 					function errorCallback(response) {
 						credit.saveNewCardOnCredits(response.data.object.payment.object.plastic.path);
-
-						console.log(response.data);
 						reject();
 					}
 				)
@@ -167,7 +170,7 @@
 		return directive
 	}
 
-	function cartController($scope, cart, offer, credit) {
+	function cartController($scope, cart, offer, credit, mock) {
 		var vm = this;
 		vm.send = cart.send;
 		vm.empty = cart.empty;
@@ -175,11 +178,15 @@
 		vm.checking = false;
 		vm.gotoCredits = gotoCredits;
 
+		vm.address = mock.device_address
+		$scope.$watch(function w(scope){return( mock.device_address )},function c(n,o){
+			vm.address = mock.device_address
+		});
+
 		vm.card = credit.active
 		$scope.$watch(function w(scope){return( credit.active )},function c(n,o){
 			vm.card = credit.active;
 		});
-
 
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
 			vm.estimated_time = cart.estimated_time;
@@ -197,7 +204,6 @@
 
 		function gotoCredits(back){
 			credit.gotoCredits(back)
-			console.log(back)
 		}
 	}
 

@@ -21,10 +21,8 @@
 		offers_count: 6
 	})
 
-	.value('mock', {
-		device_latitude: -23.543464,
-		device_longitude: -46.6391852,
-	})
+	// .value('mock', {
+	// })
 
 	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider) {
 		$localStorageProvider.setKeyPrefix('able_');

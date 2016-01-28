@@ -7,13 +7,17 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, offer, config, mock, $http, $q, $state, orders, $localStorage, credit, map) {
+	function cartService(auth, config, $http, $q, $state, orders, $localStorage, credit, map) {
 		var service = {
 			data: {
-				latitude: mock.device_latitude,
-				longitude: mock.device_longitude,
+				latitude: -23.543464,
+				longitude: -46.6391852,
+				accuracy: 100,
+				place: {},
+				complement: '',
+				name: '',
 				offer: '',
-				voucher: mock.voucher,
+				voucher: '',
 				total_freight: 0,
 				total_items: 0,
 				total_value: 0,
@@ -21,6 +25,7 @@
 				items_selected: [],
 				plastic: $localStorage.active,
 			},
+			gotlocation: false,
 			estimated_time: 0,
 			items_selected: [],
 			freight_full: 22.80,
@@ -32,18 +37,12 @@
 
 			putOne: putOne,
 			takeOne: takeOne,
-			init: init,
 			send: send,
 			empty: empty,
 			checking: false,
 			// showConfirmation: showConfirmation,
 		}
 		return service
-
-		function init(){
-			service.data.offer = offer.data.path;
-			service.estimated_time = offer.data.object.node_estimated + 900;
-		}
 
 		function empty(){
 			service.estimated_time = 0
@@ -82,6 +81,8 @@
 				service.data.given_plastic = {"self_key":credit.active.self_key}
 			}
 
+			service.data.place = JSON.stringify(service.data.place)
+
 			var payload = service.data;
 			var req_config = {headers: {'Authorization': auth.token}};
 
@@ -90,12 +91,18 @@
 				$http.post(config.api + '/users/' + auth.id + '/orders', payload, req_config).then(
 					function successCallback(response) {
 						resolve();
-						credit.saveNewCardOnCredits(response.data.object.payment.object.plastic.path);
-						orders.last = response.data.path;
-						$state.go('storePage.confirmationPage');
+						if(response.data.object.payments != null) {
+							credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
+							orders.last = response.data.path;
+							$state.go('storePage.confirmationPage');
+						} else {
+							credit.active = {}
+							window.alert('error saving credit card, try another one')
+						}
+
 					},
 					function errorCallback(response) {
-						credit.saveNewCardOnCredits(response.data.object.payment.object.plastic.path);
+						credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
 						reject();
 					}
 				)
@@ -159,7 +166,7 @@
 		return directive
 	}
 
-	function cartController($scope, cart, offer, credit, map, mock) {
+	function cartController($scope, cart, offer, credit, map) {
 		var vm = this;
 		vm.send = cart.send;
 		vm.empty = cart.empty;
@@ -167,6 +174,17 @@
 		vm.checking = false;
 		vm.gotoCredits = gotoCredits;
 		vm.gotoMap = gotoMap;
+
+		vm.place = cart.data.place
+		vm.complement = cart.data.complement
+		$scope.$watch(function w(scope){return( cart.data.place )},function c(n,o){
+			vm.place = cart.data.place
+			vm.complement = cart.data.complement
+		});
+
+
+
+
 
 		vm.card = credit.active
 		$scope.$watch(function w(scope){return( credit.active )},function c(n,o){

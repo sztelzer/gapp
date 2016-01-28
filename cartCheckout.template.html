@@ -2,10 +2,9 @@
 
 	<div class="md-body" style="width:100%" layout="row" layout-align="start center">
 		<div flex class="md-caption">
-			<span ng-hide="cart.address" style="color:red" class="md-caption">Nenhum endereço.</span>
-			<span ng-bind="cart.address"></span>
-			<span ng-show="cart.number"><br/>Número: <span ng-bind="cart.number"></span></span>
-			<span ng-show="cart.complement"><br/>Complemento: <span ng-bind="cart.complement"></span></span>
+			<span ng-hide="cart.place.description" style="color:red" class="md-caption">Nenhum endereço.</span>
+			<span ng-bind="cart.place.description"></span>
+			<span ng-show="cart.complement"><br/><span ng-bind="cart.complement"></span></span>
 		</div>
 
 		<div flex="none">

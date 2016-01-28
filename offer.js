@@ -7,7 +7,7 @@
 		.directive('elementOffer', offerDirective)
 
 
-	function offerService(auth, config, mock, $http, $q, $localStorage) {
+	function offerService(auth, config, cart, $http, $q, $localStorage) {
 		var service = {
 			loadOffer: loadOffer,
 			checkOffer: checkOffer,
@@ -35,7 +35,7 @@
 
 			// check if actual location is valid for this node
 			var linear_distance = geolib.getDistance(
-				{latitude:mock.device_latitude, longitude:mock.device_longitude},
+				{latitude:cart.data.latitude, longitude:cart.data.longitude},
 				{latitude:storedOffer.object.node_latitude, longitude:storedOffer.object.node_longitude})
 
 			if(linear_distance > storedOffer.object.node_radius){
@@ -54,8 +54,8 @@
 			var payload = {
 				company: config.company_path,
 				node_function: config.node_function,
-				latitude: mock.device_latitude,
-				longitude: mock.device_longitude,
+				latitude: cart.data.latitude,
+				longitude: cart.data.longitude,
 				list_size: config.offers_count
 			}
 
@@ -116,7 +116,7 @@
 
 
 
-	function offerController(offer, cart, map, mock) {
+	function offerController(offer, cart, map) {
 		var vm = this
 		getLocation()
 
@@ -128,8 +128,8 @@
 					function(resolve) {
 						vm.data = offer.data;
 						vm.loading = false;
-						cart.init();
-						console.log(vm.data)
+						cart.data.offer = vm.data.path;
+						cart.estimated_time = vm.data.object.node_estimated + 900;
 					},
 					function(reject) {
 						vm.loading = false;
@@ -144,7 +144,9 @@
 				function(resolve) {
 					vm.data = offer.data;
 					vm.loading = false;
-					cart.init();
+					cart.data.offer = vm.data.path;
+					cart.estimated_time = vm.data.object.node_estimated + 900;
+
 				},
 				function(reject) {
 					console.log('Failed loading offer: ' + reject);
@@ -157,11 +159,11 @@
 			if (navigator.geolocation) {
 				vm.loading = true;
 				navigator.geolocation.getCurrentPosition(function(position) {
-					mock.device_latitude = position.coords.latitude
-					mock.device_longitude = position.coords.longitude
-					console.log(position)
-					vm.loading = false;
-					if(position.coords.accuracy > 100){
+					cart.data.latitude = position.coords.latitude
+					cart.data.longitude = position.coords.longitude
+					cart.data.accuracy = position.coords.accuracy
+					cart.gotlocation = true
+					if(position.coords.accuracy > 100) {
 						map.gotoMap('storePage.offerPage')
 					} else {
 						init()
@@ -175,16 +177,6 @@
 				vm.loading = false;
 			}
 		}
-
-
-
-
-
-
-
-
-
-
 
 	} // end controller
 

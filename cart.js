@@ -7,22 +7,11 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, offer, config, mock, $http, $q, $state, orders, $localStorage, credit) {
+	function cartService(auth, offer, config, mock, $http, $q, $state, orders, $localStorage, credit, map) {
 		var service = {
 			data: {
 				latitude: mock.device_latitude,
 				longitude: mock.device_longitude,
-				cep: mock.device_zip,
-				address: mock.device_address,
-				street: mock.device_street,
-				number: mock.device_number,
-				complement: mock.device_complement,
-				city: mock.device_city,
-				vicinity: mock.device_vicinity,
-				state: mock.device_state,
-				country: mock.device_country,
-				name: mock.device_name,
-
 				offer: '',
 				voucher: mock.voucher,
 				total_freight: 0,
@@ -170,18 +159,14 @@
 		return directive
 	}
 
-	function cartController($scope, cart, offer, credit, mock) {
+	function cartController($scope, cart, offer, credit, map, mock) {
 		var vm = this;
 		vm.send = cart.send;
 		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
 		vm.checking = false;
 		vm.gotoCredits = gotoCredits;
-
-		vm.address = mock.device_address
-		$scope.$watch(function w(scope){return( mock.device_address )},function c(n,o){
-			vm.address = mock.device_address
-		});
+		vm.gotoMap = gotoMap;
 
 		vm.card = credit.active
 		$scope.$watch(function w(scope){return( credit.active )},function c(n,o){
@@ -205,6 +190,13 @@
 		function gotoCredits(back){
 			credit.gotoCredits(back)
 		}
+
+		function gotoMap(back){
+			map.gotoMap(back)
+		}
+
+
+
 	}
 
 

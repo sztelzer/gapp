@@ -22,20 +22,8 @@
 	})
 
 	.value('mock', {
-		device_latitude: -23.562482,
-		device_longitude: -46.691485,
-		device_zip: "05418001",
-		device_address: "Deputado Lacerda Franco 313 apto 96 - Sao Paulo/SP 05418-001",
-		device_address_type: "Rua",
-		device_street: "Deputado Lacerda Franco",
-		device_number: "313",
-		device_complement: "apto 96",
-		device_vicinity: "Pinheiros",
-		device_city: "Sao Paulo",
-		device_state: "SP",
-		device_country: "BR",
-		device_name: "Rodrigo Sztelzer",
-		voucher:""
+		device_latitude: -23.543464,
+		device_longitude: -46.6391852,
 	})
 
 	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider) {
@@ -120,6 +108,15 @@
 				templateUrl: "creditPage.template.html",
 				data: {
 					title: "Cartões",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+			.state('storePage.mapPage', {
+				url: "/map",
+				templateUrl: "mapPage.template.html",
+				data: {
+					title: "Localização",
 					requireLogin: true,
 					accessLogged: true
 				}

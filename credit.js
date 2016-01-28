@@ -71,7 +71,7 @@
 			}
 		}
 
-	}//end service
+	} //end service
 
 	function creditDirective() {
 		var directive = {

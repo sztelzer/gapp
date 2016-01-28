@@ -103,7 +103,7 @@ md-input-container label {
 }
 
 md-input-container {
-	margin: 18px 0 0 0 !important;
+	/*margin: 18px 0 0 0 !important;*/
 }
 
 .card-action {
@@ -225,6 +225,15 @@ div.counter {
 }
 
 
+.card-full {
+	margin: 0px 0px 8px 0px !important;
+	border-radius: 0px !important;
+}
+
+md-card .md-card-image {
+    border-radius: 0px !important;
+}
+
 .card-title {
 	font-size: 1.2em;
     padding: 1em 1em;
@@ -267,4 +276,30 @@ div.counter {
 	background-repeat: no-repeat !important;
 	background-position-x: 98% !important;
 	background-position-y: 50% !important;
+}
+
+
+
+.md-autocomplete-suggestions-container.md-default-theme li,
+.md-autocomplete-suggestions-container li {
+	color: black !important;
+}
+
+.md-autocomplete-suggestions-container li .highlight {
+	color: #26BD49 !important;
+}*/
+
+/*autocomplete-menu {
+	color:black !important;
+	position:relative !important;
+	top:3em !important;
+}*/
+
+
+md-input-container .md-errors-spacer {
+	display: none !important;
+}
+
+md-input-container {
+	padding-bottom: 0px !important;
 }

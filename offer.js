@@ -12,7 +12,7 @@
 			loadOffer: loadOffer,
 			checkOffer: checkOffer,
 			updateOfferStocks: updateOfferStocks,
-			data: ''
+			data: $localStorage.offer,
 		}
 		return service
 
@@ -114,9 +114,11 @@
 		return directive
 	}
 
-	function offerController(offer, cart) {
-		var vm = this;
-		init();
+
+
+	function offerController(offer, cart, map, mock) {
+		var vm = this
+		getLocation()
 
 		function init(){
 			vm.loading = true;
@@ -150,6 +152,40 @@
 				}
 			);
 		}
+
+		function getLocation(){
+			if (navigator.geolocation) {
+				vm.loading = true;
+				navigator.geolocation.getCurrentPosition(function(position) {
+					mock.device_latitude = position.coords.latitude
+					mock.device_longitude = position.coords.longitude
+					console.log(position)
+					vm.loading = false;
+					if(position.coords.accuracy > 100){
+						map.gotoMap('storePage.offerPage')
+					} else {
+						init()
+					}
+				}, function() {
+					map.gotoMap('storePage.offerPage')
+					vm.loading = false;
+				});
+			} else {
+				map.gotoMap('storePage.offerPage')
+				vm.loading = false;
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
 	} // end controller
 
 

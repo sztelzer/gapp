@@ -62,6 +62,10 @@
 			$localStorage.token = '';
 			$localStorage.offer = '';
 			$localStorage.orders = '';
+			$localStorage.credits = '';
+			$localStorage.active = '';
+
+
 			window.location.href = "/";
 			// $state.go('startPage')
 		}

@@ -1,5 +1,5 @@
 <div layout="column" flex="none" layout-fill>
-	<md-toolbar toolbar-element flex md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar" layout="row" layout-align="space-between center" ng-cloak>
+	<md-toolbar toolbar-element flex md-component-id="able-toolbar" class="md-toolbar-tools main-toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-cloak>
 		<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
 		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
@@ -21,7 +21,9 @@
 		<md-list-item ng-click="leftmenu.go('storePage.ordersPage')">Pedidos</md-list-item>
 		<md-list-item ng-click="leftmenu.go('storePage.confirmationPage')">Ultimo Pedido</md-list-item>
 		<md-list-item ng-click="leftmenu.go('storePage.feedbacksPage')">Feedbacks</md-list-item>
-		<md-list-item ng-click="">Cartões de Créditos</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.creditPage')">Cartões de Créditos</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.mapPage')">Mapa</md-list-item>
+
 		<md-list-item ng-click="">Ajuda</md-list-item>
 		<div flex></div>
 		<md-divider></md-divider>

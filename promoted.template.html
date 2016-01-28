@@ -1,15 +1,17 @@
 	<md-card flex-fill class="card-full md-whiteframe-1dp">
 		<img ng-src="imgs/sink.jpg" class="md-card-image md-whiteframe-0dp" alt="image">
+		<div flex="initial" layout="row" layout-align="center center" class="">
+			<md-button class="md-fab md-mini md-warn menosum" ng-click="vm.takeOne()">-</md-button>
+			<div class="counter">{{vm.quantity}}</div>
+			<md-button class="md-fab md-accent maisum" ng-click="vm.putOne()">+</md-button>
+
+		</div>
+
 		<md-card-content>
 			<div flex layout="row">
 				<div flex layout="column">
 					<h3>{{promoted.object.sku.object.name}}</h3>
 					R$ {{promoted.object.price}}<br>Stock: {{promoted.object.wet}}
-				</div>
-				<div flex="initial" layout="column" layout-align="start center" class="">
-					<div class="counter">{{vm.quantity}}</div>
-					<md-button class="md-fab md-raised md-accent maisum" ng-click="vm.putOne()">+</md-button>
-					<md-button class="md-fab md-mini md-raised md-warn menosum" ng-click="vm.takeOne()">-</md-button>
 				</div>
 			</div>
 			<p style="word-wrap:break-word">{{promoted.object.sku}}</p>

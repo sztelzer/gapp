@@ -9,7 +9,8 @@
 		'ui.router',
 		'ct.ui.router.extras',
 		'ngAria',
-		'ngMaterial'
+		'ngMaterial',
+		'angularPayments'
 	])
 
 	.value('config', {
@@ -21,11 +22,8 @@
 	})
 
 	.value('mock', {
-		device_latitude: -23.562482,
-		device_longitude: -46.691485,
-		// device_latitude: -23.611450,
-		// device_longitude: -46.692538,
-		voucher:''
+		device_latitude: -23.543464,
+		device_longitude: -46.6391852,
 	})
 
 	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider) {
@@ -86,15 +84,7 @@
 					accessLogged: true
 				}
 			})
-			.state('storePage.feedbacksPage', {
-				url: "/feedbacks",
-				templateUrl: "feedbacksPage.template.html",
-				data: {
-					title: "Avaliações",
-					requireLogin: true,
-					accessLogged: true
-				}
-			})
+
 			.state('storePage.ordersPage', {
 				url: "/orders",
 				templateUrl: "ordersPage.template.html",
@@ -109,6 +99,33 @@
 				templateUrl: "confirmationPage.template.html",
 				data: {
 					title: "Último Pedido",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+			.state('storePage.creditPage', {
+				url: "/credit",
+				templateUrl: "creditPage.template.html",
+				data: {
+					title: "Cartões",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+			.state('storePage.mapPage', {
+				url: "/map",
+				templateUrl: "mapPage.template.html",
+				data: {
+					title: "Localização",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+			.state('storePage.feedbacksPage', {
+				url: "/feedbacks",
+				templateUrl: "feedbacksPage.template.html",
+				data: {
+					title: "Avaliações",
 					requireLogin: true,
 					accessLogged: true
 				}

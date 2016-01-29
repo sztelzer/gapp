@@ -188,40 +188,51 @@ md-input-container {
 }
 
 
-h1.counter {
-	font-size: 3em;
-    margin: 0px 0.1em;
-}
 
 div.counter {
 	font-size: 3em;
     font-weight: 700;
-	/*border: 1px solid #34b7ff;*/
-    color: #ffffff;
-	background-color: #0080FF;
-    width: 1.6em;
-    height: 1.6em;
+    color: #000000;
+	background-color: #F4F2EF;
     text-align: center;
-    line-height: 1.6em;
-    border-radius: 50%;
+    line-height: 1.5em;
     padding: 0px;
-    margin: 0.1em;
+    margin: 0px;
     overflow: hidden;
-	box-shadow: inset 0px 2px 2px 0px rgba(0, 0, 255, 0.725);
+	border-right: 1px solid white;
+	border-left: 1px solid white;
 }
 
-.maisum {
-	font-size: xx-large !important;
-	margin: 0.1em;
-	box-shadow: 0 2px 3px 0px rgb(16, 101, 2) !important;
-	border-bottom: 1px solid rgb(155, 255, 151) !important;
+
+.promoted-button {
+	background-color: #F4F2EF !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    overflow: hidden;
+	border: none !important;
+	border-radius: 0px !important;
 }
 
-.menosum {
-	font-size: xx-large !important;
-	margin: 0.1em;
-	box-shadow: 0 2px 3px 0px rgb(65, 62, 64) !important;
-	border-bottom: 1px solid rgb(0, 0, 0) !important;
+.promoted-card-content {
+	background-color: white !important;
+}
+
+.promoted-recipe {
+	font-family: "Roboto";
+	font-size: 1.5em
+}
+
+.promoted-maker {
+
+}
+
+.promoted-desc {
+
+}
+
+.promoted-content > p {
+	font-family: 'Roboto Slab';
+	font-weight: 100;
 }
 
 

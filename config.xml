@@ -33,8 +33,10 @@
   <splash src="res/ios/splash568h@2x.png" platform="ios" width="640" height="1136"/>
   <splash src="res/ios/splash667h@2x.png" platform="ios" width="750" height="1334"/>
   <splash src="res/ios/splash736h@3x.png" platform="ios" width="1242" height="2208"/>
-  <!-- <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/> -->
-  <access origin="*"/>
+
+  <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/>
+
+  <access origin="*" subdomains="true"/>
   <allow-intent href="*"/>
   <platform name="android">
     <allow-intent href="market:*"/>

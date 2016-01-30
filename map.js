@@ -50,15 +50,17 @@
 		var geocoder = new google.maps.Geocoder()
 
 
-		$timeout(function() {
-			console.log('waiting')
-		}, 500);
 
 		var mapping = new google.maps.Map(document.getElementById('mapping'), {
 			zoom: 16,
 			center: {lat: cart.data.latitude, lng: cart.data.longitude},
 			disableDefaultUI: true
 		})
+
+		$timeout(function() {
+			google.maps.event.trigger(mapping, 'resize'); //necessary to wake up after first init
+		}, 500);
+
 
 		if(cart.gotlocation){
 			getAddress(cart.data.latitude, cart.data.longitude)
@@ -123,8 +125,10 @@
 				var deferred = $q.defer();
 				getPlace(place_id).then(
 					function (infos) {
-						// console.log(infos)
-						// console.log(JSON.stringify(infos.address_components))
+						console.log(infos)
+						console.log(JSON.stringify(infos.address_components))
+						console.log(JSON.stringify(infos.geometry.location.lat()))
+						console.log(JSON.stringify(infos.geometry.location.lng()))
 						cart.data.latitude = infos.geometry.location.lat()
 						cart.data.longitude = infos.geometry.location.lng()
 						cart.data.accuracy = 0

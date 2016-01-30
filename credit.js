@@ -21,7 +21,7 @@
 			discardNewCard: discardNewCard,
 			gotoCredits: gotoCredits,
 			gotoBack: gotoBack,
-			back: "",
+			back: "storePage.creditPage",
 			active: angular.copy($localStorage.active),
 			credits: angular.copy($localStorage.credits),
 			new: {

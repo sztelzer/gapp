@@ -241,6 +241,8 @@
 			}
 		})
 
+    	FastClick.attach(document.body);
+
 	})
 
 

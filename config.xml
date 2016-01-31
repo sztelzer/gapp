@@ -10,7 +10,7 @@
   <gap:plugin name="org.apache.cordova.network-information"/>
   <gap:plugin name="org.apache.cordova.splashscreen"/>
 
-  <!-- <plugin name="cordova-plugin-keyboard"/> -->
+  <plugin name="cordova-plugin-keyboard"/>
   <plugin name="cordova-plugin-whitelist"/>
 
   <preference name="permissions" value=""/>
@@ -28,7 +28,7 @@
   <preference name="deployment-target" value="7.0" />
   <preference name="android-minSdkVersion" value="14"/>
   <preference name="android-installLocation" value="auto"/>
-  <!-- <preference name="KeyboardShrinksView" value="true" /> -->
+  <preference name="KeyboardShrinksView" value="true" />
 
   <icon src="icon.png"/>
   <splash src="splash.png"/>

@@ -43,7 +43,7 @@
   <allow-intent href="*"/>
   <platform name="android">
     <allow-intent href="market:*"/>
-	<activity android:windowSoftInputMode="adjustResize">
+	<!-- <activity android:windowSoftInputMode="adjustResize"> -->
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>

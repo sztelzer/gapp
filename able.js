@@ -241,7 +241,6 @@
 				$state.go('storePage.offerPage');
 			}
 		})
-		cordova.plugins.Keyboard.disableScroll(true)
 
     	// FastClick.attach(document.body);
 	})

@@ -242,7 +242,7 @@
 		})
 
     	FastClick.attach(document.body);
-
+		Keyboard.shrinkView(true);
 	})
 
 

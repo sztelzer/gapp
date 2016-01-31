@@ -5,15 +5,14 @@
   <content src="index.html"/>
 
   <gap:plugin name="org.apache.cordova.device"/>
-  <gap:plugin name="org.apache.cordova.dialogs"/>
+  <!-- <gap:plugin name="org.apache.cordova.dialogs"/> -->
   <gap:plugin name="org.apache.cordova.geolocation"/>
   <gap:plugin name="org.apache.cordova.network-information"/>
   <gap:plugin name="org.apache.cordova.splashscreen"/>
   <gap:plugin name="nl.x-services.plugins.ioswebviewcolor" />
 
-  <plugin name="ionic-plugin-keyboard"/>
-  <plugin name="cordova-plugin-whitelist"/>
-
+  <plugin name="cordova-plugin-keyboard"/>
+  <preference name="KeyboardShrinksView" value="true" />
 
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -52,7 +51,6 @@
   <allow-intent href="*"/>
   <platform name="android">
     <allow-intent href="market:*"/>
-	<!-- <activity android:windowSoftInputMode="adjustResize"> -->
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>

@@ -48,10 +48,6 @@
 	<script src="toolbar.js"></script>
 
 	<script src="cordova.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		window.plugins.Keyboard.disableScroll(true)
-		window.plugins.webviewcolor.change('#F4F2EF')
-	</script>
 	<script>
 		angular.element(document).ready(function () {
 	      if (window.cordova) {
@@ -74,6 +70,8 @@
 	</script>
 	<script type="text/javascript">
 	  Stripe.setPublishableKey('pk_test_u1aE6CQ7npf2HWPEJidnkA0f');
+	  window.plugins.webviewcolor.change('#F4F2EF')
+	  cordova.plugins.Keyboard.disableScroll(true)
 	</script>
 
 </body>

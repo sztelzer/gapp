@@ -1,8 +1,18 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.1.0">
   <name>Able</name>
   <description>Have great craft beer choices selected by our artificial inteligence sommerlier, get even better selections over time as it learns and evolves your tastes. Receive your products wherever you are with same hour delivery on selected areas.</description>
-  <author href="http://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
+  <author href="https://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
   <content src="index.html"/>
+
+  <gap:plugin name="org.apache.cordova.device"/>
+  <gap:plugin name="org.apache.cordova.dialogs"/>
+  <gap:plugin name="org.apache.cordova.geolocation"/>
+  <gap:plugin name="org.apache.cordova.network-information"/>
+  <gap:plugin name="org.apache.cordova.splashscreen"/>
+
+  <!-- <plugin name="cordova-plugin-keyboard"/> -->
+  <plugin name="cordova-plugin-whitelist"/>
+
   <preference name="permissions" value=""/>
   <preference name="orientation" value="portrait"/>
   <preference name="target-device" value="handset"/>
@@ -18,14 +28,8 @@
   <preference name="deployment-target" value="7.0" />
   <preference name="android-minSdkVersion" value="14"/>
   <preference name="android-installLocation" value="auto"/>
-  <gap:plugin name="org.apache.cordova.device"/>
-  <gap:plugin name="org.apache.cordova.dialogs"/>
-  <gap:plugin name="org.apache.cordova.geolocation"/>
-  <gap:plugin name="org.apache.cordova.media"/>
-  <gap:plugin name="org.apache.cordova.network-information"/>
-  <gap:plugin name="org.apache.cordova.splashscreen"/>
+  <!-- <preference name="KeyboardShrinksView" value="true" /> -->
 
-  <plugin name="cordova-plugin-whitelist"/>
   <icon src="icon.png"/>
   <splash src="splash.png"/>
   <splash src="res/ios/splash.png" platform="ios" width="320" height="480"/>
@@ -34,7 +38,7 @@
   <splash src="res/ios/splash667h@2x.png" platform="ios" width="750" height="1334"/>
   <splash src="res/ios/splash736h@3x.png" platform="ios" width="1242" height="2208"/>
 
-  <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/>
+  <!-- <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/> -->
 
   <access origin="*" subdomains="true"/>
   <allow-intent href="*"/>

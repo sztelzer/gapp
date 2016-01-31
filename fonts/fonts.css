@@ -32,3 +32,17 @@
   font-weight: 400;
   src: local('Roboto Italic'), local('Roboto-Italic'), url(Roboto-Italic.ttf) format('ttf');
 }
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('Roboto-Slab-Regular'), url(Roboto-Slab-Regular.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('Roboto-Slab-Bold'), url(Roboto-Slab-Bold.ttf) format('ttf');
+}

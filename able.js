@@ -10,8 +10,7 @@
 		'ct.ui.router.extras',
 		'ngAria',
 		'ngMaterial',
-		'angularPayments',
-		'ionic'
+		'angularPayments'
 	])
 
 	.value('config', {

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<!-- <meta name="format-detection" content="telephone=no" /> -->
 	<link type="text/css" rel="stylesheet" href="fonts/fonts.css">
 	<link type="text/css" rel="stylesheet" href="able.css">
@@ -17,9 +17,8 @@
 	<script src="components/jquery.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR"></script>
 
-	<!-- <script src="components/angular.js"></script> -->
-	<script src="components/ionic.bundle.js"></script>
-	<!-- <script src="components/angular-animate.js"></script> -->
+	<script src="components/angular.js"></script>
+	<script src="components/angular-animate.js"></script>
 	<script src="components/angular-aria.js"></script>
 	<script src="components/angular-ui-router.js"></script>
 	<script src="components/ct-ui-router-extras.js"></script>
@@ -30,7 +29,7 @@
 	<script src="components/adyen.encrypt.nodom.min.js"></script>
 	<script src="components/angular-payments.js"></script>
 	<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-	<!-- <script type='application/javascript' src='components/fastclick.js'></script> -->
+	<script type='application/javascript' src='components/fastclick.js'></script>
 
 	<script src="able.js"></script>
 	<script src="auth.js"></script>
@@ -53,6 +52,12 @@
 	      if (window.cordova) {
 	        document.addEventListener('deviceready', function () {
 	          angular.bootstrap(document, ['able']);
+			  // other initializations
+			  cloudSky.UIResizeOnKeyboard.preventPan(function(){},function(){})
+
+
+
+
 	        }, false);
 	      } else {
 	        angular.bootstrap(document, ['able']);
@@ -70,9 +75,6 @@
 	</script>
 	<script type="text/javascript">
 	  Stripe.setPublishableKey('pk_test_u1aE6CQ7npf2HWPEJidnkA0f');
-	  window.plugins.webviewcolor.change('#F4F2EF')
-	  cordova.plugins.Keyboard.disableScroll(true)
-	  cordova.plugins.Keyboard.shrinkView(true);
 	</script>
 
 </body>

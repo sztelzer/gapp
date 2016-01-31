@@ -4,23 +4,26 @@
   <author href="https://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
   <content src="index.html"/>
 
-  <gap:plugin name="org.apache.cordova.device"/>
+  <plugin name="cordova-plugin-geolocation"/>
+  <plugin name="cordova-plugin-splashscreen"/> -->
+  <plugin name="cordova-plugin-whitelist"/>
+  <plugin name="cordova-plugin-statusbar"/>
+  <plugin name="org.cloudsky.cordovaplugins.uiresizeonkeyboard"/>
+  <!-- <gap:plugin name="org.apache.cordova.network-information"/> -->
+  <!-- <gap:plugin name="nl.x-services.plugins.ioswebviewcolor" /> -->
+  <!-- <plugin name="cordova-plugin-keyboard"/> -->
+  <!-- <gap:plugin name="org.apache.cordova.device"/> -->
   <!-- <gap:plugin name="org.apache.cordova.dialogs"/> -->
-  <gap:plugin name="org.apache.cordova.geolocation"/>
-  <gap:plugin name="org.apache.cordova.network-information"/>
-  <gap:plugin name="org.apache.cordova.splashscreen"/>
-  <gap:plugin name="nl.x-services.plugins.ioswebviewcolor" />
 
-  <plugin name="cordova-plugin-keyboard"/>
-  <preference name="KeyboardShrinksView" value="true" />
+
 
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
   <preference name="BackupWebStorage" value="none"/>
-  <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
-  <preference name="SuppressesIncrementalRendering" value="true"/>
-
+  <!-- <preference name="KeyboardDisplayRequiresUserAction" value="false"/> -->
+  <!-- <preference name="SuppressesIncrementalRendering" value="true"/> -->
+  <!-- <preference name="KeyboardShrinksView" value="true" /> -->
   <preference name="permissions" value=""/>
   <preference name="orientation" value="portrait"/>
   <preference name="target-device" value="handset"/>
@@ -46,14 +49,15 @@
   <splash src="res/ios/splash736h@3x.png" platform="ios" width="1242" height="2208"/>
 
   <!-- <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/> -->
+  <allow-navigation href="*" />
+  <access origin="*" />
+  <allow-intent href="*" />
 
-  <access origin="*" subdomains="true"/>
-  <allow-intent href="*"/>
-  <platform name="android">
+  <!-- <platform name="android">
     <allow-intent href="market:*"/>
   </platform>
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-  </platform>
+  </platform> -->
 </widget>

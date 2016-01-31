@@ -13,6 +13,13 @@
   <plugin name="ionic-plugin-keyboard"/>
   <plugin name="cordova-plugin-whitelist"/>
 
+  <preference name="BackgroundColor" value="0xfff4f2ef"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="EnableViewportScale" value="false"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
+  <preference name="SuppressesIncrementalRendering" value="true"/>
+
   <preference name="permissions" value=""/>
   <preference name="orientation" value="portrait"/>
   <preference name="target-device" value="handset"/>

@@ -33,6 +33,21 @@
   src: local('Roboto Italic'), local('Roboto-Italic'), url('Roboto-Italic.ttf') format('truetype');
 }
 
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Roboto Slab Thin'), local('Roboto-Slab-Thin'), url('Roboto-Slab-Thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('Roboto-Slab-Light'), url('Roboto-Slab-Light.ttf') format('truetype');
+}
+
 @font-face {
   font-family: 'Roboto Slab';
   font-style: normal;

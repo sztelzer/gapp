@@ -10,7 +10,7 @@
   <gap:plugin name="org.apache.cordova.network-information"/>
   <gap:plugin name="org.apache.cordova.splashscreen"/>
 
-  <plugin name="cordova-plugin-keyboard"/>
+  <plugin name="ionic-plugin-keyboard"/>
   <plugin name="cordova-plugin-whitelist"/>
 
   <preference name="permissions" value=""/>

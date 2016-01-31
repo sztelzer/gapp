@@ -10,7 +10,8 @@
 		'ct.ui.router.extras',
 		'ngAria',
 		'ngMaterial',
-		'angularPayments'
+		'angularPayments',
+		'ionic'
 	])
 
 	.value('config', {
@@ -240,9 +241,9 @@
 				$state.go('storePage.offerPage');
 			}
 		})
+		cordova.plugins.Keyboard.disableScroll(true)
 
-    	FastClick.attach(document.body);
-		Keyboard.shrinkView(true);
+    	// FastClick.attach(document.body);
 	})
 
 

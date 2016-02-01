@@ -8,7 +8,7 @@
   <plugin name="cordova-plugin-splashscreen"/> -->
   <plugin name="cordova-plugin-whitelist"/>
   <plugin name="cordova-plugin-statusbar"/>
-  <plugin name="org.cloudsky.cordovaplugins.uiresizeonkeyboard"/>
+  <plugin name="https://github.com/tjwoon/csUIResizeOnKeyboard.git"/>
   <!-- <gap:plugin name="org.apache.cordova.network-information"/> -->
   <!-- <gap:plugin name="nl.x-services.plugins.ioswebviewcolor" /> -->
   <!-- <plugin name="cordova-plugin-keyboard"/> -->
@@ -55,9 +55,9 @@
 
   <!-- <platform name="android">
     <allow-intent href="market:*"/>
-  </platform>
+  </platform> -->
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-  </platform> -->
+  </platform>
 </widget>

@@ -8,14 +8,15 @@
   <plugin name="cordova-plugin-splashscreen"/> -->
   <plugin name="cordova-plugin-whitelist"/>
   <plugin name="cordova-plugin-statusbar"/>
-  <plugin name="https://github.com/tjwoon/csUIResizeOnKeyboard.git"/>
   <!-- <gap:plugin name="org.apache.cordova.network-information"/> -->
   <!-- <gap:plugin name="nl.x-services.plugins.ioswebviewcolor" /> -->
-  <!-- <plugin name="cordova-plugin-keyboard"/> -->
+  <plugin name="cordova-plugin-keyboard"/>
+
+  <feature name="Keyboard">
+    <param name="ios-package" value="CDVKeyboard" onload="true" />
+  </feature>
   <!-- <gap:plugin name="org.apache.cordova.device"/> -->
   <!-- <gap:plugin name="org.apache.cordova.dialogs"/> -->
-
-
 
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
   <preference name="DisallowOverscroll" value="true"/>

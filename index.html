@@ -53,10 +53,11 @@
 	        document.addEventListener('deviceready', function () {
 	          angular.bootstrap(document, ['able']);
 			  // other initializations
-			  cloudSky.UIResizeOnKeyboard.preventPan(function(){},function(){})
-
-
-
+			  Keyboard.shrinkView(true);
+			  Keyboard.hideFormAccessoryBar(true);
+			  Keyboard.disableScrollingInShrinkView(true);
+			  Keyboard.automaticScrollToTopOnHiding = true;
+			  
 
 	        }, false);
 	      } else {

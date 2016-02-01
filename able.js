@@ -14,10 +14,10 @@
 	])
 
 	.value('config', {
-		api: 'http://127.0.0.1:8081',
-		company_path: '/companies/5629499534213120',
-		// api: 'https://api-dot-heartbend.appspot.com',
-		// company_path: '/companies/5654313976201216',
+		// api: 'http://127.0.0.1:8081',
+		// company_path: '/companies/5629499534213120',
+		api: 'https://api-dot-heartbend.appspot.com',
+		company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6
 	})
@@ -113,7 +113,7 @@
 					accessLogged: true
 				}
 			})
-			.state('storePage.confirmationPage', {
+			.state('confirmationPage', {
 				url: "/confirmation",
 				templateUrl: "confirmationPage.template.html",
 				data: {

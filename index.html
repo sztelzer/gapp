@@ -61,6 +61,7 @@
 				Keyboard.hideFormAccessoryBar(true);
 				Keyboard.disableScrollingInShrinkView(true);
 				Keyboard.automaticScrollToTopOnHiding = true;
+				FastClick.attach(document.body);
 	        }, false);
 	      } else {
 	        angular.bootstrap(document, ['able']);

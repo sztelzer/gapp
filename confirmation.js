@@ -16,8 +16,13 @@
 		return directive
 	}
 
-	function confirmationController(orders) {
+	function confirmationController(orders, $state) {
 		var vm = this;
+		vm.reset = reset
+
+		function reset(){
+			$state.go('storePage.offerPage')
+		}
 
 
 	} // end controller

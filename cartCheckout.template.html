@@ -39,6 +39,6 @@
 
 
 
-	<md-button ng-click="cart.send()" class="md-accent md-raised" ng-disabled="!cart.card.self_key || cart.address == ''">Enviar Pedido</md-button>
+	<md-button ng-click="cart.send()" class="md-accent md-raised" ng-disabled="!cart.card.self_key || !cart.place.place_id">Enviar Pedido</md-button>
 
 </div>

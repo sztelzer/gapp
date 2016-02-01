@@ -83,7 +83,7 @@
 						if(response.data.object.payments != null) {
 							credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
 							orders.last = response.data.path;
-							$state.go('storePage.confirmationPage');
+							$state.go('confirmationPage');
 						} else {
 							credit.active = {}
 							window.alert('error saving credit card, try another one')

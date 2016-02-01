@@ -5,12 +5,13 @@
 		.module('able')
 		.factory('auth', auth)
 
-	function auth($http, $state, config, $q, $localStorage){
+	function auth($http, $state, config, $q, $localStorage, $window){
 		var service = {
 			id: $localStorage.id,
 			token: $localStorage.token,
 			email: '',
 			password: '',
+			logout: false,
 			signup: signup,
 			signin: signin,
 			signout: signout
@@ -64,10 +65,8 @@
 			$localStorage.orders = '';
 			$localStorage.credits = '';
 			$localStorage.active = '';
-
-
-			window.location.href = "/";
-			// $state.go('startPage')
+			service.logout = true;
+			$state.go('startPage')
 		}
 
 	}

@@ -44,12 +44,11 @@
 		$scope.place = place
 		vm.loading = true
 		vm.setCartAddress = setCartAddress
+		vm.goodtogo = true
 
 		var autocomplete = new google.maps.places.AutocompleteService()
 		var place = new google.maps.places.PlacesService(document.getElementById('mapping'))
 		var geocoder = new google.maps.Geocoder()
-
-
 
 		var mapping = new google.maps.Map(document.getElementById('mapping'), {
 			zoom: 16,
@@ -95,6 +94,7 @@
 							for (var i = 0, prediction; prediction = predictions[i]; i++) {
 								results.push(prediction);
 							}
+							google.maps.event.trigger(mapping, 'resize'); //necessary to wake up after first init
 							deferred.resolve(results);
 						}
 					}
@@ -125,14 +125,15 @@
 				var deferred = $q.defer();
 				getPlace(place_id).then(
 					function (infos) {
-						console.log(infos)
-						console.log(JSON.stringify(infos.address_components))
-						console.log(JSON.stringify(infos.geometry.location.lat()))
-						console.log(JSON.stringify(infos.geometry.location.lng()))
+						// console.log(infos)
+						// console.log(JSON.stringify(infos.address_components))
+						// console.log(JSON.stringify(infos.geometry.location.lat()))
+						// console.log(JSON.stringify(infos.geometry.location.lng()))
 						cart.data.latitude = infos.geometry.location.lat()
 						cart.data.longitude = infos.geometry.location.lng()
 						cart.data.accuracy = 0
 						mapping.panTo(infos.geometry.location)
+						vm.goodtogo = true
 					}
 				);
 				return deferred.promise;
@@ -160,6 +161,7 @@
 				} else {
 					console.log(status)
 				}
+				vm.goodtogo = true
 			});
 		}
 
@@ -170,6 +172,7 @@
 		var center;
 		google.maps.event.addDomListener(mapping, 'idle', function() {
 			center = mapping.getCenter();
+			google.maps.event.trigger(mapping, 'resize');
 		});
 		google.maps.event.addDomListener(window, 'resize', function() {
 			mapping.setCenter(center);
@@ -182,7 +185,7 @@
 			map.gotoBack()
 		}
 
-		google.maps.event.trigger(mapping, 'resize'); //necessary to wake up after first init
+		google.maps.event.trigger(mapping, 'resize');
 
 
 	}

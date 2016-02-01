@@ -13,15 +13,11 @@
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
-  <preference name="EnableLocation" value="true"/>
-  <preference name="BackupWebStorage" value="none"/>
-  <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
-  <preference name="SuppressesIncrementalRendering" value="true"/>
   <preference name="KeyboardShrinksView" value="true" />
 
   <preference name="permissions" value=""/>
-  <preference name="SuppressesLongPressGesture" value="true" />
-  <preference name="Suppresses3DTouchGesture" value="true" />
+  <!-- <preference name="SuppressesLongPressGesture" value="true" />
+  <preference name="Suppresses3DTouchGesture" value="true" /> -->
   <preference name="orientation" value="portrait"/>
   <preference name="target-device" value="handset"/>
   <preference name="fullscreen" value="true"/>

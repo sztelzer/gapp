@@ -10,8 +10,10 @@
 
 	<md-content>
 		<form name="questForm" novalidate ng-cloak>
+			<div style="margin-top:8px"></div>
 
-			<md-card flex class="card-tag md-whiteframe-8dp" ng-repeat="tag in quest.tags">
+
+			<md-card flex class="card-full md-whiteframe-8dp" ng-repeat="tag in quest.tags">
 				<div class="card-title" style="background-color:{{tag.c}};color:{{tag.t}}">{{tag.q}}</div>
 				<div flex layout="column" class="card-content">
 					<md-radio-group name="{{tag.i}}" ng-model="quest.payload[tag.i]" ng-required="true" required>
@@ -20,7 +22,7 @@
 				</div>
 			</md-card>
 
-			<div flex layout-padding layout="column">
+			<div flex class="md-padding" layout="column">
 
 				<div ng-show="quest.least_tags">
 				  Todos os cartões devem ser respondidos!

@@ -9,21 +9,23 @@
 
 
 	function creditService($localStorage, $state) {
-		if (typeof $localStorage.credits == 'undefined'){
+		if (typeof $localStorage.credits == 'undefined' || $localStorage.credits == ''){
 			$localStorage.credits = {}
 		}
 		if (typeof $localStorage.active == 'undefined'){
 			$localStorage.active = {}
 		}
+		if ( $localStorage.active && !$localStorage.credits.hasOwnProperty($localStorage.active.self_key) ) {
+			$localStorage.active = {}
+		}
 
 		var service = {
 			saveNewCardOnCredits: saveNewCardOnCredits,
-			discardNewCard: discardNewCard,
 			gotoCredits: gotoCredits,
 			gotoBack: gotoBack,
 			back: "storePage.creditPage",
-			active: angular.copy($localStorage.active),
-			credits: angular.copy($localStorage.credits),
+			active: $localStorage.active,
+			credits: $localStorage.credits,
 			new: {
 				self_key: '',
 				mask: '',
@@ -34,29 +36,28 @@
 		}
 		return service
 
+
 		function saveNewCardOnCredits(key){
 			delete service.new.encrypted;
 			delete service.new.token;
 			service.new.self_key = key;
-
-			service.credits[service.new.self_key] = angular.copy(service.new)
-			service.active = service.credits[service.new.self_key]
-
-			$localStorage.credits = service.credits
-			$localStorage.active = service.active
-
-			service.discardNewCard();
+			service.credits[key] = angular.copy(service.new)
+			service.active = angular.copy(service.new)
+			$localStorage.credits = angular.copy(service.credits)
+			$localStorage.active = angular.copy(service.active)
+			console.log(service)
+			//discardNewCard()
 		}
 
-		function discardNewCard(){
-			service.new = {
-				self_key: '',
-				mask: '',
-				expiry: '',
-				encrypted: '',
-				token:'',
-			}
-		}
+		// function discardNewCard(){
+		// 	service.new = {
+		// 		self_key: '',
+		// 		mask: '',
+		// 		expiry: '',
+		// 		encrypted: '',
+		// 		token:'',
+		// 	}
+		// }
 
 		function gotoCredits(back){
 			service.back = back;
@@ -100,15 +101,9 @@
 		vm.self_key = 0
 		vm.count = Object.size(vm.credits)
 
-		// used mainly on reloads
-		// as it starts, credit.new must be null.
-		// if credits don't have credits[active], unset active
-		if (!credit.credits.hasOwnProperty(credit.active.self_key)) {
-			credit.active = {}
-			$localStorage.active = {}
-			vm.active = {}
-		}
-
+		$scope.$watch(function w(scope){return( credit )},function c(n,o){
+			vm.credits = credit.credits;
+		});
 
 
 		function saveNewCard(){
@@ -117,7 +112,6 @@
 			var c = angular.copy(vm.holder)
 			var d = angular.copy(vm.expiry)
 
-			encryptForAdyen(a, b, c, d)
 			tokenForStripe(a, b, c, d)
 
 			var now = new Date();
@@ -151,7 +145,7 @@
 
 		function remove(card){
 			delete credit.credits[card]
-			if (credit.active == card){
+			if (credit.active.self_key == card){
 				credit.active = ''
 				$localStorage.active = ''
 			}
@@ -162,8 +156,8 @@
 
 		function removeNewCard(){
 			if (credit.active.self_key = credit.new.self_key) {
-				credit.active = {self_key:"", mask:"", expiry:""}
-				$localStorage.active = ''
+				credit.active = {}
+				$localStorage.active = {}
 			}
 
 			credit.new = {

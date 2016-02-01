@@ -45,15 +45,8 @@
 		return service
 
 		function empty(){
-			service.estimated_time = 0
-			service.items_selected = []
-			service.freight_full = 22.80
-			service.freight_discount = 0
-			service.freight_total = 0
-			service.product_total = 0
-			service.value_total = 0
-			service.quantity_total = 0
 		}
+
 
 		function send(){
 			//put the items array on the data payload
@@ -72,9 +65,6 @@
 			service.data.total_quantity = service.quantity_total;
 			service.data.total_value = +(service.value_total).toFixed(2);
 
-			// set the credit card to use
-			// if active == new, set to send encrypted data.
-			// if active == {}, stop.
 			if (credit.active.self_key == credit.new.self_key){
 				service.data.given_plastic = credit.new
 			} else {
@@ -90,7 +80,6 @@
 			return $q(function(resolve, reject) {
 				$http.post(config.api + '/users/' + auth.id + '/orders', payload, req_config).then(
 					function successCallback(response) {
-						resolve();
 						if(response.data.object.payments != null) {
 							credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
 							orders.last = response.data.path;
@@ -99,10 +88,11 @@
 							credit.active = {}
 							window.alert('error saving credit card, try another one')
 						}
-
+						service.empty();
+						resolve();
 					},
 					function errorCallback(response) {
-						credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
+						// credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
 						reject();
 					}
 				)
@@ -171,6 +161,7 @@
 		vm.send = cart.send;
 		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
+
 		vm.checking = false;
 		vm.gotoCredits = gotoCredits;
 		vm.gotoMap = gotoMap;
@@ -181,10 +172,6 @@
 			vm.place = cart.data.place
 			vm.complement = cart.data.complement
 		});
-
-
-
-
 
 		vm.card = credit.active
 		$scope.$watch(function w(scope){return( credit.active )},function c(n,o){

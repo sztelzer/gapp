@@ -107,7 +107,7 @@
 
 
 		function put(feedback){
-			var req_config = {headers: {'Authorization': auth.user.token}};
+			var req_config = {headers: {'Authorization': auth.token}};
 			var path = feedback.path;
 			var payload = {float: feedback.object.float, open: "false"};
 

@@ -1,4 +1,4 @@
-<md-content element-feedbacks flex ng-cloak layout-padding layout="column">
+<md-content element-feedbacks flex ng-cloak class="layout-padding" layout="column">
 
 	<div ng-show="!feedbacks.loading && feedbacks.len >= 1" flex="none" ng-cloak>
 		<center>O que você achou destas cervejas?</center>
@@ -14,7 +14,7 @@
 			{{feedback.path}}
 			{{feedback.object.about}}
 			{{feedback.object.generator}}
-			<md-slider flex md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-change="feedbacks.touched = true"></md-slider>
+			<md-slider flex md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-init="feedback.object.float=1" ng-change="feedbacks.touched = true"></md-slider>
 		</md-card-content>
 	</md-card>
 

@@ -6,7 +6,6 @@ html, body {
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	font-size: 14px;
 }
 
 .app {
@@ -14,14 +13,14 @@ html, body {
 	height:100%;
 }
 
-*:not(input,textarea) {
+/**:not(input,textarea) {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	touch-callout: none;
 	user-select: none;
 	tap-highlight-color: rgba(0,0,0,0);
-}
+}*/
 
 .md-button.wider {
   margin-left: 10%;
@@ -55,11 +54,11 @@ html, body {
 }
 
 .clean-toolbar {
-	background-color: #F4F2EF !important;
+	background-color: #0080FF !important;
 }
 
 .clean-toolbar > .toolbar-title {
-	color: #0080FF;
+	color: #F4F2EF;
 }
 
 md-sidenav {
@@ -90,9 +89,9 @@ md-content.store {
 	padding-bottom: 1.3em;
 }
 
-/*md-card {
+md-card {
 	margin: 0px 0px 8px 0px !important;
-}*/
+}
 
 input.ng-touched.ng-invalid {
 	border-color: red !important;
@@ -251,7 +250,7 @@ md-card .md-card-image {
     font-family: "roboto slab";
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	border-top: 1px solid rgba(255, 255, 255, 0.9);
-	border-radius: 3px 3px 0px 0px;
+	border-radius: 0px 0px 0px 0px;
 }
 
 .card-content {

@@ -1,23 +1,12 @@
-<md-content credit-element flex ng-cloak layout="column" style="">
+<md-content credit-element flex ng-cloak layout="column" class="">
 
+		<div style="margin-top:8px"></div>
 
-		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;" ng-cloak ng-show="credit.count > 0">
-			<div>
-				Escolha o cartão que você quer utilizar.
-			</div>
-			<div flex="none" layout="row">
-				<div flex class="md-caption">Final</div>
-				<div flex class="md-caption">Validade</div>
-				<div flex></div>
-				<div flex></div>
-			</div>
-		</div>
-
-		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.self_key == card.self_key ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-repeat="card in credit.credits track by card.self_key">
-				<div flex layout="row" layout-align="start start" class="md-body-2">
+		<md-card flex="none" layout="row" class="card-full card-credit md-padding" ng-class="credit.active.self_key == card.self_key ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-repeat="card in credit.credits track by card.self_key">
+				<div flex layout="row" layout-align="center center" class="md-body-2">
 					{{card.mask}}
 				</div>
-				<div flex layout="row" layout-align="start start" class="md-body-2">
+				<div flex layout="row" layout-align="start center" class="md-body-2">
 					{{card.expiry}}
 				</div>
 
@@ -33,44 +22,7 @@
 		</md-card>
 
 
-
-		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;" ng-cloak ng-show="credit.self_key == 1">
-			<div>
-				Este cartão será salvo se você o utilizar na próxima compra. Caso não utilize, será apagado.
-			</div>
-			<div flex="none" layout="row">
-				<div flex class="md-caption">Final</div>
-				<div flex class="md-caption">Validade</div>
-				<div flex></div>
-				<div flex></div>
-			</div>
-		</div>
-
-		<md-card flex="none" layout="row" class="card-credit md-padding" ng-class="credit.active.self_key == credit.new.self_key ? 'md-whiteframe-8dp' : '' " style="margin-top:0px" ng-show="credit.self_key == 1">
-				<div flex layout="row" layout-align="start start" class="md-body-2">
-					{{credit.new.mask}}
-				</div>
-				<div flex layout="row" layout-align="start start" class="md-body-2">
-					{{credit.new.expiry}}
-				</div>
-
-				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action" style="color:red" ng-click="credit.removeNewCard()">Deletar</md-button>
-				</div>
-
-				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action" ng-class="credit.active.self_key == credit.new.self_key ? 'md-accent' : 'md-accent md-raised'" ng-click="credit.setActive(credit.new.self_key, credit.new.mask, credit.new.expiry)" ng-disable="credit.active.self_key == credit.new.self_key">
-						{{credit.active.self_key == credit.new.self_key ? "Em uso" : "Usar"}}
-					</md-button>
-				</div>
-		</md-card>
-
-
-
-
-
-
-		<md-card flex="none" class="card-credit md-padding">
+		<md-card flex="none" class="card-full card-credit md-padding">
 
 			<div flex="none" layout="column" ng-cloak>
 				<span class="md-body-2">Adicionar cartão.</span>
@@ -108,9 +60,6 @@
 
 			</form>
 		</md-card>
-		<div flex="none" layout="column" class="md-caption md-padding" style="margin-left:8px;margin-right:8px;" ng-cloak>
-			Cartões cadastrados só serão salvos após o primeiro uso na loja. Cartões não salvos serão removidos automaticamente se não utilizados.
-		</div>
 
 
 </md-content>

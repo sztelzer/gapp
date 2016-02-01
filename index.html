@@ -34,6 +34,8 @@
 	<script type='application/javascript' src='components/fastclick.js'></script>
 
 	<script src="able.js"></script>
+
+	<script src="start.js"></script>
 	<script src="auth.js"></script>
 	<script src="signin.js"></script>
 	<script src="offer.js"></script>
@@ -46,6 +48,7 @@
 	<script src="quest.js"></script>
 	<script src="credit.js"></script>
 
+
 	<script src="toolbar.js"></script>
 
 	<script>
@@ -55,9 +58,9 @@
 				angular.bootstrap(document, ['able']);
 				console.log("here on cordova")
 				Keyboard.shrinkView(true);
-				// Keyboard.hideFormAccessoryBar(true);
-				// Keyboard.disableScrollingInShrinkView(true);
-				// Keyboard.automaticScrollToTopOnHiding = true;
+				Keyboard.hideFormAccessoryBar(true);
+				Keyboard.disableScrollingInShrinkView(true);
+				Keyboard.automaticScrollToTopOnHiding = true;
 	        }, false);
 	      } else {
 	        angular.bootstrap(document, ['able']);

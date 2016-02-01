@@ -5,23 +5,20 @@
   <content src="index.html"/>
 
   <plugin name="cordova-plugin-geolocation"/>
-  <plugin name="cordova-plugin-splashscreen"/> -->
+  <plugin name="cordova-plugin-splashscreen"/>
   <plugin name="cordova-plugin-whitelist"/>
   <plugin name="cordova-plugin-statusbar"/>
-  <!-- <gap:plugin name="org.apache.cordova.network-information"/> -->
-  <!-- <gap:plugin name="nl.x-services.plugins.ioswebviewcolor" /> -->
   <plugin name="cordova-plugin-keyboard"/>
-
-  <!-- <gap:plugin name="org.apache.cordova.device"/> -->
-  <!-- <gap:plugin name="org.apache.cordova.dialogs"/> -->
 
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
+  <preference name="EnableLocation" value="true"/>
   <preference name="BackupWebStorage" value="none"/>
   <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
   <preference name="SuppressesIncrementalRendering" value="true"/>
   <preference name="KeyboardShrinksView" value="true" />
+
   <preference name="permissions" value=""/>
   <preference name="SuppressesLongPressGesture" value="true" />
   <preference name="Suppresses3DTouchGesture" value="true" />
@@ -33,12 +30,16 @@
   <preference name="stay-in-webview" value="true"/>
   <preference name="detect-data-types" value="false"/>
   <preference name="exit-on-suspend" value="false"/>
+
   <preference name="show-splash-screen-spinner" value="false"/>
   <preference name="auto-hide-splash-screen" value="true"/>
   <preference name="disable-cursor" value="true"/>
   <preference name="deployment-target" value="7.0" />
   <preference name="android-minSdkVersion" value="14"/>
   <preference name="android-installLocation" value="auto"/>
+
+  <preference name="StatusBarOverlaysWebView" value="true" />
+  <preference name="StatusBarStyle" value="blacktranslucent" />
 
   <icon src="icon.png"/>
   <splash src="splash.png"/>
@@ -48,19 +49,32 @@
   <splash src="res/ios/splash667h@2x.png" platform="ios" width="750" height="1334"/>
   <splash src="res/ios/splash736h@3x.png" platform="ios" width="1242" height="2208"/>
 
-  <!-- <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/> -->
   <allow-navigation href="*" />
-  <access origin="*" />
   <allow-intent href="*" />
+  <access origin="*" />
+
+  <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/>
 
   <!-- <platform name="android">
     <allow-intent href="market:*"/>
   </platform> -->
+
+
+
+
+	<!-- <feature name="StatusBar">
+		<param name="ios-package" value="CDVStatusBar" onload="true" />
+	</feature>
+	<feature name="Keyboard">
+		<param name="ios-package" value="CDVKeyboard" onload="true" />
+	</feature> -->
+
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
-	<feature name="Keyboard">
-		<param name="ios-package" value="CDVKeyboard" onload="true" />
-	</feature>
+
+	<preference name="ShowSplashScreenSpinner" value="false"/>
+    <preference name="AutoHideSplashScreen" value="true"/>
+
   </platform>
 </widget>

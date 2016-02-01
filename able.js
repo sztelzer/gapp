@@ -240,8 +240,6 @@
 				$state.go('storePage.offerPage');
 			}
 		})
-
-    	// FastClick.attach(document.body);
 	})
 
 

@@ -12,20 +12,17 @@
   <!-- <gap:plugin name="nl.x-services.plugins.ioswebviewcolor" /> -->
   <plugin name="cordova-plugin-keyboard"/>
 
-  <feature name="Keyboard">
-    <param name="ios-package" value="CDVKeyboard" onload="true" />
-  </feature>
   <!-- <gap:plugin name="org.apache.cordova.device"/> -->
   <!-- <gap:plugin name="org.apache.cordova.dialogs"/> -->
 
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <preference name="EnableViewportScale" value="false"/>
-  <preference name="BackupWebStorage" value="none"/>
+  <!-- <preference name="EnableViewportScale" value="false"/>
+  <preference name="BackupWebStorage" value="none"/> -->
   <!-- <preference name="KeyboardDisplayRequiresUserAction" value="false"/> -->
   <!-- <preference name="SuppressesIncrementalRendering" value="true"/> -->
   <!-- <preference name="KeyboardShrinksView" value="true" /> -->
-  <preference name="permissions" value=""/>
+  <!-- <preference name="permissions" value=""/> -->
   <preference name="orientation" value="portrait"/>
   <preference name="target-device" value="handset"/>
   <preference name="fullscreen" value="true"/>
@@ -60,5 +57,8 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
+	<feature name="Keyboard">
+		<param name="ios-package" value="CDVKeyboard" onload="true" />
+	</feature>
   </platform>
 </widget>

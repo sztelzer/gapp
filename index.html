@@ -54,10 +54,10 @@
 	          angular.bootstrap(document, ['able']);
 
 			  // other initializations
-			  Keyboard.shrinkView(true);
-			  Keyboard.hideFormAccessoryBar(true);
-			  Keyboard.disableScrollingInShrinkView(true);
-			  Keyboard.automaticScrollToTopOnHiding = true;
+			  window.cordova.plugins.Keyboard.shrinkView(true);
+			  window.cordova.plugins.Keyboard.hideFormAccessoryBar(true);
+			  window.cordova.plugins.Keyboard.disableScrollingInShrinkView(true);
+			  window.cordova.plugins.Keyboard.automaticScrollToTopOnHiding = true;
 
 
 	        }, false);

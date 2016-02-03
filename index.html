@@ -11,31 +11,25 @@
 	<title>Able</title>
 </head>
 
-<body layout="column" flex app-element style="background-color:#F4F2EF !important">
+<body layout="column" flex app-element>
 	<div class="app page {{pageClass}}" ui-view flex layout-fill></div>
-
 	<script src="components/jquery.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR"></script>
-
 	<script src="cordova.js" type="text/javascript"></script>
-
 	<script src="components/angular.js"></script>
 	<script src="components/angular-animate.js"></script>
 	<script src="components/angular-aria.js"></script>
 	<script src="components/angular-ui-router.js"></script>
 	<script src="components/ct-ui-router-extras.js"></script>
-
 	<script src="components/angular-material.js"></script>
 	<script src="components/ngStorage.js"></script>
 	<script src="components/geolib.js"></script>
-	<script src="components/adyen.encrypt.nodom.min.js"></script>
 	<script src="components/angular-payments.js"></script>
 	<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-	<script type='application/javascript' src='components/fastclick.js'></script>
+	<!-- <script type='application/javascript' src='components/fastclick.js'></script> -->
+	<!-- <script src="components/adyen.encrypt.nodom.min.js"></script> -->
 
 	<script src="able.js"></script>
-
-	<script src="start.js"></script>
 	<script src="auth.js"></script>
 	<script src="signin.js"></script>
 	<script src="offer.js"></script>
@@ -47,25 +41,27 @@
 	<script src="confirmation.js"></script>
 	<script src="quest.js"></script>
 	<script src="credit.js"></script>
-
-
 	<script src="toolbar.js"></script>
+
+
 
 	<script>
 		angular.element(document).ready(function () {
 	      if (window.cordova) {
 	        document.addEventListener('deviceready', function () {
 				angular.bootstrap(document, ['able']);
-				console.log("here on cordova")
+
 				Keyboard.shrinkView(true);
 				Keyboard.hideFormAccessoryBar(true);
-				Keyboard.disableScrollingInShrinkView(true);
-				Keyboard.automaticScrollToTopOnHiding = true;
-				FastClick.attach(document.body);
+				Stripe.setPublishableKey('pk_test_85MXK5Zb67wdbX1yUZ7QcG8K');
+				// Keyboard.disableScrollingInShrinkView(true);
+				// Keyboard.automaticScrollToTopOnHiding = true;
+				// FastClick.attach(document.body);
+				// window.HelpshiftPlugin.install("d39dcb147a53f4491218d67c09ad6103", "able.helpshift.com", "able_platform_20151202232813761-cc37683499f9965");
 	        }, false);
 	      } else {
 	        angular.bootstrap(document, ['able']);
-			console.log("here without cordova")
+			Stripe.setPublishableKey('pk_test_85MXK5Zb67wdbX1yUZ7QcG8K');
 	      }
 	    });
 	</script>
@@ -79,7 +75,6 @@
 		};
 	</script>
 	<script type="text/javascript">
-	  Stripe.setPublishableKey('pk_test_u1aE6CQ7npf2HWPEJidnkA0f');
 	</script>
 
 </body>

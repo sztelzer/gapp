@@ -78,7 +78,7 @@
 		function send(){
 			vm.touched = false;
 			vm.list.slice().reverse().forEach(function(item, index, object) {
-				if (item.object.float > 0) {
+				if (item.object.touched == true) {
 					vm.sent = true;
 					item.done = true;
 					put(item).then(

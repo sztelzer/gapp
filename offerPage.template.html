@@ -1,6 +1,6 @@
 <md-content element-offer flex ng-cloak class="store">
 	<md-progress-linear ng-show="offer.loading" md-mode="indeterminate" class="store-progress md-background"></md-progress-linear>
-	<div flex element-promoted ng-repeat="promoted in offer.data.object.promoteds" ng-init="vm.promoted = promoted;"></div>
+	<div flex element-promoted ng-repeat="promoted in offer.data.object.promoteds | orderBy:'promoted.object.rank'" ng-init="vm.promoted = promoted;"></div>
 </md-content>
 <div class="cart-group" ng-cloak>
 	<div element-cart ng-show="cart.quantity_total" layout="row" layout-align="space-between center" class="carting md-whiteframe-8dp" ng-cloak></div>

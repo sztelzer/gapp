@@ -1,5 +1,11 @@
 	<md-card flex-fill class="card-full md-whiteframe-1dp">
-		<img ng-src="imgs/sink.jpg" class="md-card-image md-whiteframe-0dp" alt="image">
+
+		<img class="md-card-image md-whiteframe-0dp" alt="image"
+			ng-repeat="content in promoted.object.sku.object.contents"
+			ng-if="content.object.function=='face_image'"
+			ng-src="{{content.object.url}}"
+			width="1080" height="1080"
+		/>
 
 		<div flex="none" layout="row" style="border-bottom: 1px solid white">
 			<md-button flex ng-click="vm.takeOne()" class="promoted-button" aria-label="retirar" ng-cloak>
@@ -11,14 +17,13 @@
 			</md-button>
 		</div>
 
-
-
 		<md-card-content class="promoted-card-content">
 				<div flex layout="row">
 					<div flex>
-					    <div class="promoted-recipe">Funky & Sour</div>
-						<div class="promoted-maker">Tupiniquim</div>
-						<div class="promoted-desc">310ml - abv&nbsp;5%</div>
+					    <div class="promoted-recipe">{{promoted.object.sku.object.recipe.object.name}}</div>
+						<div class="promoted-maker">{{promoted.object.sku.object.maker.object.name}}</div>
+						<div class="promoted-desc">{{promoted.object.sku.object.volume}}&nbsp;ml&nbsp;-&nbsp;{{promoted.object.sku.object.recipe.object.taste.alcohol_volume}}% abv
+						</div>
 					</div>
 
 					<div flex="none" layout="column" layout-align="end end">
@@ -26,8 +31,10 @@
 					</div>
 				</div>
 
-				<div flex class="promoted-content">
-					<p>Talvez você se arrependa no primeiro gole, ou lembre da época em que chupava limão. Se eu falar que tem aromas muito, mas muito delicado de mofo, couro e vinagre você desiste? É um conjunto harmonioso. Não desista no primeiro gole, deixa ela correr na sua boca e mudar o ambiente por ali. Depois dê pequenas goladas e vá tentando entender o que está acontecendo. Do começo ao fim é uma cerveja que lhe tenta ser gentil. A carbonatação é bem alta, enche a boa. Foram utilizadas leveduras de champagne no “prime” na hora de engarrafar. De cor bastante alaranjada espuma que vai sumindo e quase nenhum amargor presente. O frutado bem cítrico limpa as papilas gustativas e convidam a se refrescar novamente. Lembra que cada cerveja é uma aula e esta vai ensinar que o azedo pode surpreender  é surpreendente. Beba gelada entre 2 e 5 graus. Harmonize com pratos que buscam essa acidez. Frutos do mar nasceram para essa cerveja.</p>
+				<div flex class="promoted-content"
+				ng-repeat="content in promoted.object.sku.object.contents"
+				ng-if="content.object.function=='face_text'">
+					<p>{{content.object.text}}</p>
 				</div>
 
 

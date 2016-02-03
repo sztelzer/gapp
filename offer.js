@@ -21,7 +21,7 @@
 		function checkOffer() {
 			// check if have some offer loaded.
 			var storedOffer = $localStorage.offer;
-			if (storedOffer === undefined || storedOffer == '') {
+			if (storedOffer === undefined || storedOffer === '' || storedOffer == {}) {
 				return false;
 			}
 
@@ -118,7 +118,30 @@
 
 	function offerController(offer, cart, map) {
 		var vm = this
+		vm.loading = true
 		getLocation()
+
+		function getLocation(){
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					cart.data.latitude = position.coords.latitude
+					cart.data.longitude = position.coords.longitude
+					cart.data.accuracy = position.coords.accuracy
+					cart.gotlocation = true
+					if(position.coords.accuracy > 1000) {
+						map.gotoMap('storePage.offerPage')
+					} else {
+						init()
+					}
+				}, function() {
+					map.gotoMap('storePage.offerPage')
+					vm.loading = false;
+				});
+			} else {
+				map.gotoMap('storePage.offerPage')
+				vm.loading = false;
+			}
+		}
 
 		function init(){
 			vm.loading = true;
@@ -155,28 +178,8 @@
 			);
 		}
 
-		function getLocation(){
-			if (navigator.geolocation) {
-				vm.loading = true;
-				navigator.geolocation.getCurrentPosition(function(position) {
-					cart.data.latitude = position.coords.latitude
-					cart.data.longitude = position.coords.longitude
-					cart.data.accuracy = position.coords.accuracy
-					cart.gotlocation = true
-					if(position.coords.accuracy > 100) {
-						map.gotoMap('storePage.offerPage')
-					} else {
-						init()
-					}
-				}, function() {
-					map.gotoMap('storePage.offerPage')
-					vm.loading = false;
-				});
-			} else {
-				map.gotoMap('storePage.offerPage')
-				vm.loading = false;
-			}
-		}
+
+
 
 	} // end controller
 

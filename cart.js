@@ -10,9 +10,9 @@
 	function cartService(auth, config, $http, $q, $state, orders, $localStorage, credit, map) {
 		var service = {
 			data: {
-				latitude: -23.543464,
+				latitude: -23.543464, //galeria do rock
 				longitude: -46.6391852,
-				accuracy: 100,
+				accuracy: 10,
 				place: {},
 				complement: '',
 				name: '',
@@ -26,9 +26,9 @@
 				plastic: $localStorage.active,
 			},
 			gotlocation: false,
-			estimated_time: 0,
+			estimated_time: 3600,
 			items_selected: [],
-			freight_full: 22.80,
+			freight_full: 22.90,
 			freight_discount: 0,
 			freight_total: 0,
 			product_total: 0,
@@ -39,8 +39,7 @@
 			takeOne: takeOne,
 			send: send,
 			empty: empty,
-			checking: false,
-			// showConfirmation: showConfirmation,
+			checking: false
 		}
 		return service
 

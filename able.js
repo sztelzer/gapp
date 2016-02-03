@@ -10,7 +10,7 @@
 		'ct.ui.router.extras',
 		'ngAria',
 		'ngMaterial',
-		'angularPayments'
+		'angularPayments',
 	])
 
 	.value('config', {
@@ -28,7 +28,7 @@
 	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider) {
 		$localStorageProvider.setKeyPrefix('able_');
 		// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
-		$httpProvider.useApplyAsync(true);
+		$httpProvider.useApplyAsync(false);
 		$urlRouterProvider.otherwise("/");
 		$stateProvider
 			.state('startPage', {
@@ -217,22 +217,16 @@
 				'contrastLightColors': undefined    // could also specify this if default was 'dark'
 			});
 			$mdThemingProvider.theme('default').backgroundPalette('ivoryAble')
-
-
-		// var customAccent = {'500': '#282F3D'};
-		// var customWarn = {'500': '#26BD49'};
-		// var customBackground = {'500': '#F4F2EF'};
-
 	})
 
 	.run(function ($rootScope, $state, auth) {
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-			if (toState.data.requireLogin == true && auth.token === '' && typeof auth.token === 'undefined') {
+			if (toState.data.requireLogin && !auth.token) {
 				event.preventDefault();
 				$state.go('startPage');
 			} else
-			if (toState.data.accessLogged == false && auth.token !== '' && typeof auth.token !== 'undefined' ) {
+			if (!toState.data.accessLogged && auth.token) {
 				event.preventDefault();
 				$state.go('storePage.offerPage');
 			}

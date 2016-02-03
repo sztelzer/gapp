@@ -1,12 +1,17 @@
 <md-content element-orders flex ng-cloak>
 
-	<md-card flex ng-repeat="order in orders.list" class="card-full md-whiteframe-1dp">
-		<md-card-content>
-		{{order.created_at}}
-		<div ng-repeat="item in order.object.items">
-			{{item.object.sku.object.name}}
-			{{item.object.quantity}}
+	<md-card flex ng-repeat="order in orders.list | orderBy:'order.created_at':true" class="md-padding md-whiteframe-1dp" style="background-color:white">
+		<div>{{order.created_at| date : 'dd/MM/yyyy HH:mm' : '-0200'}}</div>
+		<div style="width:100%;height:1px;border-bottom:1px solid #eeeeee;margin:8px 0 8px 0"></div>
+
+		<div ng-repeat="item in order.object.items" class="">
+			{{item.object.quantity}}x&nbsp;{{item.object.sku.object.name}}
 		</div>
+		<div style="width:100%;height:1px;border-bottom:1px solid #eeeeee;margin:8px 0 8px 0"></div>
+		<div ng-repeat="payment in order.object.payments" ng-if="payment.object.status == 'succeeded'" class="">
+			{{payment.object.plastic.object.type}}&nbsp;{{payment.object.plastic.object.mask}}&nbsp;-&nbsp;{{payment.object.plastic.object.expiry}} {{payment.object.value}}
+		</div>
+
 		</md-card-content>
 	</md-card>
 

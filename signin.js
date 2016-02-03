@@ -30,21 +30,13 @@
 					vm.password = '';
 				},
 				function(reject){
-					vm.email = '';
 					vm.password = '';
-					//window.alert(reject.data.errors[0].reference);
 					toast("That's a no-no :(");
 				}
 			)
 		}
 
-		function toast(msg) {
-		    $mdToast.show(
-		    	$mdToast.simple()
-			    .textContent(msg)
-			    .hideDelay(3000)
-			);
-		};
+		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
 
 
 	} // end controller

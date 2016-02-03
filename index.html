@@ -43,8 +43,6 @@
 	<script src="credit.js"></script>
 	<script src="toolbar.js"></script>
 
-
-
 	<script>
 		angular.element(document).ready(function () {
 	      if (window.cordova) {
@@ -53,9 +51,11 @@
 
 				Keyboard.shrinkView(true);
 				Keyboard.hideFormAccessoryBar(true);
+				Keyboard.disableScrollingInShrinkView(true);
+				Keyboard.automaticScrollToTopOnHiding = true;
+
 				Stripe.setPublishableKey('pk_test_85MXK5Zb67wdbX1yUZ7QcG8K');
-				// Keyboard.disableScrollingInShrinkView(true);
-				// Keyboard.automaticScrollToTopOnHiding = true;
+
 				// FastClick.attach(document.body);
 				// window.HelpshiftPlugin.install("d39dcb147a53f4491218d67c09ad6103", "able.helpshift.com", "able_platform_20151202232813761-cc37683499f9965");
 	        }, false);

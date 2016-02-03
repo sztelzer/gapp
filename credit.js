@@ -8,7 +8,7 @@
 
 
 
-	function creditService($localStorage, $state) {
+	function creditService($localStorage, $state, auth, $http, config) {
 		if (typeof $localStorage.credits == 'undefined' || $localStorage.credits == ''){
 			$localStorage.credits = {}
 		}
@@ -26,6 +26,7 @@
 			back: "storePage.creditPage",
 			active: $localStorage.active,
 			credits: $localStorage.credits,
+			get: get,
 			new: {
 				self_key: '',
 				mask: '',
@@ -35,6 +36,22 @@
 			}
 		}
 		return service
+
+
+
+		function get(){
+			var req_config = {headers: {'Authorization': auth.token}};
+			$http.get(config.api + '/users/' + auth.id + '/plastics', req_config)
+			.then(
+			function successCallback(response) {
+				console.log(response)
+				// service.list = response.data.resources;
+				// $localStorage.orders = response.data.resources;
+			},
+			function errorCallback(response) {
+			})
+		}
+
 
 
 		function saveNewCardOnCredits(key){
@@ -93,13 +110,14 @@
 		vm.removeNewCard = removeNewCard
 		vm.setActive = setActive
 		vm.remove = remove
-
 		vm.credits = credit.credits
 		vm.active = credit.active
 		vm.new = credit.new
 
 		vm.self_key = 0
 		vm.count = Object.size(vm.credits)
+
+		credit.get()
 
 		$scope.$watch(function w(scope){return( credit )},function c(n,o){
 			vm.credits = credit.credits;
@@ -209,11 +227,8 @@
 		}
 
 		function stripeResponseHandler(status, response) {
-			console.log(response)
-			console.log(status)
-
 			if (status != 200) {
-				console.log("what?")
+				window.alert("O serviço de pagamentos parece estar fora do ar. Por favor, tente novamente em aluns minutos.")
 			} else {
 				credit.new.token = response.id;
 				console.log(credit.new)

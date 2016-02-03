@@ -59,17 +59,10 @@
 		}
 
 		function signout(){
-			$localStorage.active = '';
-			$localStorage.credits = '';
-			$localStorage.id = '';
-			$localStorage.offer = '';
-			$localStorage.orders = '';
-			$localStorage.token = '';
-			service.logout = true;
 			service.token = ''
 			service.id = ''
+			window.localStorage.clear()
 			$window.location.reload()
-			// $state.go('startPage')
 		}
 
 	}

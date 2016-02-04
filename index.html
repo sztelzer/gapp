@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
+	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<!-- <meta name="format-detection" content="telephone=no" /> -->
+	<meta name="format-detection" content="telephone=no" />
 	<link type="text/css" rel="stylesheet" href="fonts/fonts.css">
 	<link type="text/css" rel="stylesheet" href="able.css">
 	<link type="text/css" rel="stylesheet" href="components/angular-material.css">
@@ -13,8 +13,7 @@
 
 <body layout="column" flex app-element>
 	<div class="app page {{pageClass}}" ui-view flex layout-fill></div>
-	<script src="components/jquery.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR"></script>
+
 	<script src="cordova.js" type="text/javascript"></script>
 	<script src="components/angular.js"></script>
 	<script src="components/angular-animate.js"></script>
@@ -26,8 +25,7 @@
 	<script src="components/geolib.js"></script>
 	<script src="components/angular-payments.js"></script>
 	<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-	<!-- <script type='application/javascript' src='components/fastclick.js'></script> -->
-	<!-- <script src="components/adyen.encrypt.nodom.min.js"></script> -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR"></script>
 
 	<script src="able.js"></script>
 	<script src="auth.js"></script>
@@ -40,7 +38,7 @@
 	<script src="orders.js"></script>
 	<script src="confirmation.js"></script>
 	<script src="quest.js"></script>
-	<script src="credit.js"></script>
+	<script src="plastics.js"></script>
 	<script src="toolbar.js"></script>
 
 	<script>
@@ -50,7 +48,7 @@
 				angular.bootstrap(document, ['able']);
 
 				Keyboard.shrinkView(true);
-				Keyboard.hideFormAccessoryBar(true);
+				Keyboard.hideFormAccessoryBar(false);
 				Keyboard.disableScrollingInShrinkView(true);
 				Keyboard.automaticScrollToTopOnHiding = true;
 

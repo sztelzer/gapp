@@ -7,7 +7,7 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, config, $http, $q, $state, orders, $localStorage, credit, map) {
+	function cartService(auth, config, $http, $q, $state, orders, $localStorage, map) {
 		var service = {
 			data: {
 				latitude: -23.543464, //galeria do rock
@@ -155,7 +155,7 @@
 		return directive
 	}
 
-	function cartController($scope, cart, offer, credit, map) {
+	function cartController($scope, cart, offer, map) {
 		var vm = this;
 		vm.send = cart.send;
 		vm.empty = cart.empty;
@@ -167,15 +167,14 @@
 
 		vm.place = cart.data.place
 		vm.complement = cart.data.complement
-		$scope.$watch(function w(scope){return( cart.data.place )},function c(n,o){
+		vm.plastic = cart.data.plastic
+
+		$scope.$watch(function w(scope){return( cart.data )},function c(n,o){
 			vm.place = cart.data.place
 			vm.complement = cart.data.complement
+			vm.plastic = cart.data.plastic
 		});
 
-		vm.card = credit.active
-		$scope.$watch(function w(scope){return( credit.active )},function c(n,o){
-			vm.card = credit.active;
-		});
 
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
 			vm.estimated_time = cart.estimated_time;

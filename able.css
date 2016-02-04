@@ -1,12 +1,12 @@
 /* app css stylesheet */
 
-html, body {
+html, body, .app {
 	height: 100% !important;
 	max-height: 100% !important;
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-	background-color: #F4F2EF;
+	overflow: hidden !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	background-color: #F4F2EF !important;
 }
 
 .app {

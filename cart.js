@@ -14,6 +14,7 @@
 				longitude: -46.6391852,
 				accuracy: 10,
 				place: {},
+				plastic: '',
 				complement: '',
 				name: '',
 				offer: '',
@@ -23,9 +24,10 @@
 				total_value: 0,
 				total_quantity: 0,
 				items_selected: [],
-				plastic: $localStorage.active,
 			},
 			gotlocation: false,
+			plastic: $localStorage.active,
+
 			estimated_time: 3600,
 			items_selected: [],
 			freight_full: 22.90,
@@ -64,12 +66,7 @@
 			service.data.total_quantity = service.quantity_total;
 			service.data.total_value = +(service.value_total).toFixed(2);
 
-			if (credit.active.self_key == credit.new.self_key){
-				service.data.given_plastic = credit.new
-			} else {
-				service.data.given_plastic = {"self_key":credit.active.self_key}
-			}
-
+			service.data.plastic = service.plastic.path
 			service.data.place = JSON.stringify(service.data.place)
 
 			var payload = service.data;
@@ -162,18 +159,19 @@
 		vm.estimated_time = cart.estimated_time;
 
 		vm.checking = false;
-		vm.gotoCredits = gotoCredits;
-		vm.gotoMap = gotoMap;
 
 		vm.place = cart.data.place
 		vm.complement = cart.data.complement
-		vm.plastic = cart.data.plastic
-
 		$scope.$watch(function w(scope){return( cart.data )},function c(n,o){
 			vm.place = cart.data.place
 			vm.complement = cart.data.complement
-			vm.plastic = cart.data.plastic
 		});
+
+		vm.plastic = cart.plastic
+		$scope.$watch(function w(scope){return( cart.plastic )},function c(n,o){
+			vm.plastic = cart.plastic
+		});
+
 
 
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
@@ -189,17 +187,6 @@
 		$scope.$watch(function w(scope){return( cart.checking )},function c(n,o){
 			vm.checking = cart.checking;
 		});
-
-		function gotoCredits(back){
-			credit.gotoCredits(back)
-		}
-
-		function gotoMap(back){
-			map.gotoMap(back)
-		}
-
-
-
 	}
 
 

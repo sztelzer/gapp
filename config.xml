@@ -8,6 +8,7 @@
   <plugin name="cordova-plugin-geolocation"/>
   <plugin name="cordova-plugin-whitelist"/>
   <plugin name="cordova-plugin-keyboard"/>
+  <!-- <plugin name="cordova-plugin-googlemaps"/> -->
 
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="webviewbounce" value="false"/>

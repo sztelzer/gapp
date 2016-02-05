@@ -16,15 +16,20 @@
 		return directive
 	}
 
-	function plasticsController($scope, $localStorage, auth, $http, config, $q) {
+	function plasticsController($scope, $localStorage, auth, $http, config, $q, cart) {
 		var vm = this;
 		vm.new = {}
-		vm.active = $localStorage.active
 		vm.plastics = []
 
 		vm.save = save
 		vm.activate = activate
 		vm.remove = remove
+
+		if(typeof $localStorage.active == "undefined") {
+			$localStorage.active = {}
+		}
+		vm.active = $localStorage.active
+		cart.plastic = $localStorage.active
 
 		get()
 		function get(){
@@ -32,8 +37,10 @@
 			$http.get(config.api + '/users/' + auth.id + '/plastics', req_config)
 			.then(
 			function successCallback(response) {
-				console.log(response)
 				vm.plastics = response.data.resources;
+				if(!vm.active.path && vm.plastics && vm.plastics[0]){
+					activate(vm.plastics[0])
+				}
 			},
 			function errorCallback(response) {
 				vm.plastics = []
@@ -61,7 +68,8 @@
 							vm.new = {}
 							$scope.plasticForm.$setPristine()
 							$scope.plasticForm.$setUntouched()
-							console.log(response)
+							// console.log(response)
+							activate(response.data)
 							get()
 						},
 						function(response){
@@ -78,17 +86,24 @@
 		function activate(plastic){
 			$localStorage.active = plastic
 			vm.active = plastic
+			cart.plastic = plastic
 		}
 
 		function remove(plastic){
 			//call delete on plastic.path
 			var req_config = {headers: {'Authorization': auth.token}};
-			$http.post(config.api + '/users/' + auth.id + '/plastics/' + plastic.path, req_config)
+			$http.delete(config.api + plastic.path, req_config)
 			.then(
 				function(response){
+					console.log(response)
+					if(plastic == vm.active){
+						$localStorage.active = ''
+						vm.active = ''
+					}
 					get()
 				},
 				function(response){
+					console.log(response)
 					window.alert("Could not delete this card: "+response)
 				}
 			)

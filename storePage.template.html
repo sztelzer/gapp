@@ -15,7 +15,8 @@
 </div>
 
 <md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left" md-component-id="able-left-menu">
-	<md-subheader>{{app.auth.safe.id}}</md-subheader>
+	<md-subheader style="background-color:#0088FF"></md-subheader>
+	<md-subheader>{{app.auth.id}}</md-subheader>
 	<md-list flex="none">
 		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">Loja</md-list-item>
     	<!-- <md-list-item ng-click="">Perfil</md-list-item> -->
@@ -31,3 +32,6 @@
 		<md-list-item ng-click="app.auth.signout()">Desconectar Conta</md-list-item>
   	</md-list>
 </md-sidenav>
+
+
+cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="AIzaSyCjBmoCxoV9q0MqFz_sYCIPUBQPwyrAPHQ" --variable API_KEY_FOR_IOS="AIzaSyB0zbenUhfjeZTgHuHy17_nCpK0UJWuNLw"

@@ -30,12 +30,16 @@ html, body, .app {
   padding-left: 5%;
 }
 
+
+.md-button {
+	border-radius: 0 !important;
+}
+
+
 .main-toolbar, .clean-toolbar {
 	padding: 20px 0 0 0 !important;
 	margin: 0px !important;
-	height: 60px !important;
-	/*min-height: 40px !important;
-	max-height: 40px !important;*/
+	height: 80px !important;
 }
 
 .main-toolbar-logo {
@@ -71,7 +75,12 @@ md-backdrop.md-opaque {
 	background-color: #000000 !important;
 }
 
-md-list-item > button, md-list-item > button > * {
+body > md-backdrop {
+	background-color: #F4F2EF !important;
+}
+
+md-list-item > button,
+md-list-item > button > * {
 	border-radius: 0px !important;
 }
 
@@ -85,6 +94,10 @@ md-progress-linear .md-container {
 	background-color: rgba(0, 128, 255, 0.66);
 }
 
+md-content.md-default-theme, md-content {
+	background-color: transparent !important;
+}
+
 md-content.store {
 	overflow-x: hidden !important;
 	padding-bottom: 1.3em;
@@ -92,6 +105,7 @@ md-content.store {
 
 md-card {
 	margin: 0px 0px 8px 0px !important;
+	box-shadow: none !important;
 }
 
 input.ng-touched.ng-invalid {
@@ -103,7 +117,7 @@ md-input-container label {
 }
 
 md-input-container {
-	/*margin: 18px 0 0 0 !important;*/
+	margin: 18px 0 0 0 !important;
 }
 
 .card-action {
@@ -181,7 +195,9 @@ md-input-container {
 }
 
 
-
+.background-white {
+	background-color: white !important;
+}
 
 .navbar-fixed-top {
 	padding: 20pt 0 0 0;
@@ -257,12 +273,11 @@ md-card .md-card-image {
 .card-content {
 	padding: 1em 1em 0.5em 1em;
 	font-family: "roboto slab";
-	border-top: 1px solid rgba(256, 256, 256, 0.9);
 }
 
 .card-credit {
 	font-family: "roboto";
-	border-top: 1px solid rgba(256, 256, 256, 0.9);
+	font-weight: 300;
 }
 
 

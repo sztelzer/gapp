@@ -25,11 +25,11 @@
 		vm.activate = activate
 		vm.remove = remove
 
-		if(typeof $localStorage.active == "undefined") {
-			$localStorage.active = {}
+		if(typeof $localStorage.plastic == "undefined") {
+			$localStorage.plastic = {}
 		}
-		vm.active = $localStorage.active
-		cart.plastic = $localStorage.active
+		vm.plastic = $localStorage.plastic
+		cart.plastic = $localStorage.plastic
 
 		get()
 		function get(){
@@ -38,7 +38,7 @@
 			.then(
 			function successCallback(response) {
 				vm.plastics = response.data.resources;
-				if(!vm.active.path && vm.plastics && vm.plastics[0]){
+				if(!vm.plastic.path && vm.plastics && vm.plastics[0]){
 					activate(vm.plastics[0])
 				}
 			},
@@ -84,9 +84,9 @@
 		}
 
 		function activate(plastic){
-			$localStorage.active = plastic
-			vm.active = plastic
-			cart.plastic = plastic
+			$localStorage.plastic = plastic
+			$rootScope.plastic = plastic
+			vm.plastic = plastic
 		}
 
 		function remove(plastic){
@@ -96,9 +96,9 @@
 			.then(
 				function(response){
 					console.log(response)
-					if(plastic == vm.active){
-						$localStorage.active = ''
-						vm.active = ''
+					if(plastic == vm.plastic){
+						$localStorage.plastic = ''
+						vm.plastic = ''
 					}
 					get()
 				},

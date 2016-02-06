@@ -7,7 +7,7 @@
 		.directive('elementOffer', offerDirective)
 
 
-	function offerService(auth, config, cart, $http, $q, $localStorage) {
+	function offerService(auth, config, cart, $http, $q, $localStorage, $rootScope) {
 		var service = {
 			loadOffer: loadOffer,
 			checkOffer: checkOffer,
@@ -35,7 +35,7 @@
 
 			// check if actual location is valid for this node
 			var linear_distance = geolib.getDistance(
-				{latitude:cart.data.latitude, longitude:cart.data.longitude},
+				{latitude:$rootScope.latitude, longitude:$rootScope.longitude},
 				{latitude:storedOffer.object.node_latitude, longitude:storedOffer.object.node_longitude})
 
 			if(linear_distance > storedOffer.object.node_radius){
@@ -54,8 +54,8 @@
 			var payload = {
 				company: config.company_path,
 				node_function: config.node_function,
-				latitude: cart.data.latitude,
-				longitude: cart.data.longitude,
+				latitude: $rootScope.latitude,
+				longitude: $rootScope.longitude,
 				list_size: config.offers_count
 			}
 
@@ -116,67 +116,41 @@
 
 
 
-	function offerController(offer, cart, map) {
+	function offerController(offer, cart) {
 		var vm = this
-		vm.loading = true
-		getLocation()
 
-		function getLocation(){
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					cart.data.latitude = position.coords.latitude
-					cart.data.longitude = position.coords.longitude
-					cart.data.accuracy = position.coords.accuracy
-					cart.gotlocation = true
-					if(position.coords.accuracy > 1000) {
-						map.gotoMap('storePage.offerPage')
-					} else {
-						init()
-					}
-				}, function() {
-					map.gotoMap('storePage.offerPage')
-					vm.loading = false;
-				});
-			} else {
-				map.gotoMap('storePage.offerPage')
-				vm.loading = false;
-			}
-		}
-
-		function init(){
-			vm.loading = true;
-			if (offer.checkOffer() == true) {
-				var updateOfferStocks = offer.updateOfferStocks(offer.data.path)
-				updateOfferStocks.then(
-					function(resolve) {
-						vm.data = offer.data;
-						vm.loading = false;
-						cart.data.offer = vm.data.path;
-						cart.estimated_time = vm.data.object.node_estimated + 900;
-					},
-					function(reject) {
-						vm.loading = false;
-
-					}
-				);
-				return
-			}
-
-			var loadOffer = offer.loadOffer();
-			loadOffer.then(
+		vm.loading = true;
+		if (offer.checkOffer() == true) {
+			var updateOfferStocks = offer.updateOfferStocks(offer.data.path)
+			updateOfferStocks.then(
 				function(resolve) {
 					vm.data = offer.data;
-					vm.loading = false;
-					cart.data.offer = vm.data.path;
+					cart.offer = offer.data.path;
 					cart.estimated_time = vm.data.object.node_estimated + 900;
-
+					vm.loading = false;
 				},
 				function(reject) {
-					console.log('Failed loading offer: ' + reject);
 					vm.loading = false;
+
 				}
 			);
+			return
 		}
+
+		var loadOffer = offer.loadOffer();
+		loadOffer.then(
+			function(resolve) {
+				vm.data = offer.data;
+				vm.loading = false;
+				cart.offer = offer.data.path;
+				cart.estimated_time = vm.data.object.node_estimated + 900;
+
+			},
+			function(reject) {
+				console.log('Failed loading offer: ' + reject);
+				vm.loading = false;
+			}
+		);
 
 
 

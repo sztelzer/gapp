@@ -6,7 +6,7 @@
 			<span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está seguro.</span>
 		</div>
 
-		<md-card flex="none" layout="row" class="card-full card-credit md-padding" ng-class="plastics.active.path == plastic.path ? 'md-whiteframe-8dp background-white' : '' " style="margin-top:0px" ng-repeat="plastic in plastics.plastics track by plastic.path">
+		<md-card flex="none" layout="row" class="card-full card-credit md-padding" ng-class="plastics.plastic.path == plastic.path ? 'md-whiteframe-8dp background-white' : '' " style="margin-top:0px" ng-repeat="plastic in plastics.plastics track by plastic.path">
 				<div flex layout="row" layout-align="center center" class="md-body">
 					****{{plastic.object.mask}}
 				</div>
@@ -19,8 +19,8 @@
 				</div>
 
 				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action" ng-class="plastics.active.path == plastic.path ? '' : 'md-accent'" ng-click="plastics.activate(plastic)" ng-disable="plastics.active.path == plastic.path">
-						{{plastics.active.path == plastic.path ? "Em Uso" : "Ativar"}}
+					<md-button class="card-action" ng-class="plastics.plastic.path == plastic.path ? '' : 'md-accent'" ng-click="plastics.activate(plastic)" ng-disable="plastics.plastic.path == plastic.path">
+						{{plastics.plastic.path == plastic.path ? "Em Uso" : "Ativar"}}
 					</md-button>
 				</div>
 		</md-card>

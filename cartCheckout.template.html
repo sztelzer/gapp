@@ -2,9 +2,9 @@
 
 	<div class="md-body" style="width:100%" layout="row" layout-align="start center">
 		<div flex class="md-caption">
-			<span ng-hide="cart.place.description" style="color:red" class="md-caption">Nenhum endereço.</span>
-			<span ng-bind="cart.place.description"></span>
-			<span ng-show="cart.complement"><br/><span ng-bind="cart.complement"></span></span>
+			<span ng-hide="$root.place.description" style="color:red" class="md-caption">Nenhum endereço.</span>
+			<span ng-bind="$root.place.description"></span>
+			<span ng-show="$root.complement"><br/><span ng-bind="cart.complement"></span></span>
 		</div>
 
 		<div flex="none">
@@ -39,6 +39,6 @@
 
 
 
-	<md-button ng-click="cart.send()" class="md-accent md-raised" ng-disabled="!cart.card.self_key || !cart.place.place_id">Enviar Pedido</md-button>
+	<md-button ng-click="cart.send()" class="md-accent md-raised" ng-disabled="!cart.plastic || !cart.place">Enviar Pedido</md-button>
 
 </div>

@@ -34,6 +34,7 @@
 	<script src="promoted.js"></script>
 	<script src="cart.js"></script>
 	<script src="map.js"></script>
+
 	<script src="feedbacks.js"></script>
 	<script src="orders.js"></script>
 	<script src="confirmation.js"></script>
@@ -45,17 +46,16 @@
 		angular.element(document).ready(function () {
 	      if (window.cordova) {
 	        document.addEventListener('deviceready', function () {
-				angular.bootstrap(document, ['able']);
 
 				Keyboard.shrinkView(true);
 				Keyboard.hideFormAccessoryBar(false);
 				Keyboard.disableScrollingInShrinkView(true);
 				Keyboard.automaticScrollToTopOnHiding = true;
-
 				Stripe.setPublishableKey('pk_test_85MXK5Zb67wdbX1yUZ7QcG8K');
 
-				// FastClick.attach(document.body);
 				// window.HelpshiftPlugin.install("d39dcb147a53f4491218d67c09ad6103", "able.helpshift.com", "able_platform_20151202232813761-cc37683499f9965");
+
+				angular.bootstrap(document, ['able']);
 	        }, false);
 	      } else {
 	        angular.bootstrap(document, ['able']);

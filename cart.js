@@ -7,27 +7,8 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, config, $http, $q, $state, orders, $localStorage, map) {
+	function cartService(auth, config, $http, $q, $state, orders, $localStorage, $rootScope) {
 		var service = {
-			data: {
-				latitude: -23.543464, //galeria do rock
-				longitude: -46.6391852,
-				accuracy: 10,
-				place: {},
-				plastic: '',
-				complement: '',
-				name: '',
-				offer: '',
-				voucher: '',
-				total_freight: 0,
-				total_items: 0,
-				total_value: 0,
-				total_quantity: 0,
-				items_selected: [],
-			},
-			gotlocation: false,
-			plastic: $localStorage.active,
-
 			estimated_time: 3600,
 			items_selected: [],
 			freight_full: 22.90,
@@ -36,6 +17,7 @@
 			product_total: 0,
 			value_total: 0,
 			quantity_total: 0,
+			offer: {},
 
 			putOne: putOne,
 			takeOne: takeOne,
@@ -46,44 +28,48 @@
 		return service
 
 		function empty(){
+			service = {
+				estimated_time: 3600,
+				items_selected: [],
+				freight_full: 22.90,
+				freight_discount: 0,
+				freight_total: 0,
+				product_total: 0,
+				value_total: 0,
+				quantity_total: 0,
+				checking: false,
+				offer: {}
+			}
 		}
 
-
 		function send(){
-			//put the items array on the data payload
-			service.data.items_selected = []
+			var payload = {}
+			payload.items_selected = []
 			Object.keys(service.items_selected).forEach(function(key) {
 				if(service.items_selected[key] > 0){
-					service.data.items_selected.push({
+					payload.items_selected.push({
 						promoted: key,
 						quantity: service.items_selected[key]
 					})
 				}
 			});
 
-			service.data.total_freight = +(service.freight_total).toFixed(2);
-			service.data.total_items = +(service.product_total).toFixed(2);
-			service.data.total_quantity = service.quantity_total;
-			service.data.total_value = +(service.value_total).toFixed(2);
+			payload.total_freight = +(service.freight_total).toFixed(2);
+			payload.total_items = +(service.product_total).toFixed(2);
+			payload.total_quantity = service.quantity_total;
+			payload.total_value = +(service.value_total).toFixed(2);
+			payload.plastic = $rootScope.plastic.path
+			payload.place = JSON.stringify($rootScope.place)
+			payload.offer = service.offer
 
-			service.data.plastic = service.plastic.path
-			service.data.place = JSON.stringify(service.data.place)
-
-			var payload = service.data;
 			var req_config = {headers: {'Authorization': auth.token}};
 
 			//return a promissssssse
 			return $q(function(resolve, reject) {
 				$http.post(config.api + '/users/' + auth.id + '/orders', payload, req_config).then(
 					function successCallback(response) {
-						if(response.data.object.payments != null) {
-							credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
-							orders.last = response.data.path;
-							$state.go('confirmationPage');
-						} else {
-							credit.active = {}
-							window.alert('error saving credit card, try another one')
-						}
+						orders.last = response.data.path;
+						$state.go('confirmationPage');
 						service.empty();
 						resolve();
 					},
@@ -152,26 +138,24 @@
 		return directive
 	}
 
-	function cartController($scope, cart, offer, map) {
+	function cartController($scope, cart, offer, $rootScope, config, auth, $http, $localStorage) {
 		var vm = this;
 		vm.send = cart.send;
 		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
-
 		vm.checking = false;
 
-		vm.place = cart.data.place
-		vm.complement = cart.data.complement
-		$scope.$watch(function w(scope){return( cart.data )},function c(n,o){
-			vm.place = cart.data.place
-			vm.complement = cart.data.complement
+		vm.place = $rootScope.place
+		vm.complement = $rootScope.complement
+		$scope.$watch(function w(scope){return( $rootScope.place )},function c(n,o){
+			vm.place = $rootScope.place
+			vm.complement = $rootScope.complement
 		});
 
-		vm.plastic = cart.plastic
-		$scope.$watch(function w(scope){return( cart.plastic )},function c(n,o){
-			vm.plastic = cart.plastic
+		vm.plastic = $rootScope.plastic
+		$scope.$watch(function w(scope){return( $rootScope.plastic )},function c(n,o){
+			vm.plastic = $rootScope.plastic
 		});
-
 
 
 		$scope.$watch(function w(scope){return( cart.estimated_time )},function c(n,o){
@@ -187,6 +171,24 @@
 		$scope.$watch(function w(scope){return( cart.checking )},function c(n,o){
 			vm.checking = cart.checking;
 		});
+
+
+		if(!$rootScope.plastic){
+			var req_config = {headers: {'Authorization': auth.token}};
+			$http.get(config.api + '/users/' + auth.id + '/plastics', req_config)
+				.then(
+					function successCallback(response) {
+						var plastics = response.data.resources;
+						if(plastics && plastics[0]){
+							$localStorage.plastic = plastics[0]
+							$rootScope.plastic = plastics[0]
+							vm.plastic = plastics[0]
+						}
+					},
+					function errorCallback(response){}
+				)
+		}
+
 	}
 
 

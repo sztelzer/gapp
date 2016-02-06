@@ -219,7 +219,7 @@
 			$mdThemingProvider.theme('default').backgroundPalette('ivoryAble')
 	})
 
-	.run(function ($rootScope, $state, auth) {
+	.run(function ($rootScope, $state, auth, cart) {
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if (toState.data.requireLogin && !auth.token) {
@@ -231,6 +231,64 @@
 				$state.go('storePage.offerPage');
 			}
 		})
+
+
+		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+			if(toState.name == 'storePage.offerPage' && !$rootScope.located ){
+				if (navigator.geolocation) {
+					event.preventDefault();
+					$rootScope.locating = true
+		 			navigator.geolocation.getCurrentPosition(
+						function(position) {
+
+							new google.maps.Geocoder().geocode({'location':{'lat':position.coords.latitude,'lng':position.coords.longitude}}, function(results, status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									$rootScope.place = {
+										description: results[0].formatted_address,
+										place_id: results[0].place_id
+									}
+								} else {
+									console.log(status)
+								}
+							});
+
+
+							$rootScope.latitude = position.coords.latitude
+							$rootScope.longitude = position.coords.longitude
+							$rootScope.accuracy = position.coords.accuracy
+
+							$rootScope.addressed = true
+							$rootScope.located = true
+							$rootScope.locating = false
+							$state.go('storePage.offerPage');
+						},
+						function() {
+							event.preventDefault();
+							$rootScope.located = false
+							$rootScope.locating = false
+							$state.go('storePage.mapPage');
+						}
+					);
+				} else {
+					event.preventDefault();
+					$rootScope.located = false
+					$rootScope.locating = false
+					$state.go('storePage.mapPage');
+				}
+			}
+		})
+
+
+
+
+
+
+
+
+
+
+
+
 	})
 
 

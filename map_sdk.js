@@ -1,5 +1,5 @@
 (function () {
-	// 'use strict';
+	'use strict';
 
 	angular
 		.module('able')
@@ -15,56 +15,73 @@
 		return directive
 	}
 
-	function mapController($q, $state, $rootScope, $scope, $timeout){
+	function mapController(cart, $q, $rootScope, $scope, $timeout){
 		var vm = this
+		vm.complement = ''
+
 		$scope.selectedItem
 		$scope.searchText
 		$scope.search = search
 		$scope.place = place
-		vm.complement = ''
+		//vm.loading = true
 		vm.setCartAddress = setCartAddress
 
-		if(!$rootScope.addressed){
-			vm.searching = true
-		}
 
 		var autocomplete = new google.maps.places.AutocompleteService()
-		var placer = new google.maps.places.PlacesService(document.getElementById('mapping'))
+		var place = new google.maps.places.PlacesService(document.getElementById('map'))
 		var geocoder = new google.maps.Geocoder()
+
 		if(!$rootScope.map){
-			$rootScope.map = new google.maps.Map(document.getElementById('mapping'), {
-				zoom: 16,
-				center: {lat: $rootScope.latitude, lng: $rootScope.longitude},
-				disableDefaultUI: true
-			})
+			$rootScope.map = plugin.google.maps.Map.getMap(document.getElementById("map"))
 		}
 		var map = $rootScope.map
 
+		map.addEventListener(plugin.google.maps.event.MAP_READY, function(map){
+			map = plugin.google.maps.Map.getMap({
+				'backgroundColor': 'white',
+				'controls': {
+				  'myLocationButton': true,
+				  'indoorPicker': true,
+				  'zoom': true
+				},
+				'gestures': {
+				  'scroll': true,
+				  'tilt': false,
+				  'rotate': false,
+				  'zoom': true
+				},
+				'camera': {
+				  'latLng': maps.LatLng($rootScope.latitude, $rootScope.longitude);,
+				  'zoom': 16,
+				}
+			})
+			$rootScope.locating = false
+		})
+
 		if($rootScope.located){
 			getAddress($rootScope.latitude, $rootScope.longitude)
+			$rootScope.locating = false
 		} else {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					$rootScope.latitude = position.coords.latitude
 					$rootScope.longitude = position.coords.longitude
 					$rootScope.accuracy = position.coords.accuracy
-
 					getAddress($rootScope.latitude, $rootScope.longitude)
 					map.panTo({
 						lat:$rootScope.latitude,
 						lng:$rootScope.longitude,
 					})
-					// google.maps.event.trigger(map, 'resize'); //necessary to wake up after first init
 					$rootScope.located = true
 					$rootScope.locating = false
 				}, function() {
-					// handleLocationError(true, infoWindow, map.getCenter());
+					$rootScope.located = false
+					$rootScope.locating = false
 				});
 			}
 		}
 
 		function search(address) {
-			vm.searching = true
 			if(address) {
 				var deferred = $q.defer();
 				getAutocomplete(address).then(
@@ -74,6 +91,7 @@
 							for (var i = 0, prediction; prediction = predictions[i]; i++) {
 								results.push(prediction);
 							}
+							google.maps.event.trigger(map, 'resize'); //necessary to wake up after first init
 							deferred.resolve(results);
 						}
 					}
@@ -99,21 +117,15 @@
 
 		function place(item){
 			if (item) {
-				vm.searching = false
 				var place_id = item.place_id
-				$rootScope.place = item
-				$rootScope.addressed = true
-				$rootScope.located = true
-				$rootScope.locating = false
 				var deferred = $q.defer();
 				getPlace(place_id).then(
 					function (infos) {
-						$rootScope.place.address_components = infos.address_components
 						$rootScope.latitude = infos.geometry.location.lat()
 						$rootScope.longitude = infos.geometry.location.lng()
 						$rootScope.accuracy = 0
-						map.panTo(infos.geometry.location)
-						$rootScope.addressed = true
+						mapp.panTo(infos.geometry.location)
+						vm.goodtogo = true
 					}
 				);
 				return deferred.promise;
@@ -122,7 +134,7 @@
 
 		function getPlace(place_id) {
 			var deferred = $q.defer();
-			placer.getDetails({placeId:place_id}, function (data) {
+			place.getDetails({placeId:place_id}, function (data) {
 				deferred.resolve(data);
 			});
 			return deferred.promise;
@@ -131,16 +143,17 @@
 		function getAddress(lat, lng) {
 			geocoder.geocode({'location':{'lat':lat,'lng':lng}}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
+					console.log(results)
 					$scope.selectedItem = {
 						description: results[0].formatted_address,
 						place_id: results[0].place_id
 					}
-					$rootScope.place = $scope.selectedItem
 					$scope.searchText = results[0].formatted_address
 					$scope.$apply()
 				} else {
 					console.log(status)
 				}
+				$rootScope.addressed = true
 			});
 		}
 
@@ -158,9 +171,12 @@
 		});
 
 		function setCartAddress() {
-			console.log($rootScope.place)
-			$state.go('storePage.offerPage')
+			cart.gotlocation = true
+			cart.data.place = $scope.selectedItem
+			cart.data.complement = vm.complement
+			map.gotoBack()
 		}
+
 
 
 	}

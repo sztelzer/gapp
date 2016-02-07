@@ -33,32 +33,27 @@
 			</div> -->
 
 			<form name="plasticForm" flex="none" layout="column" ng-cloak>
-				<md-input-container>
+				<md-input-container md-no-float>
 					<label>Número do Cartão</label>
 					<input type="tel" name="number" ng-model="plastics.new.number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class='creditForm.number.$card.type' ng-required="true" required/>
 				</md-input-container>
 
 				<div layout="row">
-					<md-input-container>
+					<md-input-container md-no-float>
 						<label>Validade</label>
 						<input type="tel" ng-model="plastics.new.expiry" payments-validate="expiry" payments-format="expiry" ng-required="true" required/>
 					</md-input-container>
 
-					<md-input-container>
+					<md-input-container md-no-float>
 						<label>Código de Segurança</label>
 						<input type="tel" ng-model="plastics.new.cvc" payments-validate="cvc" payments-format="cvc" ng-required="true" required payments-type-model="type"/>
 					</md-input-container>
 				</div>
-				<!-- <md-input-container>
-					<label>Nome Portador</label>
-					<input type="text" ng-model="credit.holder" minlength="5" maxlength="40" ng-required="true" required/>
-				</md-input-container> -->
-				<div style="width:100%;" layout="row" layout-align="center center">
-					<md-button class="md-raised md-accent wider" ng-click="plastics.save()" ng-disabled="plasticForm.$invalid">Salvar Cartão</md-button>
-				</div>
-
 			</form>
 		</md-card>
 
+		<div flex="none" layout="row">
+			<md-button class="md-raised md-accent full-button" ng-click="plastics.save()" ng-disabled="plasticForm.$invalid">Salvar Cartão</md-button>
+		</div>
 
 </md-content>

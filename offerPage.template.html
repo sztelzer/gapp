@@ -3,7 +3,10 @@
 	<div flex element-promoted ng-repeat="promoted in offer.data.object.promoteds | orderBy:'promoted.object.rank'" ng-init="vm.promoted = promoted;"></div>
 </md-content>
 <div class="cart-group" flex="none" ng-cloak>
-	<div element-cart ng-show="cart.quantity_total" layout="row" layout-align="space-between center" class="carting" ng-cloak></div>
-	<div element-cart-checkout ng-show="cart.checking" class="" ng-cloak></div>
-	<div id="mapping2"></div>
+	<a element-cart ng-show="cart.quantity_total" layout="row" layout-align="space-between center" ng-click="cart.checking = !cart.checking"
+	ng-class="cart.checking ? 'cart checking' : 'cart closed'"
+	md-ink-ripple="cart.checking ? '#000000' : '#FFFFFF'"
+	ng-cloak></a>
+
+	<div element-cart-checkout ng-show="cart.checking && cart.quantity_total" class="checker" ng-cloak></div>
 </div>

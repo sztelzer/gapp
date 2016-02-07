@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function plasticsController($scope, $localStorage, auth, $http, config, $q, cart) {
+	function plasticsController($rootScope, $scope, $localStorage, auth, $http, config, $q, cart) {
 		var vm = this;
 		vm.new = {}
 		vm.plastics = []

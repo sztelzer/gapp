@@ -21,7 +21,6 @@
 		$scope.searchText
 		$scope.search = search
 		$scope.place = place
-		vm.complement = ''
 		vm.setCartAddress = setCartAddress
 
 		if(!$rootScope.addressed){

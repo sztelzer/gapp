@@ -16,11 +16,14 @@
 		return directive
 	}
 
-	function confirmationController(orders, $state) {
+	function confirmationController($state, cart) {
 		var vm = this;
 		vm.reset = reset
+		vm.last = cart.last
 
 		function reset(){
+			cart.reset = true
+			console.log(cart.reset)
 			$state.go('storePage.offerPage')
 		}
 

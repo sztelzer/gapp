@@ -1,9 +1,9 @@
 <div element-quest flex layout-fill layout="column">
-	<md-toolbar flex="none" class="clean-toolbar md-whiteframe-4dp" layout="row" layout-align="start center" ng-cloak>
+	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak>
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
-		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-black"></md-icon>
+		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
-		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo-small">
+		<img flex="none" src="imgs/able-white.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Criar Perfil</div>
 		<div flex="none" style="width:78px"></div>
 	</md-toolbar>
@@ -57,6 +57,11 @@
 					  </div>
 					</div>
 				</md-input-container>
+
+				<div "md-caption">
+				  Enviando seus dados você confirma que possui mais de 18 anos para navegar e realizar compras neste aplicativo.
+				</div>
+
 
 				<div style="width:100%" layout="row" layout-align="space-around center">
 					<md-button class="md-raised md-accent wider" ng-click="quest.send()" ng-disabled="questForm.$invalid">Criar Perfil</md-button>

@@ -21,7 +21,7 @@
 		function checkOffer() {
 			// check if have some offer loaded.
 			var storedOffer = $localStorage.offer;
-			if (storedOffer === undefined || storedOffer === '' || storedOffer == {}) {
+			if (storedOffer == undefined || storedOffer == '' || storedOffer == {}) {
 				return false;
 			}
 
@@ -44,6 +44,7 @@
 
 			var original_pace = storedOffer.object.node_estimated/storedOffer.object.node_linear;
 			storedOffer.object.node_estimated = linear_distance * original_pace;
+			storedOffer.object.status = 'attended'
 
 			// check each stock?
 			return true;
@@ -118,8 +119,8 @@
 
 	function offerController(offer, cart) {
 		var vm = this
-
 		vm.loading = true;
+
 		if (offer.checkOffer() == true) {
 			var updateOfferStocks = offer.updateOfferStocks(offer.data.path)
 			updateOfferStocks.then(

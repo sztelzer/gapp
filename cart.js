@@ -7,7 +7,7 @@
 		.directive('elementCart', cartDirective)
 		.directive('elementCartCheckout', cartCheckoutDirective)
 
-	function cartService(auth, config, $http, $q, $state, orders, $localStorage, $rootScope) {
+	function cartService(auth, config, $http, $q, $state, $localStorage, $rootScope) {
 		var service = {
 			estimated_time: 3600,
 			items_selected: [],
@@ -23,7 +23,9 @@
 			takeOne: takeOne,
 			send: send,
 			empty: empty,
-			checking: false
+			checking: false,
+			last: {},
+			reset: false
 		}
 		return service
 
@@ -38,11 +40,13 @@
 				value_total: 0,
 				quantity_total: 0,
 				checking: false,
-				offer: {}
+				offer: {},
+				sending: false
 			}
 		}
 
 		function send(){
+			service.sending = true
 			var payload = {}
 			payload.items_selected = []
 			Object.keys(service.items_selected).forEach(function(key) {
@@ -68,13 +72,14 @@
 			return $q(function(resolve, reject) {
 				$http.post(config.api + '/users/' + auth.id + '/orders', payload, req_config).then(
 					function successCallback(response) {
-						orders.last = response.data.path;
+						service.last = response.data;
+						service.sending = false
 						$state.go('confirmationPage');
 						service.empty();
 						resolve();
 					},
 					function errorCallback(response) {
-						// credit.saveNewCardOnCredits(response.data.object.payments[0].object.plastic.path);
+						service.sending = false
 						reject();
 					}
 				)
@@ -144,6 +149,11 @@
 		vm.empty = cart.empty;
 		vm.estimated_time = cart.estimated_time;
 		vm.checking = false;
+
+		vm.sending = cart.sending
+		$scope.$watch(function w(scope){return( cart.sending )},function c(n,o){
+			vm.sending = cart.sending
+		});
 
 		vm.place = $rootScope.place
 		vm.complement = $rootScope.complement

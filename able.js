@@ -219,7 +219,7 @@
 			$mdThemingProvider.theme('default').backgroundPalette('ivoryAble')
 	})
 
-	.run(function ($rootScope, $state, auth, cart) {
+	.run(function ($rootScope, $state, auth, cart, $window) {
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if (toState.data.requireLogin && !auth.token) {
@@ -232,6 +232,12 @@
 			}
 		})
 
+		// $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+		// 	console.log(cart.reset)
+		// 	if (cart.reset == true) {
+		// 		$window.location.reload()
+		// 	}
+		// })
 
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if(toState.name == 'storePage.offerPage' && !$rootScope.located ){
@@ -278,7 +284,9 @@
 			}
 		})
 
-
+		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+			Keyboard.hide()
+		})
 
 
 

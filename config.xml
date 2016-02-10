@@ -1,6 +1,6 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.1.0">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.3">
   <name>Able</name>
-  <description>Have great craft beer choices selected by our artificial inteligence sommerlier, get even better selections over time as it learns and evolves your tastes. Receive your products wherever you are with same hour delivery on selected areas.</description>
+  <description>Experimente ótimas cervejas artesanais selecionadas pelo nosso sommelier virtual especialmente para você. Melhore ainda mais sua experiência ao longo do tempo enquanto ele aprende com suas escolhas e avaliações. Receba suas garrafas geladas onde estiver, na mesma hora. Disponível agora em São Paulo/SP.</description>
   <author href="https://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
   <content src="index.html"/>
 
@@ -34,15 +34,7 @@
   <preference name="StatusBarStyle" value="blacktranslucent" />
 
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
-
-
-  <icon src="icon.png"/>
-  <splash src="splash.png"/>
-  <splash src="res/ios/splash.png" platform="ios" width="320" height="480"/>
-  <splash src="res/ios/splash@2x.png" platform="ios" width="640" height="960"/>
-  <splash src="res/ios/splash568h@2x.png" platform="ios" width="640" height="1136"/>
-  <splash src="res/ios/splash667h@2x.png" platform="ios" width="750" height="1334"/>
-  <splash src="res/ios/splash736h@3x.png" platform="ios" width="1242" height="2208"/>
+  <icon src="res/ios/icon.png" platform="ios" width="57" height="57"/>
 
   <allow-navigation href="*" />
   <allow-intent href="*" />
@@ -50,11 +42,61 @@
 
   <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/>
 
-  <platform name="ios">
-    <allow-intent href="itms:*"/>
-    <allow-intent href="itms-apps:*"/>
-	<preference name="ShowSplashScreenSpinner" value="false"/>
-    <preference name="AutoHideSplashScreen" value="true"/>
+	<platform name="ios">
+		<allow-intent href="itms:*"/>
+		<allow-intent href="itms-apps:*"/>
+		<preference name="ShowSplashScreenSpinner" value="false"/>
+		<preference name="AutoHideSplashScreen" value="true"/>
 
-  </platform>
+
+		<icon src="res/ios/icon.png" width="57" height="57"/>
+		<!-- iOS 7.0+ -->
+		<!-- iPhone / iPod Touch  -->
+		<!-- <icon src="res/ios/icon-60.png" width="60" height="60" /> -->
+		<icon src="res/ios/icon-60@2x.png" width="120" height="120" />
+		<icon src="res/ios/icon-60@3x.png" width="180" height="180" />
+
+		<!-- iPad -->
+		<icon src="res/ios/icon-76.png" width="76" height="76" />
+		<icon src="res/ios/icon-76@2x.png" width="152" height="152" />
+		<!-- iOS 6.1 -->
+		<!-- Spotlight Icon -->
+		<icon src="res/ios/icon-40.png" width="40" height="40" />
+		<icon src="res/ios/icon-40@2x.png" width="80" height="80" />
+		<!-- iPhone / iPod Touch -->
+		<icon src="res/ios/icon.png" width="57" height="57" />
+		<icon src="res/ios/icon@2x.png" width="114" height="114" />
+		<!-- iPad -->
+		<icon src="res/ios/icon-72.png" width="72" height="72" />
+		<icon src="res/ios/icon-72@2x.png" width="144" height="144" />
+		<!-- iPhone Spotlight and Settings Icon -->
+		<icon src="res/ios/icon-small.png" width="29" height="29" />
+		<icon src="res/ios/icon-small@2x.png" width="58" height="58" />
+		<icon src="res/ios/icon-small@3x.png" width="87" height="87" />
+		<!-- iPad Spotlight and Settings Icon -->
+		<icon src="res/ios/icon-50.png" width="50" height="50" />
+		<icon src="res/ios/icon-50@2x.png" width="100" height="100" />
+
+
+
+
+		<splash src="res/ios/320x480.png"   width="320"  height="480"/>
+		<splash src="res/ios/640x960.png"   width="640"  height="960"/>
+		<splash src="res/ios/640x1136.png"  width="640"  height="1136"/>
+		<splash src="res/ios/750x1334.png"  width="750"  height="1334"/>
+		<splash src="res/ios/1242x2208.png" width="1242" height="2208"/>
+
+		<!-- <splash src="res/screen/ios/Default~iphone.png" width="320" height="480"/>
+		<splash src="res/screen/ios/Default@2x~iphone.png" width="640" height="960"/>
+		<splash src="res/screen/ios/Default-Portrait~ipad.png" width="768" height="1024"/>
+		<splash src="res/screen/ios/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
+		<splash src="res/screen/ios/Default-Landscape~ipad.png" width="1024" height="768"/>
+		<splash src="res/screen/ios/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
+		<splash src="res/screen/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>
+		<splash src="res/screen/ios/Default-667h.png" width="750" height="1334"/>
+		<splash src="res/screen/ios/Default-736h.png" width="1242" height="2208"/>
+		<splash src="res/screen/ios/Default-Landscape-736h.png" width="2208" height="1242"/> -->
+
+
+	</platform>
 </widget>

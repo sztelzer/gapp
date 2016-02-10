@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function plasticsController($rootScope, $scope, $localStorage, auth, $http, config, $q, cart) {
+	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, cart) {
 		var vm = this;
 		vm.new = {}
 		vm.plastics = []
@@ -87,6 +87,7 @@
 			$localStorage.plastic = plastic
 			$rootScope.plastic = plastic
 			vm.plastic = plastic
+			$state.go('storePage.offerPage')
 		}
 
 		function remove(plastic){
@@ -104,18 +105,10 @@
 				},
 				function(response){
 					console.log(response)
-					window.alert("Could not delete this card: "+response)
+					//window.alert("Could not delete this card: "+response)
 				}
 			)
-
-
-
 		}
-
-
-
-
-
 
 		function maskPlasticNumber(number){
 			var a = number.substring(0, 4)

@@ -1,4 +1,4 @@
-<md-content plastics-element flex ng-cloak layout="column" class="">
+<md-content plastics-element layout="column">
 
 		<div style="margin-top:8px"></div>
 
@@ -6,7 +6,7 @@
 			<span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está seguro.</span>
 		</div>
 
-		<md-card flex="none" layout="row" class="card-full card-credit md-padding" ng-class="plastics.plastic.path == plastic.path ? 'md-whiteframe-8dp background-white' : '' " style="margin-top:0px" ng-repeat="plastic in plastics.plastics track by plastic.path">
+		<md-card layout="row" class="card-full card-credit md-padding" ng-class="plastics.plastic.path == plastic.path ? 'md-whiteframe-8dp background-white' : '' " style="margin-top:0px" ng-repeat="plastic in plastics.plastics track by plastic.path">
 				<div flex layout="row" layout-align="center center" class="md-body">
 					****{{plastic.object.mask}}
 				</div>
@@ -20,31 +20,29 @@
 
 				<div flex layout="row" layout-align="center center">
 					<md-button class="card-action" ng-class="plastics.plastic.path == plastic.path ? '' : 'md-accent'" ng-click="plastics.activate(plastic)" ng-disable="plastics.plastic.path == plastic.path">
-						{{plastics.plastic.path == plastic.path ? "Em Uso" : "Ativar"}}
+						{{plastics.plastic.path == plastic.path ? "Em Uso" : "Usar"}}
 					</md-button>
 				</div>
 		</md-card>
 
 
-		<md-card flex="none" class="card-full card-credit md-padding background-white">
+		<md-card class="card-full card-credit md-padding background-white">
 
-			<!-- <div flex="none" layout="column" ng-cloak>
-				<span class="md-body-2">Adicionar cartão.</span>
-			</div> -->
+			<div class="md-caption">Aceitamos cartões de crédito VISA, Mastercard e American&nbsp;Express</div>
 
-			<form name="plasticForm" flex="none" layout="column" ng-cloak>
-				<md-input-container md-no-float>
+			<form layout="column" name="plasticForm" ng-cloak>
+				<md-input-container flex="none" class="no-errors">
 					<label>Número do Cartão</label>
 					<input type="tel" name="number" ng-model="plastics.new.number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class='creditForm.number.$card.type' ng-required="true" required/>
 				</md-input-container>
 
-				<div layout="row">
-					<md-input-container md-no-float>
+				<div flex="none" layout="row" layout-align="spacebetween center">
+					<md-input-container flex class="no-errors">
 						<label>Validade</label>
 						<input type="tel" ng-model="plastics.new.expiry" payments-validate="expiry" payments-format="expiry" ng-required="true" required/>
 					</md-input-container>
 
-					<md-input-container md-no-float>
+					<md-input-container flex class="no-errors">
 						<label>Código de Segurança</label>
 						<input type="tel" ng-model="plastics.new.cvc" payments-validate="cvc" payments-format="cvc" ng-required="true" required payments-type-model="type"/>
 					</md-input-container>

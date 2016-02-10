@@ -22,12 +22,13 @@
 					<div flex>
 					    <div class="promoted-recipe">{{promoted.object.sku.object.recipe.object.name}}</div>
 						<div class="promoted-maker">{{promoted.object.sku.object.maker.object.name}}</div>
-						<div class="promoted-desc">{{promoted.object.sku.object.volume}}&nbsp;ml&nbsp;-&nbsp;{{promoted.object.sku.object.recipe.object.taste.alcohol_volume}}% abv
+						<div class="promoted-desc">{{promoted.object.sku.object.volume}}&nbsp;ml&nbsp;-&nbsp;{{promoted.object.sku.object.recipe.object.taste.alcohol_volume | number:2}}% abv
 						</div>
 					</div>
 
 					<div flex="none" layout="column" layout-align="end end">
-						<div class="promoted-price">R$18,00</div>
+						<div class="promoted-price">{{promoted.object.price | currency}}</div>
+						<div class="promoted-price">{{promoted.object.rank}}</div>
 					</div>
 				</div>
 

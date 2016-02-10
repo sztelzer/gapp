@@ -24,7 +24,7 @@
 			md-floating-label="Endereço"
 			md-autofocus="true"
 			md-autoselect="true"
-			required ng-required="true"
+			ng-class="no-errors"
 			ng-cloak>
 			<md-item-template>
 		    	<span md-highlight-text="searchText" md-highlight-flags="^i">{{item.description}}</span>
@@ -32,7 +32,7 @@
 		</md-autocomplete>
 
 		<div flex layout="row">
-			<md-input-container flex class="md-block">
+			<md-input-container flex class="md-block no-errors">
 				<label>Complemento</label>
 				<input type="text" ng-model="$root.place.complement"/>
 			</md-input-container>

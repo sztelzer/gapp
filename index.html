@@ -22,14 +22,22 @@
 	<script src="components/angular-aria.js"></script>
 	<script src="components/angular-ui-router.js"></script>
 	<script src="components/ct-ui-router-extras.js"></script>
+	<script src="components/angular-messages.js"></script>
+
 	<script src="components/angular-material.js"></script>
+
 	<script src="components/ngStorage.js"></script>
 	<script src="components/geolib.js"></script>
 	<script src="components/angular-payments.js"></script>
-	<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+	<script src="https://js.stripe.com/v2/" type="text/javascript"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR"></script>
 
 	<script src="able.js"></script>
+
+	<!-- <script src="able-filters.js"></script>
+	<script src="able-validators.js"></script> -->
+
+
 	<script src="auth.js"></script>
 	<script src="signin.js"></script>
 	<script src="offer.js"></script>
@@ -75,6 +83,30 @@
 		};
 	</script>
 	<script type="text/javascript">
+		function testCpf(strCPF) {
+		  var Soma;
+		  var Resto;
+		  Soma = 0;
+		  //strCPF  = RetiraCaracteresInvalidos(strCPF,11);
+		  if (strCPF == "00000000000")
+			return false;
+		  for (i=1; i<=9; i++)
+			Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+			Resto = (Soma * 10) % 11;
+		  if ((Resto == 10) || (Resto == 11))
+			Resto = 0;
+		  if (Resto != parseInt(strCPF.substring(9, 10)) )
+			return false;
+		  Soma = 0;
+		  for (i = 1; i <= 10; i++)
+			Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+			Resto = (Soma * 10) % 11;
+		  if ((Resto == 10) || (Resto == 11))
+			Resto = 0;
+		  if (Resto != parseInt(strCPF.substring(10, 11) ) )
+			return false;
+		  return true;
+		}
 	</script>
 
 </body>

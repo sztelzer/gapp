@@ -1,9 +1,4 @@
-/**
- * @license AngularJS v1.5.0
- * (c) 2010-2016 Google, Inc. http://angularjs.org
- * License: MIT
- */
-(function(window, angular, undefined) {'use strict';
+'use strict';
 
 /* jshint ignore:start */
 // this code is in the core, but not in angular-messages.js
@@ -682,6 +677,3 @@ function ngMessageDirectiveFactory() {
     }
   }
 }
-
-
-})(window, window.angular);

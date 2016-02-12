@@ -18,8 +18,8 @@
 		}
 		return service
 
-		function signup(name, email, password){
-			var payload = {'name':name,'email':email,'new_password':password};
+		function signup(name, document, email, password){
+			var payload = {'name':name, 'document':document, 'email':email,'new_password':password};
 			return $q(function(resolve, reject) {
 				$http.post(config.api + '/users', payload, {})
 					.then(

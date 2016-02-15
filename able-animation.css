@@ -1,0 +1,113 @@
+[ui-view].ng-animate {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+}
+
+
+.startPage {
+	background-color: #F4F2EF !important;
+	z-index: 9999;
+}
+
+.signinPage, .questPage {
+	background-color: #F4F2EF !important;
+	z-index: 8888;
+}
+
+
+
+.startPage.ng-enter {
+	-webkit-transform: translate3d(-100%,0,0);
+	-webkit-transition: -webkit-transform 0.5s ease;
+}
+.startPage.ng-enter-active {
+	-webkit-transform: translate3d(0,0,0);
+}
+.startPage-remove.ng-leave {
+	-webkit-transform: translate3d(0,0,0);
+	-webkit-transition: -webkit-transform 0.5s ease;
+}
+.startPage-remove.ng-leave-active {
+	-webkit-transform: translate3d(-100%,0,0);
+}
+
+
+.signinPage.ng-enter {
+	-webkit-transform: translate3d(100%,0,0);
+	-webkit-transition: -webkit-transform 0.5s ease;
+}
+.signinPage.ng-enter-active {
+	-webkit-transform: translate3d(0,0,0);
+}
+.signinPage-remove.ng-leave {
+	-webkit-transform: translate3d(0,0,0);
+	-webkit-transition: -webkit-transform 0.5s ease;
+}
+.signinPage-remove.ng-leave-active {
+	-webkit-transform: translate3d(100%,0,0);
+}
+
+
+.questPage.ng-enter {
+	-webkit-transform: translate3d(100%,0,0);
+	-webkit-transition: -webkit-transform 0.5s ease;
+}
+.questPage.ng-enter-active {
+	-webkit-transform: translate3d(0,0,0);
+}
+.questPage-remove.ng-leave {
+	-webkit-transform: translate3d(0,0,0);
+	-webkit-transition: -webkit-transform 0.5s ease;
+}
+.questPage-remove.ng-leave-active {
+	-webkit-transform: translate3d(100%,0,0);
+}
+
+
+
+
+
+
+/*.cart {
+	-webkit-transform: translate3d(0,0,0);
+	-webkit-transition: -webkit-transform 30s ease;
+}*/
+.cart.ng-hide-remove {
+	-webkit-animation: 0.5s in_up ease-out;
+}
+.cart.ng-hide-add {
+	-webkit-animation: 0.5s 0.5s out_down ease;
+}
+.checker.ng-hide-remove {
+	-webkit-animation: 0.5s in_up ease-out;
+}
+.checker.ng-hide-add {
+	-webkit-animation: 0.5s out_down ease;
+}
+
+@-webkit-keyframes out_down {
+	0%     { -webkit-transform: translate3d(0,0,0); }
+	100%   { -webkit-transform: translate3d(0,100%,0); }
+}
+@-webkit-keyframes in_up {
+	0%   { -webkit-transform: translate3d(0,100%,0); }
+	100% { -webkit-transform: translate3d(0,0,0); }
+}
+
+
+
+
+
+
+/*.cart.ng-leave {
+	-webkit-transform: translate3d(0,0,0);
+	-webkit-transition: -webkit-transform 30s ease;
+}
+.cart.ng-leave-active {
+	-webkit-transform: translate3d(100%,0,0);
+}*/

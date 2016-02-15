@@ -1,16 +1,54 @@
-<md-content element-offer flex ng-cloak class="store">
+<md-content offer-element flex ng-cloak layout="column" style="background-color:#F4F2EF !important">
 
-	<div flex element-promoted ng-repeat="promoted in offer.data.object.promoteds | orderBy:'object.rank':1 track by promoted.path" ng-init="vm.promoted = promoted;"></div>
+		<md-card class="card-full" style="background-color:white"
+		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path"
+		ng-controller="promotedController">
+
+			<img class="md-card-image" alt="image"
+				ng-repeat="content in promoted.object.sku.object.contents"
+				ng-if="content.object.function=='face_image'"
+				ng-src="{{content.object.url}}"
+				width="1080" height="1080"
+			/>
+
+			<div flex="none" layout="row" style="border-bottom: 1px solid white">
+				<md-button flex ng-click="promoted.takeOne()" class="promoted-button" aria-label="retirar" ng-cloak>
+				  <md-icon md-svg-icon="imgs/minus.svg" class="svg-black"></md-icon>
+				</md-button>
+				<div flex class="counter">{{promoted.quantity}}</div>
+				<md-button flex ng-click="promoted.putOne()" class="promoted-button" aria-label="adicionar" ng-cloak>
+				  <md-icon md-svg-icon="imgs/plus.svg" class="svg-green"></md-icon>
+				</md-button>
+			</div>
+
+			<md-card-content class="promoted-card-content">
+					<div flex layout="row">
+						<div flex>
+						    <div class="promoted-recipe">{{promoted.object.sku.object.recipe.object.name}}</div>
+							<div class="promoted-maker">{{promoted.object.sku.object.maker.object.name}}</div>
+							<div class="promoted-desc">{{promoted.object.sku.object.volume}}&nbsp;ml&nbsp;-&nbsp;{{promoted.object.sku.object.recipe.object.taste.alcohol_volume | number:2}}% abv
+							</div>
+						</div>
+
+						<div flex="none" layout="column" layout-align="end end">
+							<div class="promoted-price">{{promoted.object.price | currency}}</div>
+							<div class="promoted-price">{{promoted.object.rank}}</div>
+						</div>
+					</div>
+
+					<div flex class="promoted-content"
+					ng-repeat="content in promoted.object.sku.object.contents"
+					ng-if="content.object.function=='face_text'">
+						<p>{{content.object.text}}</p>
+					</div>
+
+
+			</md-card-content>
+		</md-card>
+
 	<div ng-show="offer.loading" style="position:absolute;top:0;left:0;width:100%;height:50%" layout="column" layout-align="center center">
 		<md-progress-circular ng-show="offer.loading" md-mode="indeterminate" md-diameter="80"></md-progress-circular>
 	</div>
-
 </md-content>
-<div class="cart-group" flex="none" ng-cloak>
-	<a element-cart ng-show="cart.quantity_total" layout="row" layout-align="space-between center" ng-click="cart.checking = !cart.checking"
-	ng-class="cart.checking ? 'cart checking' : 'cart closed'"
-	md-ink-ripple="cart.checking ? '#000000' : '#FFFFFF'"
-	ng-cloak></a>
 
-	<div element-cart-checkout ng-show="cart.checking && cart.quantity_total" class="checker" ng-cloak></div>
-</div>
+<div flex='none' cart-element ng-cloak></div>

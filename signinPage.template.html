@@ -1,4 +1,4 @@
-<div signin-element layout-fill layout="column">
+<div signin-element layout-fill layout="column" signin-page>
 	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak>
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
 		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-white"></md-icon>
@@ -20,11 +20,11 @@
 	    </md-input-container>
 
 		<div flex='none' layout="row" layout-align="space-between center"  style="width:100%">
-			<a ui-sref="recoverPage" ng-click>Recuperar Senha</a>
-			<md-button class="md-raised md-accent" ng-click="signin.signin()">Entrar</md-button>
+			<a flex="none" ui-sref="recoverPage" ng-click>Recuperar Senha</a>
+			<div flex="20"></div>
+			<md-button flex class="md-raised md-accent" ng-click="signin.signin()">Entrar</md-button>
 		</div>
 	</md-content>
 
 	<div flex="none" style="height:80px;"></div>
-
 </div>

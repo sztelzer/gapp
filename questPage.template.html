@@ -1,4 +1,4 @@
-<div element-quest flex layout-fill layout="column">
+<div element-quest flex layout-fill layout="column" quest-page>
 	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak>
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
 		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-white"></md-icon>
@@ -30,8 +30,8 @@
 
 
 				<md-input-container>
-					<label>Nome</label>
-					<input name="name" ng-model="quest.user.name" minlength="5" maxlength="40" ng-required="true" required>
+					<label>Nome Completo</label>
+					<input name="name" ng-model="quest.user.name" minlength="10" maxlength="40" ng-required="true" required>
 					<div ng-messages="questForm.name.$error">
 						<div ng-message="required">Seu nome é necessário para entregas e identificação.</div>
 					</div>

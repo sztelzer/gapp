@@ -2,22 +2,31 @@
 	'use strict';
 
 	angular
-		.module('able')
-		.factory('offer', offerService)
-		.directive('elementOffer', offerDirective)
+	.module('able')
+	.directive('offerElement', offerDirective)
 
-
-	function offerService(auth, config, cart, $http, $q, $localStorage, $rootScope) {
-		var service = {
-			loadOffer: loadOffer,
-			checkOffer: checkOffer,
-			updateOfferStocks: updateOfferStocks,
-			data: $localStorage.offer,
+	function offerDirective() {
+		var directive = {
+			restrict: 'A',
+			controller: offerController,
+			controllerAs: 'offer',
+			bindToController: true
 		}
-		return service
+		return directive
+	}
 
-		// checkOffer() returns false if offer is invalid.
-		// if true, resets
+	function offerController($rootScope, $localStorage, config, auth, $http) {
+		var vm = this
+		vm.loading = true;
+
+		if (checkOffer() == true) {
+			updateOfferStocks($localStorage.offer.path)
+		} else {
+			loadNewOffer()
+		}
+
+
+
 		function checkOffer() {
 			// check if have some offer loaded.
 			var storedOffer = $localStorage.offer;
@@ -51,7 +60,7 @@
 		}
 
 
-		function loadOffer() {
+		function loadNewOffer() {
 			var payload = {
 				company: config.company_path,
 				node_function: config.node_function,
@@ -62,96 +71,38 @@
 
 			var req_config = {headers: {'Authorization': auth.token}}
 
-			//return a promissssssse
-			return $q(function(resolve, reject) {
-				$http.post(config.api + '/users/' + auth.id + '/offers', payload, req_config).then(
-					function successCallback(response) {
-						service.data = response.data;
-						$localStorage.offer = response.data;
-						var date = new Date();
-						date.setTime(service.data.object.good_until);
-						service.data.object.good_until_date = date;
-						resolve(response);
-					},
-					function errorCallback(response) {
-						service.data = '';
-						$localStorage.offer = '';
-						reject(response);
-					}
-				)
-			}) // end q()
+			$http.post(config.api + '/users/' + auth.id + '/offers', payload, req_config).then(
+				function successCallback(response) {
+					$localStorage.offer = response.data;
+					$rootScope.offer = response.data;
+					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
+					$rootScope.updateDistance()
+					vm.loading = false
+				},
+				function errorCallback(response) {
+					vm.loading = false
+				}
+			)
 		} // end loadOffer()
+
 
 		function updateOfferStocks(offerPath) {
 			var req_config = {headers: {'Authorization': auth.token}}
-
-			return $q(function(resolve, reject) {
-				$http.get(config.api + offerPath, req_config).then(
-					function successCallback(response) {
-						service.data = response.data;
-						$localStorage.offer = response.data;
-						var date = new Date();
-						date.setTime(service.data.object.good_until);
-						service.data.object.good_until_date = date;
-						resolve(response);
-					},
-					function errorCallback(response) {
-						service.data = '';
-						$localStorage.offer = '';
-						reject(response);
-					}
-				)
-			}) // end q()
-		} // end updateOffer()
-	} // end service
-
-	function offerDirective() {
-		var directive = {
-			restrict: 'A',
-			controller: offerController,
-			controllerAs: 'offer',
-			bindToController: true
-		}
-		return directive
-	}
-
-
-
-	function offerController(offer, cart) {
-		var vm = this
-		vm.loading = true;
-
-		if (offer.checkOffer() == true) {
-			var updateOfferStocks = offer.updateOfferStocks(offer.data.path)
-			updateOfferStocks.then(
-				function(resolve) {
-					vm.data = offer.data;
-					cart.offer = offer.data.path;
-					cart.estimated_time = vm.data.object.node_estimated + 900;
-					vm.loading = false;
+			$http.get(config.api + offerPath, req_config).then(
+				function successCallback(response) {
+					$localStorage.offer = response.data;
+					$rootScope.offer = response.data;
+					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
+					$rootScope.updateDistance()
+					vm.loading = false
 				},
-				function(reject) {
-					vm.loading = false;
-
+				function errorCallback(response) {
+					vm.loading = false
 				}
-			);
-			return
-		}
+			)
+		} // end updateOffer()
 
-		var loadOffer = offer.loadOffer();
-		loadOffer.then(
-			function(resolve) {
-				vm.data = offer.data;
-				vm.loading = false;
-				cart.offer = offer.data.path;
-				cart.estimated_time = vm.data.object.node_estimated + 900;
 
-			},
-			function(reject) {
-				console.log('Failed loading offer: ' + reject);
-				vm.loading = false;
-			}
-		);
 
 
 

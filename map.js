@@ -15,7 +15,7 @@
 		return directive
 	}
 
-	function mapController($q, $state, $rootScope, $scope, $timeout){
+	function mapController($q, $state, $rootScope, $scope){
 		var vm = this
 		$scope.selectedItem
 		$scope.searchText
@@ -157,7 +157,8 @@
 		});
 
 		function setCartAddress() {
-			console.log($rootScope.place)
+			$rootScope.updateDistance()
+			$rootScope.updateCart()
 			$state.go('storePage.offerPage')
 		}
 

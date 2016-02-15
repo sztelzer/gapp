@@ -16,20 +16,20 @@
 		return directive
 	}
 
-	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, cart) {
+	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, $mdToast) {
 		var vm = this;
 		vm.new = {}
 		vm.plastics = []
-
 		vm.save = save
 		vm.activate = activate
 		vm.remove = remove
+		vm.sending = false
 
 		if(typeof $localStorage.plastic == "undefined") {
 			$localStorage.plastic = {}
 		}
 		vm.plastic = $localStorage.plastic
-		cart.plastic = $localStorage.plastic
+		$rootScope.plastic = $localStorage.plastic
 
 		get()
 		function get(){
@@ -44,10 +44,12 @@
 			},
 			function errorCallback(response) {
 				vm.plastics = []
+				toast('Não conseguimos carregar seus cartões. Tente novamente.')
 			})
 		}
 
 		function save(){
+			vm.sending = true
 			var a = angular.copy(vm.new.number)
 			var b = angular.copy(vm.new.cvc)
 			var c = angular.copy(vm.new.expiry)
@@ -71,14 +73,15 @@
 							// console.log(response)
 							activate(response.data)
 							get()
+							vm.sending = false
 						},
 						function(response){
-							console.log(response)
+							vm.sending = false
 						}
 					);
 				},
 				function(rejectedToken){
-					console.log(rejectedToken)
+					vm.sending = false
 				}
 			)
 		}
@@ -99,16 +102,26 @@
 					console.log(response)
 					if(plastic == vm.plastic){
 						$localStorage.plastic = ''
+						$rootScope.plastic = ''
 						vm.plastic = ''
 					}
-					get()
+					//remove this item from the list
+					vm.plastics.slice().reverse().forEach(function(item, index, object) {
+						if (item.path == plastic.path) {
+							vm.plastics.splice(object.length - 1 - index, 1);
+						}
+					})
+
+
 				},
 				function(response){
 					console.log(response)
-					//window.alert("Could not delete this card: "+response)
+					toast('Houve um erro ao remover este cartão. Tente novamente.')
 				}
 			)
 		}
+
+
 
 		function maskPlasticNumber(number){
 			var a = number.substring(0, 4)
@@ -135,6 +148,16 @@
 				})
 			})
 		}
+
+
+		function toast(msg) {
+			$mdToast.show(
+				$mdToast.simple()
+				.textContent(msg)
+				.hideDelay(5000)
+				.action('OK')
+			);
+		};
 
 
 

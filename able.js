@@ -11,7 +11,7 @@
 		'ct.ui.router.extras',
 		'ngAria',
 		'ngMaterial',
-		'angularPayments',
+		'angularPayments'
 	])
 
 	.value('config', {
@@ -26,7 +26,8 @@
 	// .value('mock', {
 	// })
 
-	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider) {
+	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider) {
+		$animateProvider.classNameFilter( /\banimated\b/ );
 		$localStorageProvider.setKeyPrefix('able_');
 		// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
 		$httpProvider.useApplyAsync(false);
@@ -220,7 +221,7 @@
 			$mdThemingProvider.theme('default').backgroundPalette('ivoryAble')
 	})
 
-	.run(function ($rootScope, $state, auth, cart, $window) {
+	.run(function ($rootScope, $state, auth, $window) {
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if (toState.data.requireLogin && !auth.token) {
@@ -232,13 +233,6 @@
 				$state.go('storePage.offerPage');
 			}
 		})
-
-		// $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-		// 	console.log(cart.reset)
-		// 	if (cart.reset == true) {
-		// 		$window.location.reload()
-		// 	}
-		// })
 
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if(toState.name == 'storePage.offerPage' && !$rootScope.located ){
@@ -286,13 +280,17 @@
 		})
 
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-			Keyboard.hide()
+			// Keyboard.hide()
 		})
 
-
-
-
-
+		$rootScope.updateDistance = function(){
+			var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
+			var distance = linear * 1.5
+			console.log(distance)
+			$rootScope.estimated = +((distance * 0.25) + 1200).toFixed(2)
+			var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
+			$rootScope.freight = +((over)*1.50 + 22.90).toFixed(2)
+		}
 
 
 

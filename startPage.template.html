@@ -1,6 +1,12 @@
-<md-content layout="column" layout-align="center center" layout-fill layout-wrap>
+<md-content layout="column" layout-align="center center" layout-fill start-page>
 	<img flex="none" src="imgs/able-white.svg" style="width:80%; margin-bottom:20px">
-	<md-button class="md-raised wider md-primary" ng-click ui-sref="questPage">Crie seu perfil</md-button><br/>
+	<br/>
+	<div flex="none" layout="row" style="width:100%">
+		<md-button class="md-raised md-primary full-button" ng-click ui-sref="questPage">Crie seu perfil</md-button>
+	</div>
+	<br/>
 	<em style="color:#AAAAAA;">- ou -</em>
-	<md-button class="wider md-primary" ng-click ui-sref="signinPage">Entrar</md-button>
+	<div flex="none" layout="row" style="width:100%">
+		<md-button flex class="md-primary full-button" ng-click ui-sref="signinPage">Entrar</md-button>
+	</div>
 </md-content>

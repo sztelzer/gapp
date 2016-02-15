@@ -9,11 +9,6 @@ html, body, .app {
 	background-color: #F4F2EF !important;
 }
 
-.app {
-	min-height: 100%;
-	height:100%;
-}
-
 /*prevent select text on mobile*/
 *:not(input,textarea) {
     -webkit-touch-callout: none;

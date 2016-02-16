@@ -139,6 +139,7 @@
 			}
 
 			return $q(function(resolve, reject) {
+				Stripe.setPublishableKey('pk_test_85MXK5Zb67wdbX1yUZ7QcG8K');
 				Stripe.card.createToken(payload, function(status, response){
 					if (status < 200 || status > 299) {
 						reject(status)

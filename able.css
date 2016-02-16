@@ -87,9 +87,24 @@ input.ng-touched.ng-invalid {
 	min-width: 0em !important;
 }
 
-.cart-group {
-	position: relative;
+.card-title {
+	font-size: 1.2em;
+    padding: 1em 1em;
+    font-family: "roboto slab";
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	border-top: 1px solid rgba(255, 255, 255, 0.9);
+	border-radius: 0px 0px 0px 0px;
 }
+
+.card-content {
+	padding: 1em 1em 0.5em 1em;
+	font-family: "roboto slab";
+}
+
+
+
+
+
 
 .cart {
 	padding: 0 0em 0em 0.5em;
@@ -100,17 +115,7 @@ input.ng-touched.ng-invalid {
 	font-weight: 400;
 }
 
-.cart.closed {
-	background-color: #26bd49;
-	color: white;
-	border-top: 1px solid #197f31;
-}
 
-.cart.checking {
-	background-color: #F4F2EF;
-	color: black;
-	border-top: 1px solid #AAAAAA;
-}
 
 md-icon.small-icon {
 	height: 1em;
@@ -119,10 +124,23 @@ md-icon.small-icon {
 	padding-right: 0;
 }
 
+
+.cart.opened {
+	background-color: #F4F2EF;
+	color: black;
+	border-top: 1px solid #d1cfcd;
+}
+
+.cart.closed {
+	background-color: #26BD49;
+	color: white;
+	border-top: 1px solid #1d8f37;
+}
+
 .cart.closed > div > md-icon > svg {
 	fill: #ffffff;
 }
-.cart.checking > div > md-icon > svg {
+.cart.opened > div > md-icon > svg {
 	fill: #000000;
 }
 
@@ -142,12 +160,12 @@ md-icon.small-icon {
 	fill: #ffffff;
 }
 
-.cart.checking > .carting-go > md-icon > svg {
+.cart.opened > .carting-go > md-icon > svg {
 	fill: #26BD49;
 }
 
 
-.checker {
+.checkout {
 	font-size: 0.8em;
 	font-weight: 300;
 	background-color: #F4F2EF;
@@ -159,14 +177,6 @@ md-icon.small-icon {
 	font-size: 14px !important;
 	/*height: 3em;*/
 }
-
-
-
-.cart > .freight {
-	font-size: 0.8em;
-}
-
-
 
 div > md-icon {
 	padding: 8px
@@ -193,11 +203,6 @@ div > md-icon {
 
 .md-icon-button {
 	margin:0 !important;
-}
-
-
-.background-white {
-	background-color: white !important;
 }
 
 .navbar-fixed-top {
@@ -253,33 +258,6 @@ div.counter {
 }
 
 
-.card-full {
-	margin: 0px 0px 8px 0px !important;
-	border-radius: 0px !important;
-}
-
-md-card .md-card-image {
-    border-radius: 0px !important;
-}
-
-.card-title {
-	font-size: 1.2em;
-    padding: 1em 1em;
-    font-family: "roboto slab";
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	border-top: 1px solid rgba(255, 255, 255, 0.9);
-	border-radius: 0px 0px 0px 0px;
-}
-
-.card-content {
-	padding: 1em 1em 0.5em 1em;
-	font-family: "roboto slab";
-}
-
-.card-credit {
-	font-family: "roboto";
-	font-weight: 300;
-}
 
 .md-autocomplete-suggestions-container.md-default-theme li,
 .md-autocomplete-suggestions-container li {
@@ -300,10 +278,13 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
 	display:none;
 }
 
-
-
 .round-cicle {
 	width: 8em;
 	height: 8em;
 	margin: 0 0 2em 0;
+}
+
+.card-credit {
+	font-family: "roboto";
+	font-weight: 300;
 }

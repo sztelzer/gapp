@@ -31,6 +31,7 @@
   <preference name="StatusBarStyle" value="blacktranslucent" />
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
 
+
   <allow-navigation href="*" />
   <allow-intent href="*" />
   <access origin="*" />
@@ -41,8 +42,9 @@
 		<allow-intent href="itms:*"/>
 		<allow-intent href="itms-apps:*"/>
 		<preference name="ShowSplashScreenSpinner" value="false"/>
+		<preference name="SplashScreenDelay" value="500" />
 		<preference name="AutoHideSplashScreen" value="true"/>
-    <preference name="KeyboardShrinksView" value="true" />
+        <preference name="KeyboardShrinksView" value="true" />
 
 		<icon src="res/ios/icon.png" width="57" height="57"/>
 		<icon src="res/ios/icon-60@2x.png" width="120" height="120" />

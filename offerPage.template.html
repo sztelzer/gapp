@@ -1,17 +1,20 @@
-<md-content offer-element flex ng-cloak layout="column" style="background-color:#F4F2EF !important">
-
-		<md-card class="card-full" style="background-color:white"
+<md-content flex offer-element ng-cloak>
+	<div flex layout="column">
+		<md-card class="card-full"
 		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path"
 		ng-controller="promotedController">
 
-			<img class="md-card-image" alt="image"
+			<img class="md-card-image" alt="product image"
 				ng-repeat="content in promoted.object.sku.object.contents"
 				ng-if="content.object.function=='face_image'"
+				loading-src="{{'imgs/placeholder.jpg'}}"
 				ng-src="{{content.object.url}}"
-				width="1080" height="1080"
+				width="1080"
+				height="1080"
+				style="width:100%;height:auto;min-height:0;image-rendering:-webkit-optimize-contrast;border-radius: 0px;"
 			/>
 
-			<div flex="none" layout="row" style="border-bottom: 1px solid white">
+			<div layout="row" style="border-bottom: 1px solid white">
 				<md-button flex ng-click="promoted.takeOne()" class="promoted-button" aria-label="retirar" ng-cloak>
 				  <md-icon md-svg-icon="imgs/minus.svg" class="svg-black"></md-icon>
 				</md-button>
@@ -41,14 +44,73 @@
 					ng-if="content.object.function=='face_text'">
 						<p>{{content.object.text}}</p>
 					</div>
-
-
 			</md-card-content>
 		</md-card>
+	</div>
 
 	<div ng-show="offer.loading" style="position:absolute;top:0;left:0;width:100%;height:50%" layout="column" layout-align="center center">
 		<md-progress-circular ng-show="offer.loading" md-mode="indeterminate" md-diameter="80"></md-progress-circular>
 	</div>
 </md-content>
 
-<div flex='none' cart-element ng-cloak></div>
+
+
+
+
+<div flex='none' layout="column" layout-align='start center' style="width:100%" ng-show="cart.quantity>0">
+	<a flex='none' layout="row" class="cart" layout-align="space-between center" ng-click="cart.open = !cart.open"
+	ng-class="cart.open?'opened':'closed'"
+	md-ink-ripple="cart.open?'#000000':'#FFFFFF'"
+	style="position:relative"
+	ng-cloak>
+		<div><md-icon md-svg-icon="imgs/ic_done_white_48px.svg" class="small-icon"></md-icon> {{cart.quantity}}</div>
+		<div><md-icon md-svg-icon="imgs/ic_local_shipping_white_48px.svg" class="small-icon"></md-icon> {{cart.freight | currency}}</div>
+		<div><md-icon md-svg-icon="imgs/ic_schedule_white_48px.svg" class="small-icon"></md-icon> {{cart.estimated | secondsToMinutes}}min</div>
+		<div><md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="small-icon"></md-icon> {{cart.total | currency}}</div>
+		<div>
+			<md-icon ng-hide="cart.open" md-svg-icon="imgs/ic_arrow_forward_black_48px.svg" class="svg-white"></md-icon>
+			<md-icon ng-show="cart.open" md-svg-icon="imgs/ic_close_white_48px.svg" class="svg-green"></md-icon>
+		</div>
+	</a>
+
+
+	<div flex='none' class="checkout" ng-show="cart.open" ng-class="cart.open?'opened':'closed'" style="width:100%;height:10em" layout="column" ng-cloak>
+		<div flex></div>
+		<div flex="none" layout="column" layout-align="end center">
+			<div class="" style="width:100%" layout="row" layout-align="start center">
+				<div flex="none">
+					<md-icon md-svg-icon="imgs/ic_place_black_48px.svg" class="svg-black"></md-icon>
+				</div>
+				<div flex>
+					<span ng-hide="$root.place.description" style="color:red">Nenhum endereço.</span>
+					<span ng-bind="$root.place.description"></span>
+					<span ng-show="$root.place.complement"> - <span ng-bind="$root.place.complement"></span></span>
+				</div>
+				<div flex="none">
+					<md-button class="md-icon-button" aria-label="Editar Endereço" ng-click="$state.go('storePage.mapPage')">
+						<md-icon md-svg-icon="imgs/ic_edit_black_48px.svg" class="svg-black"></md-icon>
+					</md-button>
+				</div>
+			</div>
+
+			<div class="" style="width:100%"  layout="row" layout-align="start center">
+				<div flex="none">
+					<md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="svg-black"></md-icon>
+				</div>
+				<div flex>
+					<span ng-hide="$root.plastic.object.type" style="color:red">Nenhum cartão cadastrado.</span>
+					<span ng-show="$root.plastic.object.type">{{cart.plastic.object.type}} {{cart.plastic.object.mask}} {{cart.plastic.object.expiry}}</span>
+				</div>
+				<div flex="none">
+					<md-button class="md-icon-button" aria-label="Editar Cartão" ng-click="$state.go('storePage.plasticsPage')">
+						<md-icon md-svg-icon="imgs/ic_edit_black_48px.svg" class="svg-black"></md-icon>
+					</md-button>
+				</div>
+			</div>
+		</div>
+		<div flex></div>
+		<div flex="none" layout="row">
+			<md-button class="md-raised md-accent full-button" ng-click="cart.send()" ng-disabled="!cart.plastic || !cart.place || cart.sending">Enviar Pedido</md-button>
+		</div>
+	</div>
+</div>

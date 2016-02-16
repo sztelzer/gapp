@@ -1,6 +1,6 @@
 <div layout="row" class="cart animated" layout-align="space-between center" ng-click="cart.open = !cart.open"
-ng-class="cart.open ? 'cart-open' : ''"
-md-ink-ripple="cart.open ? '#000000' : '#FFFFFF'"
+ng-class="cart.open?'opened':'closed'"
+md-ink-ripple="cart.open?'#000000':'#FFFFFF'"
 ng-cloak>
 	<div><md-icon md-svg-icon="imgs/ic_done_white_48px.svg" class="small-icon"></md-icon> {{cart.quantity}}</div>
 	<div><md-icon md-svg-icon="imgs/ic_local_shipping_white_48px.svg" class="small-icon"></md-icon> {{cart.freight | currency}}</div>
@@ -12,7 +12,7 @@ ng-cloak>
 	</div>
 </div>
 
-<div class="checkout animated" ng-cloak>
+<div class="checkout animated" ng-class="cart.open?'opened':'closed'" ng-cloak>
 	<div flex layout="column" layout-align="end center">
 		<div class="" style="width:100%" layout="row" layout-align="start center">
 			<div flex="none">

@@ -1,5 +1,5 @@
 <div layout="column" flex="none" layout-fill>
-	<md-toolbar toolbar-element flex md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-cloak>
+	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-cloak>
 		<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
 		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
@@ -9,19 +9,21 @@
 		<div flex="none" style="width:83px"></div>
 
 	</md-toolbar>
-	<div ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" flex ng-cloak></div>
-	<div ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout="column" flex ng-cloak></div>
-	<div ui-view ng-hide="$state.includes('storePage.offerPage') || $state.includes('storePage.mapPage')" layout="column" flex ng-cloak></div>
+
+	<div flex cart-element ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" layout-align="start start" ng-cloak></div>
+	<div flex ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout="column" ng-cloak></div>
+	<div flex ui-view ng-hide="$state.includes('storePage.offerPage') || $state.includes('storePage.mapPage')" layout="column" ng-cloak></div>
+
 </div>
 
-<md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left" md-component-id="able-left-menu">
+<md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left animated" md-component-id="able-left-menu">
 	<md-subheader style="background-color:#0088FF"></md-subheader>
 	<md-subheader>{{app.auth.id}}</md-subheader>
 	<md-list flex="none">
 		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">Loja</md-list-item>
     	<!-- <md-list-item ng-click="">Perfil</md-list-item> -->
 		<md-list-item ng-click="leftmenu.go('storePage.ordersPage')">Pedidos</md-list-item>
-		<!-- <md-list-item ng-click="leftmenu.go('storePage.confirmationPage')">Ultimo Pedido</md-list-item> -->
+		<md-list-item ng-click="leftmenu.go('confirmationPage')">Ultimo Pedido</md-list-item>
 		<md-list-item ng-click="leftmenu.go('storePage.feedbacksPage')">Feedbacks</md-list-item>
 		<md-list-item ng-click="leftmenu.go('storePage.plasticsPage')">Cartões de Crédito</md-list-item>
 		<!-- <md-list-item ng-click="leftmenu.go('storePage.mapPage')">Mapa</md-list-item> -->

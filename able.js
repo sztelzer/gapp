@@ -11,7 +11,8 @@
 		'ct.ui.router.extras',
 		'ngAria',
 		'ngMaterial',
-		'angularPayments'
+		'angularPayments',
+		'dcbImgFallback'
 	])
 
 	.value('config', {
@@ -20,14 +21,16 @@
 		// api: 'https://api-dot-heartbend.appspot.com',
 		// company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
-		offers_count: 6
+		offers_count: 6,
+		stripe_key: 'pk_test_85MXK5Zb67wdbX1yUZ7QcG8K'
 	})
 
 	// .value('mock', {
 	// })
 
-	.config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider) {
-		$animateProvider.classNameFilter( /\banimated\b/ );
+	.config(function ($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider) {
+		$compileProvider.debugInfoEnabled(false);
+		$animateProvider.classNameFilter( /\banimated\b|\bmd-sidenav-backdrop\b/ );
 		$localStorageProvider.setKeyPrefix('able_');
 		// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
 		$httpProvider.useApplyAsync(false);
@@ -234,6 +237,10 @@
 			}
 		})
 
+
+
+
+
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if(toState.name == 'storePage.offerPage' && !$rootScope.located ){
 				if (navigator.geolocation) {
@@ -241,18 +248,14 @@
 					$rootScope.locating = true
 		 			navigator.geolocation.getCurrentPosition(
 						function(position) {
-
 							new google.maps.Geocoder().geocode({'location':{'lat':position.coords.latitude,'lng':position.coords.longitude}}, function(results, status) {
 								if (status == google.maps.GeocoderStatus.OK) {
 									$rootScope.place = {
 										description: results[0].formatted_address,
 										place_id: results[0].place_id
 									}
-								} else {
-									console.log(status)
 								}
 							});
-
 
 							$rootScope.latitude = position.coords.latitude
 							$rootScope.longitude = position.coords.longitude
@@ -287,9 +290,9 @@
 			var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
 			var distance = linear * 1.5
 			console.log(distance)
-			$rootScope.estimated = +((distance * 0.25) + 1200).toFixed(2)
+			$rootScope.estimated = +((distance * 0.33) + 1200).toFixed(2)
 			var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
-			$rootScope.freight = +((over)*1.50 + 22.90).toFixed(2)
+			$rootScope.freight = +((over)*1.80 + 22.90).toFixed(2)
 		}
 
 

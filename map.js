@@ -30,30 +30,56 @@
 		var autocomplete = new google.maps.places.AutocompleteService()
 		var placer = new google.maps.places.PlacesService(document.getElementById('mapping'))
 		var geocoder = new google.maps.Geocoder()
-		if(!$rootScope.map){
-			$rootScope.map = new google.maps.Map(document.getElementById('mapping'), {
-				zoom: 16,
-				center: {lat: $rootScope.latitude, lng: $rootScope.longitude},
-				disableDefaultUI: true
-			})
+
+		var map
+		function createMap(){
+			if(!$rootScope.map){
+				map = new google.maps.Map(document.getElementById('mapping'), {
+					zoom: 18,
+					center: {lat: $rootScope.latitude, lng: $rootScope.longitude},
+					disableDefaultUI: true,
+					zoomControl: true
+				})
+
+				map.addListener('dragend', function() {
+					getAddress(map.getCenter().lat(), map.getCenter().lng())
+				});
+
+
+				google.maps.event.addDomListener(map, 'idle', function() {
+					$rootScope.center = map.getCenter();
+					google.maps.event.trigger(map, 'resize');
+				});
+				google.maps.event.addDomListener(window, 'resize', function() {
+					map.panTo($rootScope.center);
+				});
+				$rootScope.map = map
+			}
 		}
-		var map = $rootScope.map
 
 		if($rootScope.located){
+			createMap()
 			getAddress($rootScope.latitude, $rootScope.longitude)
+
+			map.panTo({
+				lat:$rootScope.latitude,
+				lng:$rootScope.longitude,
+			})
+			google.maps.event.trigger(map, 'resize'); //necessary to wake up after first init
+
 		} else {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					$rootScope.latitude = position.coords.latitude
 					$rootScope.longitude = position.coords.longitude
 					$rootScope.accuracy = position.coords.accuracy
-
+					createMap()
 					getAddress($rootScope.latitude, $rootScope.longitude)
 					map.panTo({
 						lat:$rootScope.latitude,
 						lng:$rootScope.longitude,
 					})
-					// google.maps.event.trigger(map, 'resize'); //necessary to wake up after first init
+					google.maps.event.trigger(map, 'resize'); //necessary to wake up after first init
 					$rootScope.located = true
 					$rootScope.locating = false
 				}, function() {
@@ -143,18 +169,6 @@
 			});
 		}
 
-		map.addListener('dragend', function() {
-			getAddress(map.getCenter().lat(), map.getCenter().lng())
-		});
-
-		var center;
-		google.maps.event.addDomListener(map, 'idle', function() {
-			center = map.getCenter();
-			google.maps.event.trigger(map, 'resize');
-		});
-		google.maps.event.addDomListener(window, 'resize', function() {
-			map.setCenter(center);
-		});
 
 		function setCartAddress() {
 			$rootScope.updateDistance()

@@ -16,13 +16,14 @@
 		return directive
 	}
 
-	function confirmationController($rootScope) {
+	function confirmationController($rootScope, $state) {
 		var vm = this;
 		vm.last = $rootScope.last
-		// vm.reset = reset
-		// function reset(){
-		// 	$state.go('storePage.offerPage')
-		// }
+
+		vm.reset = reset
+		function reset(){
+			$state.go('storePage.offerPage')
+		}
 
 
 	} // end controller

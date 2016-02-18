@@ -53,6 +53,7 @@
 	function feedbacksController(feedbacks, auth, $http, config, $q){
 		var vm = this;
 		vm.loading = true;
+		vm.working = true;
 		vm.list = feedbacks.list;
 		vm.len = 0;
 		vm.touched = false;
@@ -63,14 +64,17 @@
 		vm.get();
 
 		function get(){
+			vm.working = true
 			var get = feedbacks.get();
 			get.then(
 				function(resolve) {
 					vm.list = feedbacks.list;
 					vm.len = feedbacks.len;
 					vm.loading = false;
+					vm.working = false;
 				},
 				function(reject) {
+					vm.working = false;
 				}
 			);
 		}
@@ -81,6 +85,7 @@
 				if (item.object.touched == true) {
 					vm.sent = true;
 					item.done = true;
+					item.sending = true;
 					put(item).then(
 						function(resolve){
 							item.done = true;
@@ -103,6 +108,7 @@
 					vm.len -= 1;
 				}
 			})
+			vm.working = false
 		}
 
 

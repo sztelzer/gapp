@@ -73,6 +73,12 @@ md-card {
 	box-shadow: none !important;
 }
 
+img.md-card-image {
+	image-rendering: -webkit-optimize-contrast !important;
+	border-radius: 0 !important;
+}
+
+
 input.ng-touched.ng-invalid {
 	border-color: red !important;
 }
@@ -287,4 +293,13 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
 .card-credit {
 	font-family: "roboto";
 	font-weight: 300;
+}
+
+
+.attended {
+	color: black;
+}
+
+.not_attended {
+	color: red;
 }

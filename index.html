@@ -14,6 +14,7 @@
 
 <body layout="column" flex app-element>
 	<div class="app page {{$state.current.name}} animated" ui-view flex layout-fill></div>
+	<script defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR'></script>
 
 	<script src="cordova.js"></script>
 	<script src="components/angular.js"></script>
@@ -29,19 +30,18 @@
 	<script src='components/angular-payments.js'></script>
 	<script src='components/angular.dcb-img-fallback.js'></script>
 	<script src='able.js'></script>
-	<script src='auth.js'></script>
-	<script src='signin.js'></script>
-	<script src='offer.js'></script>
-	<script src='cart.js'></script>
-	<script src='map.js'></script>
-	<script src='feedbacks.js'></script>
-	<script src='orders.js'></script>
-	<script src='confirmation.js'></script>
-	<script src='quest.js'></script>
-	<script src='plastics.js'></script>
-	<script src='toolbar.js'></script>
+	<script src='able-auth.js'></script>
+	<script src='able-signin.js'></script>
+	<script src='able-offer.js'></script>
+	<script src='able-cart.js'></script>
+	<script src='able-map.js'></script>
+	<script src='able-feedbacks.js'></script>
+	<script src='able-orders.js'></script>
+	<script src='able-confirmation.js'></script>
+	<script src='able-quest.js'></script>
+	<script src='able-plastics.js'></script>
+	<script src='able-toolbar.js'></script>
 	<script src='https://js.stripe.com/v2/'></script>
-	<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR'></script>
 
 	<script>
 		angular.element(document).ready(function () {
@@ -52,7 +52,7 @@
 						console.log('online')
 						bootOnlineCordova()
 					} else {
-						navigator.notification.alert('Você precisa estar conectado para usar este aplicativo.', refreshPage(), 'Able', 'Tentar Novamente')
+						navigator.notification.alert('Você precisa estar conectado para usar este aplicativo.', refreshPage, 'Able', 'Tentar Novamente')
 					}
 				}, false);
 			} else {

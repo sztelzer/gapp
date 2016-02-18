@@ -38,7 +38,7 @@
 		return directive
 	}
 
-	function cartController($scope, $rootScope, config, auth, $http, $localStorage, $mdToast) {
+	function cartController($scope, $rootScope, config, auth, $http, $localStorage, $mdToast, $state) {
 		var vm = this;
 		vm.send = send;
 		//vm.empty = empty;
@@ -51,24 +51,26 @@
 
 		//pass over offers, checking what we have selected
 		function updateCart(){
-			var promoteds = $rootScope.offer.object.promoteds
-			var quantity = 0
-			var products = 0
+			if($rootScope.offer && $rootScope.offer.object){
+				var promoteds = $rootScope.offer.object.promoteds
+				var quantity = 0
+				var products = 0
 
-			for (var key in promoteds) {
-				quantity += promoteds[key].quantity
-				products += promoteds[key].object.price * promoteds[key].quantity
+				for (var key in promoteds) {
+					quantity += promoteds[key].quantity
+					products += promoteds[key].object.price * promoteds[key].quantity
+				}
+
+				var freight = +($rootScope.freight - (products * 0.10))
+				if(freight < 0){freight = 0}
+				var total = products + freight
+
+				vm.quantity = +(quantity).toFixed(2)
+				vm.freight = +(freight).toFixed(2)
+				vm.products = +(products).toFixed(2)
+				vm.total = +(total).toFixed(2)
+				vm.estimated = $rootScope.estimated
 			}
-
-			var freight = +($rootScope.freight - (products * 0.10))
-			if(freight < 0){freight = 0}
-			var total = products + freight
-
-			vm.quantity = +(quantity).toFixed(2)
-			vm.freight = +(freight).toFixed(2)
-			vm.products = +(products).toFixed(2)
-			vm.total = +(total).toFixed(2)
-			vm.estimated = $rootScope.estimated
 		}
 
 		$rootScope.updateCart = updateCart
@@ -115,6 +117,8 @@
 				}
 			}
 
+			payload.latitude = $rootScope.latitude
+			payload.longitude = $rootScope.longitude
 			payload.total_freight = vm.freight
 			payload.total_items = vm.products
 			payload.total_quantity = vm.quantity
@@ -130,7 +134,7 @@
 					empty()
 					$rootScope.last = response.data;
 					vm.sending = false
-					// $state.go('confirmationPage');
+					$state.go('storePage.confirmationPage');
 				},
 				function errorCallback(response) {
 					toast('response.data.errors[0]')

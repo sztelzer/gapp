@@ -16,10 +16,10 @@
 	])
 
 	.value('config', {
-		api: 'http://127.0.0.1:8081',
-		company_path: '/companies/5629499534213120',
-		// api: 'https://api-dot-heartbend.appspot.com',
-		// company_path: '/companies/5654313976201216',
+		// api: 'http://127.0.0.1:8081',
+		// company_path: '/companies/5629499534213120',
+		api: 'https://api-dot-heartbend.appspot.com',
+		company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6,
 		stripe_key: 'pk_test_85MXK5Zb67wdbX1yUZ7QcG8K'
@@ -118,7 +118,7 @@
 					accessLogged: true
 				}
 			})
-			.state('confirmationPage', {
+			.state('storePage.confirmationPage', {
 				url: "/confirmation",
 				templateUrl: "confirmationPage.template.html",
 				data: {
@@ -225,8 +225,12 @@
 	})
 
 	.run(function ($rootScope, $state, auth, $window) {
+
+		$rootScope.geocoder = new google.maps.Geocoder()
+
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+			$rootScope.workingTime()
 			if (toState.data.requireLogin && !auth.token) {
 				event.preventDefault();
 				$state.go('startPage');
@@ -248,7 +252,8 @@
 					$rootScope.locating = true
 		 			navigator.geolocation.getCurrentPosition(
 						function(position) {
-							new google.maps.Geocoder().geocode({'location':{'lat':position.coords.latitude,'lng':position.coords.longitude}}, function(results, status) {
+							var geocoder = $rootScope.geocoder
+							$rootScope.geocoder.geocode({'location':{'lat':position.coords.latitude,'lng':position.coords.longitude}}, function(results, status) {
 								if (status == google.maps.GeocoderStatus.OK) {
 									$rootScope.place = {
 										description: results[0].formatted_address,
@@ -282,20 +287,39 @@
 			}
 		})
 
-		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-			// Keyboard.hide()
-		})
+		// $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+		// 	Keyboard.hide()
+		// })
 
 		$rootScope.updateDistance = function(){
-			var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
-			var distance = linear * 1.5
-			console.log(distance)
-			$rootScope.estimated = +((distance * 0.33) + 1200).toFixed(2)
-			var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
-			$rootScope.freight = +((over)*1.80 + 22.90).toFixed(2)
+			if($rootScope.offer && $rootScope.offer.object){
+				var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
+				$rootScope.attended = linear < $rootScope.offer.object.node_radius ? true : false
+				var distance = linear * 1.5
+				// console.log(distance)
+				$rootScope.estimated = +((distance * 0.33) + 1200).toFixed(2)
+				var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
+				$rootScope.freight = +((over)*1.80 + 22.90).toFixed(2)
+			}
 		}
 
-
+		$rootScope.workingTime = function(){
+			if($rootScope.offer && $rootScope.offer.object){
+				var times = $rootScope.offer.object.node_resource.object.times
+				var start
+				var end
+				var now = new Date()
+				var today = now.getDay()
+				for (var key in times) {
+					if(times[key].day == today){
+						start = times[key].start
+						end = times[key].end
+					}
+				}
+				var now = now.getHours()*60 + now.getMinutes()
+				$rootScope.not_attending = now < start && now > end ? true : false
+			}
+		}
 
 
 

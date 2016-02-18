@@ -10,26 +10,26 @@
 
 	</md-toolbar>
 
-	<div flex cart-element ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout="column" layout-align="start start" ng-cloak></div>
-	<div flex ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout="column" ng-cloak></div>
-	<div flex ui-view ng-hide="$state.includes('storePage.offerPage') || $state.includes('storePage.mapPage')" layout="column" ng-cloak></div>
+	<div flex cart-element ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout='column' ng-cloak></div>
+	<div flex ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout='column' ng-cloak></div>
+	<div flex ui-view ng-hide="$state.includes('storePage.offerPage') || $state.includes('storePage.mapPage')" layout='column' ng-cloak></div>
 
 </div>
 
 <md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left animated" md-component-id="able-left-menu">
-	<md-subheader style="background-color:#0088FF"></md-subheader>
-	<md-subheader>{{app.auth.id}}</md-subheader>
+	<md-subheader style="background-color:#004582;height:56px" class="md-caption"></md-subheader>
+	<md-subheader class="md-caption">Able.cool Beta.</md-subheader>
 	<md-list flex="none">
 		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">Loja</md-list-item>
     	<!-- <md-list-item ng-click="">Perfil</md-list-item> -->
 		<md-list-item ng-click="leftmenu.go('storePage.ordersPage')">Pedidos</md-list-item>
-		<md-list-item ng-click="leftmenu.go('confirmationPage')">Ultimo Pedido</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.confirmationPage')" ng-disabled="!$root.last">Ultimo Pedido</md-list-item>
 		<md-list-item ng-click="leftmenu.go('storePage.feedbacksPage')">Feedbacks</md-list-item>
 		<md-list-item ng-click="leftmenu.go('storePage.plasticsPage')">Cartões de Crédito</md-list-item>
 		<!-- <md-list-item ng-click="leftmenu.go('storePage.mapPage')">Mapa</md-list-item> -->
 		<!-- https://able.helpshift.com/a/able/?l=pt -->
-		<md-list-item ng-click="">Ajuda</md-list-item>
-		<div flex></div>
+		<!-- <md-divider></md-divider>
+		<md-list-item ng-click="">Ajuda</md-list-item> -->
 		<md-divider></md-divider>
 		<md-list-item ng-click="app.auth.signout()">Desconectar Conta</md-list-item>
   	</md-list>

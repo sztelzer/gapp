@@ -23,70 +23,59 @@
 		$scope.place = place
 		vm.setCartAddress = setCartAddress
 
-		if(!$rootScope.addressed){
-			vm.searching = true
-		}
 
 		var autocomplete = new google.maps.places.AutocompleteService()
-		var placer = new google.maps.places.PlacesService(document.getElementById('mapping'))
-		var geocoder = new google.maps.Geocoder()
-
+		var placer = new google.maps.places.PlacesService(document.getElementById('mapping2'))
+		var geocoder = $rootScope.geocoder
 		var map
-		function createMap(){
-			if(!$rootScope.map){
-				map = new google.maps.Map(document.getElementById('mapping'), {
-					zoom: 18,
-					center: {lat: $rootScope.latitude, lng: $rootScope.longitude},
-					disableDefaultUI: true,
-					zoomControl: true
-				})
 
-				map.addListener('dragend', function() {
-					getAddress(map.getCenter().lat(), map.getCenter().lng())
-				});
-
-
-				google.maps.event.addDomListener(map, 'idle', function() {
-					$rootScope.center = map.getCenter();
-					google.maps.event.trigger(map, 'resize');
-				});
-				google.maps.event.addDomListener(window, 'resize', function() {
-					map.panTo($rootScope.center);
-				});
-				$rootScope.map = map
-			}
-		}
 
 		if($rootScope.located){
-			createMap()
+			setMap()
 			getAddress($rootScope.latitude, $rootScope.longitude)
-
-			map.panTo({
-				lat:$rootScope.latitude,
-				lng:$rootScope.longitude,
-			})
-			google.maps.event.trigger(map, 'resize'); //necessary to wake up after first init
-
 		} else {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function(position) {
 					$rootScope.latitude = position.coords.latitude
 					$rootScope.longitude = position.coords.longitude
 					$rootScope.accuracy = position.coords.accuracy
-					createMap()
 					getAddress($rootScope.latitude, $rootScope.longitude)
-					map.panTo({
-						lat:$rootScope.latitude,
-						lng:$rootScope.longitude,
-					})
-					google.maps.event.trigger(map, 'resize'); //necessary to wake up after first init
 					$rootScope.located = true
 					$rootScope.locating = false
+					setMap()
 				}, function() {
 					// handleLocationError(true, infoWindow, map.getCenter());
 				});
 			}
 		}
+
+		function setMap(){
+			map = new google.maps.Map(document.getElementById('mapping'), {
+				center: {'lat': $rootScope.latitude, 'lng': $rootScope.longitude},
+				zoom: 18,
+				disableDefaultUI: true,
+				zoomControl: true
+			})
+			setListeners()
+		}
+
+		function setListeners(){
+			map.addListener('dragend', function() {
+				getAddress(map.getCenter().lat(), map.getCenter().lng())
+				$rootScope.latitude = map.getCenter().lat()
+				$rootScope.longitude = map.getCenter().lng()
+			});
+
+			// google.maps.event.addDomListener(map, 'idle', function() {
+			// 	map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
+			// });
+
+			google.maps.event.addDomListener(window, 'resize', function() {
+				map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
+			});
+		}
+
+
 
 		function search(address) {
 			vm.searching = true
@@ -114,7 +103,7 @@
 			var request = {
 				input: address,
 				location: loc,
-				radius: 500,
+				radius: 500
 			}
 			autocomplete.getQueryPredictions(request, function (data) {
 				deferred.resolve(data);

@@ -76,7 +76,9 @@
 					$localStorage.offer = response.data;
 					$rootScope.offer = response.data;
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
+					$rootScope.workingTime()
 					$rootScope.updateDistance()
+					$rootScope.stripeKey = response.data.object.stripe_key
 					vm.loading = false
 				},
 				function errorCallback(response) {
@@ -93,6 +95,7 @@
 					$localStorage.offer = response.data;
 					$rootScope.offer = response.data;
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
+					$rootScope.workingTime()
 					$rootScope.updateDistance()
 					vm.loading = false
 				},

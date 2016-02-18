@@ -5,14 +5,10 @@
 
 <md-content offer-element flex ng-cloak>
 
-
 	<div flex layout="column">
 		<md-card class="card-full"
 		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path"
-		ng-if="promoted.object.max > 0"
 		ng-controller="promotedController">
-
-
 			<img class="md-card-image" alt="product image"
 				ng-repeat="content in promoted.object.sku.object.contents"
 				ng-if="content.object.function=='face_image'"
@@ -70,8 +66,6 @@
 	<div layout="row" ng-show="cart.sending" layout-align="center center" style="z-index:9999;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
-
-
 
 	<a flex='none' layout="row" class="cart" layout-align="space-between center" ng-click="cart.open = !cart.open"
 	ng-class="cart.open?'opened':'closed'"

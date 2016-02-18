@@ -7,7 +7,6 @@
 	.controller('promotedController', promotedController)
 
 
-
 	function promotedController($scope, $rootScope){
 		$scope.promoted.putOne = putOne
 		$scope.promoted.takeOne = takeOne

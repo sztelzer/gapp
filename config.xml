@@ -1,4 +1,4 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.4">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.5">
   <name>Able</name>
   <description>Experimente ótimas cervejas artesanais selecionadas pelo nosso sommelier virtual especialmente para você. Melhore ainda mais sua experiência ao longo do tempo enquanto ele aprende com suas escolhas e avaliações. Receba suas garrafas geladas onde estiver, na mesma hora. Disponível agora em São Paulo/SP.</description>
   <author href="https://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
@@ -7,13 +7,12 @@
   <plugin name="cordova-plugin-statusbar"/>
   <plugin name="cordova-plugin-geolocation"/>
   <plugin name="cordova-plugin-whitelist"/>
-  <plugin name="cordova-plugin-keyboard"/>
   <plugin name="cordova-plugin-splashscreen"/>
+  <plugin name="ionic-plugin-keyboard"/>
 
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="EnableViewportScale" value="false"/>
-  <preference name="KeyboardDisplayRequiresUserAction" value="true" />
   <preference name="SuppressesIncrementalRendering" value="true"/>
   <preference name="permissions" value=""/>
   <preference name="BackupWebStorage" value="none"/>
@@ -42,9 +41,8 @@
 		<allow-intent href="itms:*"/>
 		<allow-intent href="itms-apps:*"/>
 		<preference name="ShowSplashScreenSpinner" value="false"/>
-		<preference name="SplashScreenDelay" value="500" />
-		<preference name="AutoHideSplashScreen" value="true"/>
-        <preference name="KeyboardShrinksView" value="true" />
+		<preference name="FadeSplashScreenDuration" value="500"/>
+		<preference name="AutoHideSplashScreen" value="false"/>
 
 		<icon src="res/ios/icon.png" width="57" height="57"/>
 		<icon src="res/ios/icon-60@2x.png" width="120" height="120" />
@@ -71,6 +69,9 @@
 
   <platform name="android">
     <preference name="KeepRunning" value="false"/>
+	<preference name="ShowSplashScreenSpinner" value="false"/>
+	<preference name="FadeSplashScreenDuration" value="500"/>
+	<preference name="AutoHideSplashScreen" value="false"/>
 
     <icon src="res/android/ldpi.png" density="ldpi" />
     <icon src="res/android/mdpi.png" density="mdpi" />

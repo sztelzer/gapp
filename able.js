@@ -30,7 +30,7 @@
 
 	.config(function ($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider) {
 		$compileProvider.debugInfoEnabled(false);
-		$animateProvider.classNameFilter( /\banimated\b|\bmd-sidenav-backdrop\b/ );
+		$animateProvider.classNameFilter( /\banimated\b|\bmd-sidenav-backdrop\b|\bmd-bottom\b/ );
 		$localStorageProvider.setKeyPrefix('able_');
 		// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
 		$httpProvider.useApplyAsync(false);
@@ -160,26 +160,26 @@
 			});
 			$mdThemingProvider.theme('default').primaryPalette('blueAble')
 
-			$mdThemingProvider.definePalette('darkSilverAble', {
-				'50': '282F3D',
-				'100': '282F3D',
-				'200': '282F3D',
-				'300': '282F3D',
-				'400': '282F3D',
-				'500': '282F3D',
-				'600': '282F3D',
-				'700': '282F3D',
-				'800': '282F3D',
-				'900': '282F3D',
-				'A100': '282F3D',
-				'A200': '282F3D',
-				'A400': '282F3D',
-				'A700': '282F3D',
+			$mdThemingProvider.definePalette('redAble', {
+				'50': 'FF6666',
+				'100': 'FF6666',
+				'200': 'FF6666',
+				'300': 'FF6666',
+				'400': 'FF6666',
+				'500': 'FF6666',
+				'600': 'FF6666',
+				'700': 'FF6666',
+				'800': 'FF6666',
+				'900': 'FF6666',
+				'A100': 'FF6666',
+				'A200': 'FF6666',
+				'A400': 'FF6666',
+				'A700': 'FF6666',
 				'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
 				'contrastDarkColors': undefined,
 				'contrastLightColors': undefined    // could also specify this if default was 'dark'
 			});
-			$mdThemingProvider.theme('default').warnPalette('darkSilverAble')
+			$mdThemingProvider.theme('default').warnPalette('redAble')
 
 			$mdThemingProvider.definePalette('greenAble', {
 				'50': '26BD49',
@@ -225,7 +225,6 @@
 	})
 
 	.run(function ($rootScope, $state, auth, $window) {
-
 		$rootScope.geocoder = new google.maps.Geocoder()
 
 		$rootScope.$state = $state;
@@ -287,10 +286,6 @@
 			}
 		})
 
-		// $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-		// 	Keyboard.hide()
-		// })
-
 		$rootScope.updateDistance = function(){
 			if($rootScope.offer && $rootScope.offer.object){
 				var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
@@ -319,6 +314,13 @@
 				var now = now.getHours()*60 + now.getMinutes()
 				$rootScope.not_attending = now < start && now > end ? true : false
 			}
+		}
+
+		if(Keyboard){
+			$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+				Keyboard.close()
+				// $rootScope.height = document.getElementsByTagName('body')[0].clientHeight
+			})
 		}
 
 
@@ -354,10 +356,30 @@
 		return directive
 	}
 
-	function appController(auth, $state){
+	function appController(auth, $state, $rootScope){
 		var vm = this;
 		vm.auth = auth;
 		vm.state = $state;
+
+		if(Keyboard){
+			window.addEventListener('native.keyboardshow', keyboardShowHandler);
+			window.addEventListener('native.keyboardhide', keyboardHideHandler);
+			Keyboard.close();
+		}
+
+		function keyboardShowHandler(e){
+			var full = document.getElementsByTagName('body')[0].clientHeight
+			$rootScope.height = full - e.keyboardHeight
+			document.getElementById('app').setAttribute("style","height:"+$rootScope.height+"px !important");
+		}
+
+		function keyboardHideHandler(e){
+			$rootScope.height = document.getElementsByTagName('body')[0].clientHeight
+			document.getElementById('app').setAttribute("style","height:"+$rootScope.height+"px !important");
+		}
+
+
+
 	}
 
 

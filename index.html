@@ -10,11 +10,11 @@
 	<link type="text/css" rel="stylesheet" href="able-animation.css">
 	<link type="text/css" rel="stylesheet" href="components/angular-material.css">
 	<title>Able</title>
+	<script defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR'></script>
 </head>
 
 <body layout="column" flex app-element>
-	<div class="app page {{$state.current.name}} animated" ui-view flex layout-fill></div>
-	<script defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR'></script>
+	<div class="app page {{$state.current.name}} animated" id="app" ui-view flex layout-fill></div>
 
 	<script src="cordova.js"></script>
 	<script src="components/angular.js"></script>
@@ -67,14 +67,18 @@
 		})
 
 		function bootOnlineBrowser(){
+			Keyboard = false
 			angular.bootstrap(document, ['able'])
 		}
 
 		function bootOnlineCordova(){
-			Keyboard.shrinkView(true);
-			Keyboard.hideFormAccessoryBar(false);
-			//Keyboard.disableScrollingInShrinkView(true);
-			Keyboard.automaticScrollToTopOnHiding = true;
+			// Keyboard.shrinkView(true);
+			// Keyboard.hideFormAccessoryBar(false);
+			// Keyboard.disableScrollingInShrinkView(true);
+			// Keyboard.automaticScrollToTopOnHiding = true;
+			Keyboard = cordova.plugins.Keyboard
+			Keyboard.disableScroll(true);
+			navigator.splashscreen.hide();
 			angular.bootstrap(document, ['able'])
 		}
 

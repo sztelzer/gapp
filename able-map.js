@@ -22,13 +22,12 @@
 		$scope.search = search
 		$scope.place = place
 		vm.setCartAddress = setCartAddress
-
+		vm.loading = true
 
 		var autocomplete = new google.maps.places.AutocompleteService()
 		var placer = new google.maps.places.PlacesService(document.getElementById('mapping2'))
 		var geocoder = $rootScope.geocoder
 		var map
-
 
 		if($rootScope.located){
 			setMap()
@@ -44,8 +43,10 @@
 					$rootScope.locating = false
 					setMap()
 				}, function() {
-					// handleLocationError(true, infoWindow, map.getCenter());
+					vm.loading = false
 				});
+			} else {
+				vm.loading = false
 			}
 		}
 
@@ -66,15 +67,27 @@
 				$rootScope.longitude = map.getCenter().lng()
 			});
 
-			// google.maps.event.addDomListener(map, 'idle', function() {
-			// 	map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
-			// });
+			map.addListener('drag', function() {
+				$rootScope.latitude = map.getCenter().lat()
+				$rootScope.longitude = map.getCenter().lng()
+			});
 
-			google.maps.event.addDomListener(window, 'resize', function() {
+			map.addListener('idle', function() {
 				map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
 			});
-		}
 
+			map.addListener('resize', function() {
+				map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
+			});
+
+			$scope.$watch(function w(scope){return( $rootScope.height )},function c(n,o){
+				console.log('height_changed')
+				google.maps.event.trigger(map, "resize");
+			});
+
+			vm.loading = false
+
+		}
 
 
 		function search(address) {
@@ -164,6 +177,7 @@
 			$rootScope.updateCart()
 			$state.go('storePage.offerPage')
 		}
+
 
 
 	}

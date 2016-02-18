@@ -6,14 +6,14 @@
 		</div>
 
 		<div ng-show="map.loading" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#F4F2EF" layout="column" layout-align="center center">
-			<md-progress-circular md-mode="indeterminate" md-diameter="120"></md-progress-circular>
+			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 		</div>
 
 	</div>
 
 	<div id="mapping2"></div>
 
-	<form flex="none" name="mapForm" flex="none" layout="column" style="width:100%" ng-cloak>
+	<md-content flex="none" flex="none" layout="column" style="width:100%" ng-cloak>
 		<md-autocomplete flex
 			md-no-cache="true"
 			md-search-text="searchText"
@@ -39,10 +39,12 @@
 				<input type="text" ng-model="$root.place.complement"/>
 			</md-input-container>
 		</div>
-	</form>
 
-	<div flex="none" layout="row">
-		<md-button flex class="md-raised md-primary full-button" ng-click="map.setCartAddress()" ng-disabled="map.searching">Usar endereço</md-button>
-	</div>
+		<div flex="none" layout="row">
+			<md-button flex class="md-raised md-primary full-button" ng-click="map.setCartAddress()" ng-disabled="map.searching">Usar endereço</md-button>
+		</div>
+
+	</md-content>
+
 
 </div>

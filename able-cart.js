@@ -137,7 +137,8 @@
 					$state.go('storePage.confirmationPage');
 				},
 				function errorCallback(response) {
-					toast('response.data.errors[0]')
+					toast(errors(response.data.errors[0]))
+					empty()
 					vm.sending = false
 				}
 			)
@@ -153,15 +154,15 @@
 		}
 
 
-
-
-
-
-
-
-
-
-
+		function errors(error){
+			switch (error) {
+				case 'payment':
+					return "O pagamento não foi aceito. Tente outro cartão."
+					break;
+				default:
+					return "Houve um erro inesperado. Reinicie o aplicativo."
+			}
+		}
 
 		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
 

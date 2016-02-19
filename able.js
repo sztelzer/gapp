@@ -16,10 +16,10 @@
 	])
 
 	.value('config', {
-		// api: 'http://127.0.0.1:8081',
-		// company_path: '/companies/5629499534213120',
-		api: 'https://api-dot-heartbend.appspot.com',
-		company_path: '/companies/5654313976201216',
+		api: 'http://127.0.0.1:8081',
+		company_path: '/companies/5629499534213120',
+		// api: 'https://api-dot-heartbend.appspot.com',
+		// company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6,
 		stripe_key: 'pk_test_85MXK5Zb67wdbX1yUZ7QcG8K'
@@ -224,12 +224,12 @@
 			$mdThemingProvider.theme('default').backgroundPalette('ivoryAble')
 	})
 
-	.run(function ($rootScope, $state, auth, $window) {
+	.run(function ($rootScope, $state, auth, $window, $interval) {
 		$rootScope.platform = Platform
 		$rootScope.geocoder = new google.maps.Geocoder()
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-			$rootScope.workingTime()
+			// $rootScope.workingTime()
 			if (toState.data.requireLogin && !auth.token) {
 				event.preventDefault();
 				$state.go('startPage');
@@ -239,6 +239,9 @@
 				$state.go('storePage.offerPage');
 			}
 		})
+
+		$interval($rootScope.workingTime, 60 * 1000); //60 seconds * 1000 miliseconds
+
 
 
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
@@ -296,27 +299,25 @@
 		}
 
 		$rootScope.workingTime = function(){
-			if($rootScope.offer && $rootScope.offer.object){
-				var times = $rootScope.offer.object.node_resource.object.times
-				var start
-				var end
-				var now = new Date()
-				var today = now.getDay()
-				for (var key in times) {
-					if(times[key].day == today){
-						start = times[key].start
-						end = times[key].end
-					}
+			var times = $rootScope.offer.object.node_resource.object.times
+//			console.log($rootScope.offer.object.node_resource.object.times)
+			var start
+			var end
+			var now = new Date()
+			var today = now.getDay()
+			for (var key in times) {
+				if(times[key].day == today){
+					start = times[key].start
+					end = times[key].end
 				}
-				var now = now.getHours()*60 + now.getMinutes()
-				$rootScope.not_attending = now < start && now > end ? true : false
 			}
+			var nowMinutes = now.getHours()*60 + now.getMinutes()
+			$rootScope.not_attending = nowMinutes < start || nowMinutes > end ? true : false
 		}
 
 		if(Keyboard){
 			$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 				Keyboard.close()
-				// $rootScope.height = document.getElementsByTagName('body')[0].clientHeight
 			})
 		}
 

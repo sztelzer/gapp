@@ -32,6 +32,17 @@ html, body, .app {
 	color: #F4F2EF !important;
 }
 
+.toolbar.Android {
+	padding: 0px !important;
+	min-height: 40px !important;
+	height: 40px !important;
+	max-height: 40px !important;
+}
+
+md-subheader.sidenav.Android {
+	height: 40px !important;
+}
+
 .toolbar-logo {
 	height:18px;
 }

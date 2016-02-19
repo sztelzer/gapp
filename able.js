@@ -225,8 +225,8 @@
 	})
 
 	.run(function ($rootScope, $state, auth, $window) {
+		$rootScope.platform = Platform
 		$rootScope.geocoder = new google.maps.Geocoder()
-
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			$rootScope.workingTime()
@@ -239,9 +239,6 @@
 				$state.go('storePage.offerPage');
 			}
 		})
-
-
-
 
 
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
@@ -361,7 +358,7 @@
 		vm.auth = auth;
 		vm.state = $state;
 
-		if(Keyboard){
+		if(Keyboard && device.platform == 'iOS'){
 			window.addEventListener('native.keyboardshow', keyboardShowHandler);
 			window.addEventListener('native.keyboardhide', keyboardHideHandler);
 			Keyboard.close();

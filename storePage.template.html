@@ -1,5 +1,5 @@
 <div layout="column" flex="none" layout-fill>
-	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-cloak>
+	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-cloak ng-class="$root.platform">
 		<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
 		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
@@ -17,7 +17,7 @@
 </div>
 
 <md-sidenav left-menu style="z-index:9999" layout="column" class="md-sidenav-left animated" md-component-id="able-left-menu">
-	<md-subheader style="background-color:#004582;height:56px" class="md-caption"></md-subheader>
+	<md-subheader class="sidenav" style="background-color:#004582;height:56px" class="md-caption" ng-class="$root.platform"></md-subheader>
 	<md-subheader class="md-caption">Able.cool Beta</md-subheader>
 	<md-list flex="none">
 		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">Loja</md-list-item>

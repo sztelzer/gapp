@@ -42,13 +42,14 @@
 				return false;
 			}
 
-			// check if actual location is valid for this node
+			//check if actual location is valid for this node
 			var linear_distance = geolib.getDistance(
 				{latitude:$rootScope.latitude, longitude:$rootScope.longitude},
 				{latitude:storedOffer.object.node_latitude, longitude:storedOffer.object.node_longitude})
 
 			if(linear_distance > storedOffer.object.node_radius){
-				return false;
+				storedOffer.object.status = 'not_attended'
+				// return false;
 			}
 
 			var original_pace = storedOffer.object.node_estimated/storedOffer.object.node_linear;

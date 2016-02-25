@@ -18,11 +18,12 @@
 	.value('config', {
 		api: 'http://127.0.0.1:8081',
 		company_path: '/companies/5629499534213120',
+
 		// api: 'https://api-dot-heartbend.appspot.com',
 		// company_path: '/companies/5654313976201216',
+
 		node_function: 'productConsumerDispatch',
-		offers_count: 6,
-		stripe_key: 'pk_test_85MXK5Zb67wdbX1yUZ7QcG8K'
+		offers_count: 6
 	})
 
 	// .value('mock', {
@@ -45,7 +46,6 @@
 					accessLogged: false
 				}
 			})
-
 
 			.state('questPage', {
 				url: "/quest",
@@ -240,10 +240,6 @@
 			}
 		})
 
-		$interval($rootScope.workingTime, 60 * 1000); //60 seconds * 1000 miliseconds
-
-
-
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			if(toState.name == 'storePage.offerPage' && !$rootScope.located ){
 				if (navigator.geolocation) {
@@ -299,21 +295,25 @@
 		}
 
 		$rootScope.workingTime = function(){
-			var times = $rootScope.offer.object.node_resource.object.times
-//			console.log($rootScope.offer.object.node_resource.object.times)
-			var start
-			var end
-			var now = new Date()
-			var today = now.getDay()
-			for (var key in times) {
-				if(times[key].day == today){
-					start = times[key].start
-					end = times[key].end
+			if($rootScope.offer){
+				var times = $rootScope.offer.object.node_resource.object.times
+				var start
+				var end
+				var now = new Date()
+				var today = now.getDay()
+				for (var key in times) {
+					if(times[key].day == today){
+						start = times[key].start
+						end = times[key].end
+					}
 				}
+				var nowMinutes = now.getHours()*60 + now.getMinutes()
+				$rootScope.not_attending = nowMinutes < start || nowMinutes > end ? true : false
 			}
-			var nowMinutes = now.getHours()*60 + now.getMinutes()
-			$rootScope.not_attending = nowMinutes < start || nowMinutes > end ? true : false
 		}
+
+		$interval($rootScope.workingTime, 60 * 1000); //60 seconds * 1000 miliseconds
+
 
 		if(Keyboard){
 			$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {

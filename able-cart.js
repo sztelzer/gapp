@@ -137,7 +137,7 @@
 				},
 				function errorCallback(response) {
 					toast(errors(response.data.errors[0]))
-					empty()
+					console.log(response.data.errors[0])
 					vm.sending = false
 				}
 			)
@@ -154,9 +154,9 @@
 
 
 		function errors(error){
-			switch (error) {
+			switch (error.reference) {
 				case 'payment':
-					return "O pagamento não foi aceito. Tente outro cartão."
+					return "O pagamento não foi aceito."
 					break;
 				default:
 					return "Houve um erro inesperado. Reinicie o aplicativo."

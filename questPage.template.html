@@ -1,17 +1,19 @@
-<div element-quest flex layout-fill layout="column">
-	<md-toolbar flex="none" class="clean-toolbar md-whiteframe-4dp" layout="row" layout-align="start center" ng-cloak>
+<div element-quest flex layout-fill layout="column" quest-page>
+	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak ng-class="$root.platform">
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
-		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-black"></md-icon>
+		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
-		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo-small">
+		<img flex="none" src="imgs/able-white.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Criar Perfil</div>
 		<div flex="none" style="width:78px"></div>
 	</md-toolbar>
 
 	<md-content>
 		<form name="questForm" novalidate ng-cloak>
+			<div style="margin-top:8px"></div>
 
-			<md-card flex class="card-tag md-whiteframe-8dp" ng-repeat="tag in quest.tags">
+
+			<md-card flex class="card-full md-whiteframe-8dp" ng-repeat="tag in quest.tags">
 				<div class="card-title" style="background-color:{{tag.c}};color:{{tag.t}}">{{tag.q}}</div>
 				<div flex layout="column" class="card-content">
 					<md-radio-group name="{{tag.i}}" ng-model="quest.payload[tag.i]" ng-required="true" required>
@@ -20,7 +22,7 @@
 				</div>
 			</md-card>
 
-			<div flex layout-padding layout="column">
+			<div flex class="md-padding" layout="column">
 
 				<div ng-show="quest.least_tags">
 				  Todos os cartões devem ser respondidos!
@@ -28,19 +30,28 @@
 
 
 				<md-input-container>
-				  <label>Nome</label>
-				  <input name="name" ng-model="quest.user.name" minlength="5" maxlength="40" ng-required="true" required>
-			          <div ng-messages="questForm.name.$error">
-			            <div ng-message="required">This is required.</div>
-			          </div>
-				  </md-input-container>
+					<label>Nome Completo</label>
+					<input name="name" ng-model="quest.user.name" minlength="10" maxlength="40" ng-required="true" required>
+					<div ng-messages="questForm.name.$error">
+						<div ng-message="required">Seu nome é necessário para entregas e identificação.</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container>
+					<label>CPF</label>
+					<input name="document" ng-model="quest.user.document" validate-cpf minlength="11" maxlength="11" ng-required="true" required />
+					<div ng-messages="questForm.document.$error">
+						<div ng-message="cpf">Um CPF válido é necessário para emissão de nota fiscal.</div>
+					</div>
+				</md-input-container>
+
 
 				<md-input-container>
 				  <label>E-mail</label>
 				  <input name="email" ng-model="quest.user.email" type="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" ng-required="true" required>
 				  <div ng-messages="questForm.email.$error">
 		            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-		              Your email must be between 10 and 100 characters long and look like an e-mail address.
+					  Seu e-mail deve ser válido.
 		            </div>
 		          </div>
 
@@ -51,14 +62,19 @@
 					<input name="password" ng-model="quest.user.password" type="password" minlength="8" maxlength="32" ng-required="true" required>
 					<div ng-messages="questForm.password.$error">
 					  <div ng-message-exp="['required', 'minlength', 'maxlength']">
-						  Please create a password with at least 8 characters.
+						  Crie uma senha de 8 caracteres.
 					  </div>
 					</div>
 				</md-input-container>
 
-				<div style="width:100%" layout="row" layout-align="space-around center">
-					<md-button class="md-raised md-accent wider" ng-click="quest.send()" ng-disabled="questForm.$invalid">Criar Perfil</md-button>
+				<div class="md-caption">
+				  Enviando seus dados você confirma que possui mais de 18 anos para navegar e realizar compras neste aplicativo.
 				</div>
+
+			</div>
+
+			<div flex="none" layout="row">
+				<md-button flex class="md-raised md-accent full-button" ng-click="quest.send()" ng-disabled="questForm.$invalid || quest.sending">Criar Perfil</md-button>
 			</div>
 
 

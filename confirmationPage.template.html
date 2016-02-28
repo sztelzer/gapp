@@ -1,9 +1,18 @@
-<md-content confirmation-element flex layout="column" layout-align="center center">
+<md-content confirmation-element flex layout-fill layout="column" layout-align="center center" style="background-color:#0088FF !important; color:white !important;">
 
-	<img flex="none" src="imgs/process-express-delivery.svg" style="width:20%; margin: 0px 0px 2em 0px">
-	<div flex="none">Estamos indo.</div>
-	<div flex="none">Hora do pedido: {{confirmation.data.created_at}}</div>
-	<div flex="none">Quantidade de Produtos: {{confirmation.data.object.total_quantity}}</div>
-	<div flex="none">Tempo estimado de entrega: {{confirmation.data.object.node_estimated+900}}</div>
+	<img flex="none" src="imgs/process-express-delivery-circled.svg" class="round-cicle">
+	<div flex="none">Pronto.</div>
+	<div flex="none">{{confirmation.last.created_at | date : 'dd/MM/yyyy HH:mm' : '-0200'}}</div>
+	<div flex="none">Tempo aproximado para entrega:</div>
+	<div flex="none">{{confirmation.last.object.node_estimated | secondsToMinutes}} min.</div>
+
+	<div flex="none" layout="row" style="width:100%">
+		<md-button class="md-raised md-accent full-button" ng-click="confirmation.reset()">Ok, recomeçar</md-button>
+	</div>
+
+	<div flex="none" class="md-caption md-padding">
+		Você sempre pode verificar<br/>seus pedidos na área... Pedidos :)
+	</div>
+
 
 </md-content>

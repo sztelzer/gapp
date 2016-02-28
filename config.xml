@@ -1,46 +1,101 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.1.0">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.5">
   <name>Able</name>
-  <description>Have great craft beer choices selected by our artificial inteligence sommerlier, get even better selections over time as it learns and evolves your tastes. Receive your products wherever you are with same hour delivery on selected areas.</description>
-  <author href="http://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
+  <description>Experimente ótimas cervejas artesanais selecionadas pelo nosso sommelier virtual especialmente para você. Melhore ainda mais sua experiência ao longo do tempo enquanto ele aprende com suas escolhas e avaliações. Receba suas garrafas geladas onde estiver, na mesma hora. Disponível agora em São Paulo/SP.</description>
+  <author href="https://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
   <content src="index.html"/>
+
+  <plugin name="cordova-plugin-statusbar"/>
+  <plugin name="cordova-plugin-geolocation"/>
+  <plugin name="cordova-plugin-whitelist"/>
+  <plugin name="cordova-plugin-splashscreen"/>
+  <plugin name="cordova-plugin-device"/>
+  <plugin name="ionic-plugin-keyboard"/>
+
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="EnableViewportScale" value="false"/>
+  <preference name="SuppressesIncrementalRendering" value="true"/>
   <preference name="permissions" value=""/>
+  <preference name="BackupWebStorage" value="none"/>
   <preference name="orientation" value="portrait"/>
   <preference name="target-device" value="handset"/>
-  <preference name="fullscreen" value="true"/>
-  <preference name="webviewbounce" value="false"/>
   <preference name="prerendered-icon" value="true"/>
   <preference name="stay-in-webview" value="true"/>
   <preference name="detect-data-types" value="false"/>
-  <preference name="exit-on-suspend" value="false"/>
+  <preference name="exit-on-suspend" value="true"/>
   <preference name="show-splash-screen-spinner" value="false"/>
   <preference name="auto-hide-splash-screen" value="true"/>
-  <preference name="disable-cursor" value="true"/>
-  <preference name="deployment-target" value="7.0" />
-  <preference name="android-minSdkVersion" value="14"/>
-  <preference name="android-installLocation" value="auto"/>
-  <gap:plugin name="org.apache.cordova.device"/>
-  <gap:plugin name="org.apache.cordova.dialogs"/>
-  <gap:plugin name="org.apache.cordova.geolocation"/>
-  <gap:plugin name="org.apache.cordova.media"/>
-  <gap:plugin name="org.apache.cordova.network-information"/>
-  <gap:plugin name="org.apache.cordova.splashscreen"/>
+  <preference name="deployment-target" value="7.1" />
+  <preference name="StatusBarOverlaysWebView" value="true" />
+  <preference name="StatusBarStyle" value="blacktranslucent" />
+  <preference name="BackgroundColor" value="0xfff4f2ef"/>
 
-  <plugin name="cordova-plugin-whitelist"/>
-  <icon src="icon.png"/>
-  <splash src="splash.png"/>
-  <splash src="res/ios/splash.png" platform="ios" width="320" height="480"/>
-  <splash src="res/ios/splash@2x.png" platform="ios" width="640" height="960"/>
-  <splash src="res/ios/splash568h@2x.png" platform="ios" width="640" height="1136"/>
-  <splash src="res/ios/splash667h@2x.png" platform="ios" width="750" height="1334"/>
-  <splash src="res/ios/splash736h@3x.png" platform="ios" width="1242" height="2208"/>
-  <!-- <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/> -->
-  <access origin="*"/>
-  <allow-intent href="*"/>
+
+  <allow-navigation href="*" />
+  <allow-intent href="*" />
+  <access origin="*" />
+
+  <access origin="https://api-dot-heartbend.appspot.com" subdomains="true"/>
+
+	<platform name="ios">
+		<allow-intent href="itms:*"/>
+		<allow-intent href="itms-apps:*"/>
+		<preference name="ShowSplashScreenSpinner" value="false"/>
+		<preference name="FadeSplashScreenDuration" value="500"/>
+		<preference name="AutoHideSplashScreen" value="false"/>
+		<preference name="fullscreen" value="true"/>
+
+
+		<icon src="res/ios/icon.png" width="57" height="57"/>
+		<icon src="res/ios/icon-60@2x.png" width="120" height="120" />
+		<icon src="res/ios/icon-60@3x.png" width="180" height="180" />
+		<icon src="res/ios/icon-76.png" width="76" height="76" />
+		<icon src="res/ios/icon-76@2x.png" width="152" height="152" />
+		<icon src="res/ios/icon-40.png" width="40" height="40" />
+		<icon src="res/ios/icon-40@2x.png" width="80" height="80" />
+		<icon src="res/ios/icon.png" width="57" height="57" />
+		<icon src="res/ios/icon@2x.png" width="114" height="114" />
+		<icon src="res/ios/icon-72.png" width="72" height="72" />
+		<icon src="res/ios/icon-72@2x.png" width="144" height="144" />
+		<icon src="res/ios/icon-small.png" width="29" height="29" />
+		<icon src="res/ios/icon-small@2x.png" width="58" height="58" />
+		<icon src="res/ios/icon-small@3x.png" width="87" height="87" />
+		<icon src="res/ios/icon-50.png" width="50" height="50" />
+		<icon src="res/ios/icon-50@2x.png" width="100" height="100" />
+		<splash src="res/ios/320x480.png"   width="320"  height="480"/>
+		<splash src="res/ios/640x960.png"   width="640"  height="960"/>
+		<splash src="res/ios/640x1136.png"  width="640"  height="1136"/>
+		<splash src="res/ios/750x1334.png"  width="750"  height="1334"/>
+		<splash src="res/ios/1242x2208.png" width="1242" height="2208"/>
+	</platform>
+
   <platform name="android">
-    <allow-intent href="market:*"/>
+    <preference name="KeepRunning" value="false"/>
+	<preference name="ShowSplashScreenSpinner" value="false"/>
+	<preference name="FadeSplashScreenDuration" value="500"/>
+	<preference name="AutoHideSplashScreen" value="false"/>
+	<preference name="fullscreen" value="false"/>
+
+
+    <icon src="res/android/ldpi.png" density="ldpi" />
+    <icon src="res/android/mdpi.png" density="mdpi" />
+    <icon src="res/android/hdpi.png" density="hdpi" />
+    <icon src="res/android/xhdpi.png" density="xhdpi" />
+    <icon src="res/android/xxhdpi.png" density="xxhdpi" />
+    <icon src="res/android/xxxhdpi.png" density="xxxhdpi" />
+
+    <splash src="res/android/land-hdpi.png" density="land-hdpi"/>
+    <splash src="res/android/land-ldpi.png" density="land-ldpi"/>
+    <splash src="res/android/land-mdpi.png" density="land-mdpi"/>
+    <splash src="res/android/land-xhdpi.png" density="land-xhdpi"/>
+
+    <splash src="res/android/port-hdpi.png" density="port-hdpi"/>
+    <splash src="res/android/port-ldpi.png" density="port-ldpi"/>
+    <splash src="res/android/port-mdpi.png" density="port-mdpi"/>
+    <splash src="res/android/port-xhdpi.png" density="port-xhdpi"/>
+
   </platform>
-  <platform name="ios">
-    <allow-intent href="itms:*"/>
-    <allow-intent href="itms-apps:*"/>
-  </platform>
+
+
+
 </widget>

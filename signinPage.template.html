@@ -1,32 +1,30 @@
-<div signin-element flex layout-fill layout="column">
-	<md-toolbar flex="none" class="clean-toolbar md-whiteframe-4dp" layout="row" layout-align="start center" ng-cloak>
+<div signin-element layout-fill layout="column" signin-page>
+	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak ng-class="$root.platform">
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
-		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-black"></md-icon>
+		  <md-icon md-svg-icon="imgs/ic_navigate_before_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
-		<img flex="none" src="imgs/able-white.svg" class="main-toolbar-logo-small">
+		<img flex="none" src="imgs/able-white.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Login</div>
 		<div flex="none" style="width:83px"></div>
 	</md-toolbar>
 
-	<md-content flex layout="column">
-		<form name="signinForm" flex layout-padding layout="column" layout-align="center center" ng-cloak>
-			<md-input-container style="width:90%">
-		      <label>Email</label>
-		      <input novalidate type="email" name="email" ng-model="signin.email" minlength="10" maxlength="256" ng-pattern="/^.+@.+\..+$/">
-		    </md-input-container>
+	<md-content flex layout="column" layout-align="center center" ng-cloak class="md-padding">
+		<md-input-container flex='none' class="md-block"  style="width:100%">
+	      <label>Email</label>
+	      <input novalidate type="email" name="email" ng-model="signin.email" minlength="10" maxlength="256" ng-pattern="/^.+@.+\..+$/">
+	    </md-input-container>
 
-			<md-input-container style="width:90%">
-		      <label>Senha</label>
-		      <input novalidate type="password" name="password" ng-model="signin.password" minlength="6" maxlength="24">
-		    </md-input-container>
+		<md-input-container flex='none' class="md-block"  style="width:100%">
+	      <label>Senha</label>
+	      <input novalidate type="password" name="password" ng-model="signin.password" minlength="6" maxlength="24">
+	    </md-input-container>
 
-			<div style="width:90%" layout="row" layout-align="space-between center">
-				<a ui-sref="recoverPage" ng-click>Recuperar Senha</a>
-				<md-button class="md-raised md-accent" ng-click="signin.signin()">Entrar</md-button>
-			</div>
-		</form>
-
-		<div flex="none" style="height:60px;"></div>
-
+		<div flex='none' layout="row" layout-align="space-between center"  style="width:100%">
+			<a flex="none" ui-sref="recoverPage" ng-click>Recuperar Senha</a>
+			<div flex="20"></div>
+			<md-button flex class="md-raised md-accent" ng-click="signin.signin()">Entrar</md-button>
+		</div>
 	</md-content>
+
+	<div flex="none" style="height:80px;"></div>
 </div>

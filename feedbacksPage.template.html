@@ -1,29 +1,47 @@
-<md-content element-feedbacks flex ng-cloak layout-padding layout="column">
-
-	<div ng-show="!feedbacks.loading && feedbacks.len >= 1" flex="none" ng-cloak>
-		<center>O que você achou destas cervejas?</center>
+<div element-feedbacks flex-fill layout="column" style="position:relative">
+	<div layout="row" ng-show="feedbacks.working" layout-align="center center" style="z-index:9999;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
 
-	<div ng-show="feedbacks.len == 0" flex="none" ng-cloak>
-		<strong>Nenhuma avaliação pendente.</strong> Quando você receber nossos produtos você poderá avaliá-los aqui. É muito importante que você tenha experimentado cada cerveja,
-		pois sua avaliação impactará diretamente e automaticamente no ranking dos produtos selecionados para você.
-	</div>
+	<md-content flex ng-cloak layout="column" class="" style="overflow-x:hidden !important" ng-cloak>
+		<div ng-show="!feedbacks.len" flex="none" class="md-padding" ng-cloak>
+			<strong>Nenhuma avaliação pendente.</strong> Quando você receber nossos produtos você poderá avaliá-los aqui. É muito importante que você tenha experimentado cada cerveja,
+			pois sua avaliação impactará diretamente e automaticamente no ranking dos produtos selecionados para você.
+		</div>
 
-	<md-card ng-repeat="feedback in feedbacks.list" flex="none" ng-cloak>
-		<md-card-content>
-			{{feedback.path}}
-			{{feedback.object.about}}
-			{{feedback.object.generator}}
-			<md-slider flex md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-change="feedbacks.touched = true"></md-slider>
-		</md-card-content>
-	</md-card>
+		<md-card ng-repeat="feedback in feedbacks.list" flex="none" class="md-padding" layout="column" style="background-color:#ffffff !important; position:relative" ng-cloak>
+			<div layout="row" ng-show="feedback.sending" layout-align="center center" style="z-index:9999;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+				<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+			</div>
+			<div layout="column" layout-align="start start">
+				<div flex='none'>
+					<img class="md-card-image md-whiteframe-0dp" alt="image"
+					  ng-repeat="content in feedback.object.contents"
+					  ng-if="content.object.function=='face_image'"
+					  ng-src="{{content.object.url}}"
+					  />
+				</div>
+			</div>
+			<div layout="column" class="">
+				<md-slider md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-init="feedback.object.float=1" ng-change="feedbacks.touched = true;feedback.object.touched = true"></md-slider>
+				<div flex layout="row" layout-align="space-between start">
+					<div flex="none" class="md-caption">1</div>
+					<div flex="none" class="md-caption">2</div>
+					<div flex="none" class="md-caption">3</div>
+					<div flex="none" class="md-caption">4</div>
+					<div flex="none" class="md-caption">5</div>
+				</div>
+				<div flex layout="row" layout-align="space-between start">
+					<div flex="none" class="md-caption">Não Gostei</div>
+					<div flex="none" class="md-caption">Adorei</div>
+				</div>
 
+
+			</div>
+		</md-card>
+
+	</md-content>
 	<div ng-show="feedbacks.touched" flex="none" layout="row" layout-align="end center" ng-cloak>
-		<md-button class="md-raised md-primary" ng-click="feedbacks.send()">Enviar</md-button>
+		<md-button class="md-raised md-primary full-button" ng-click="feedbacks.send()">Enviar avaliados</md-button>
 	</div>
-
-	<div ng-show="feedbacks.sent && !feedbacks.touched" flex="none" layout-padding ng-cloak>
-		<p>Excelente!<br/>As avaliações foram salvas e complementarão sua experiência na próxima compra.</p>
-	</div>
-
-</md-content>
+</div>

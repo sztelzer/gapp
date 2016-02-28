@@ -1,45 +1,50 @@
-<div map-element flex ng-cloak layout="column">
-
+<div map-element flex layout="column" ng-cloak>
 	<div flex layout="column" style="position:relative">
-		<div flex id="mapping"></div>
-		<div style="position:absolute;top:50%;left:50%"><md-icon md-svg-icon="imgs/map_pointer.svg" style="height:5em;width:1.5em;position:relative;top:-2.5em;left:-0.75em"></md-icon></div>
+		<div flex id="mapping" style="height:100%"></div>
+		<div style="position:absolute;top:50%;left:50%">
+			<md-icon md-svg-icon="imgs/map_pointer.svg" style="height:2.5em;width:1.5em;position:relative;top:-2.5em;left:-0.75em"></md-icon>
+		</div>
+
+		<div ng-show="map.loading" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#F4F2EF" layout="column" layout-align="center center">
+			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+		</div>
+
 	</div>
 
-	<form name="mapForm" flex="none" layout="column" style="width:100%" ng-cloak>
+	<div id="mapping2"></div>
+
+	<md-content flex="none" flex="none" layout="column" style="width:100%" ng-cloak>
 		<md-autocomplete flex
 			md-no-cache="true"
-			md-search-text="map.searchText"
-			md-selected-item="map.selectedItem"
-			md-search-text-change="map.search(map.searchText)"
-			md-selected-item-change="map.place(item)"
-			md-items="item in map.search(map.searchText)"
+			md-search-text="searchText"
+			md-selected-item="selectedItem"
+			md-search-text-change="search(searchText)"
+			md-selected-item-change="place(item)"
+			md-items="item in search(searchText)"
 			md-item-text="item.description"
 			md-min-length="3"
-			md-floating-label="Endereco"
+			md-floating-label="Endereço"
 			md-autofocus="true"
 			md-autoselect="true"
-			required ng-required="true"
+			ng-class="no-errors"
 			ng-cloak>
 			<md-item-template>
-		    	<span md-highlight-text="map.searchText" md-highlight-flags="^i">{{item.description}}</span>
+		    	<span md-highlight-text="searchText" md-highlight-flags="^i">{{item.description}}</span>
 			</md-item-template>
 		</md-autocomplete>
 
-
-		<!-- <div flex layout="row">
-			<md-input-container flex class="md-block">
+		<div flex layout="row">
+			<md-input-container flex class="md-block no-errors">
 				<label>Complemento</label>
-				<input type="text" ng-model="map.address.complement"/>
+				<input type="text" ng-model="$root.place.complement"/>
 			</md-input-container>
-		</div> -->
-
-		<div style="width:100%; height:5em" layout="row" layout-align="space-around center">
-			<md-button class="md-raised md-accent wider" ng-click="map.setAddress()" ng-disabled="mapForm.$invalid">Usar endereço</md-button>
 		</div>
 
-		<div flex="none" id="maps_attributions"></div>
-	</form>
+		<div flex="none" layout="row">
+			<md-button flex class="md-raised md-primary full-button" ng-click="map.setCartAddress()" ng-disabled="map.searching">Usar endereço</md-button>
+		</div>
 
+	</md-content>
 
 
 </div>

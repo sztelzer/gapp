@@ -1,7 +1,8 @@
 /* app css stylesheet */
 
 html, body, .app {
-	height: 100% !important;
+	height: 100%;
+	min-height: 0% !important;
 	max-height: 100% !important;
 	overflow: hidden !important;
 	margin: 0 !important;
@@ -23,6 +24,13 @@ html, body, .app {
 	border-radius: 0 !important;
 }
 
+.md-scrool-mask {
+	z-index: 9990 !important;
+}
+
+.md-dialog-container {
+	z-index: 9999 !important;
+}
 
 .toolbar {
 	padding: 20px 0 0 0 !important;

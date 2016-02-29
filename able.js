@@ -4,13 +4,13 @@
 	angular
 
 	.module("able", [
+		'ngMaterial',
 		'ngMessages',
 		'ngAnimate',
 		'ngStorage',
 		'ui.router',
 		'ct.ui.router.extras',
 		'ngAria',
-		'ngMaterial',
 		'angularPayments',
 		'dcbImgFallback'
 	])
@@ -18,20 +18,16 @@
 	.value('config', {
 		api: 'http://127.0.0.1:8081',
 		company_path: '/companies/5629499534213120',
-
-		// api: 'https://api-dot-heartbend.appspot.com',
+		// api: 'https://autocraft-beta-1-dot-api-dot-heartbend.appspot.com',
 		// company_path: '/companies/5654313976201216',
-
 		node_function: 'productConsumerDispatch',
 		offers_count: 6
 	})
 
-	// .value('mock', {
-	// })
-
-	.config(function ($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider) {
+	.config(function ($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider, $anchorScrollProvider) {
 		$compileProvider.debugInfoEnabled(false);
-		$animateProvider.classNameFilter( /\banimated\b|\bmd-sidenav-backdrop\b|\bmd-bottom\b/ );
+		$anchorScrollProvider.disableAutoScrolling()
+		// $animateProvider.classNameFilter( /\banimated\b|\bmd-sidenav-backdrop\b|\bmd-bottom\b|\bng-animate\b/ );
 		$localStorageProvider.setKeyPrefix('able_');
 		// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
 		$httpProvider.useApplyAsync(false);
@@ -224,7 +220,10 @@
 			$mdThemingProvider.theme('default').backgroundPalette('ivoryAble')
 	})
 
-	.run(function ($rootScope, $state, auth, $window, $interval) {
+	.run(function ($rootScope, $state, auth, $window, $interval, config, $mdDialog) {
+
+		console.log(config.api)
+
 		$rootScope.platform = Platform
 		$rootScope.geocoder = new google.maps.Geocoder()
 		$rootScope.$state = $state;
@@ -321,7 +320,13 @@
 			})
 		}
 
-
+		// $rootScope.alert = function(msg) {
+		// 	alert = $mdDialog.alert({
+		// 		textContent: msg,
+		// 		ok: 'Ok'
+		// 	})
+		// 	$mdDialog.show( alert )
+		// }
 
 	})
 
@@ -360,22 +365,15 @@
 		vm.state = $state;
 
 		if(Keyboard && device.platform == 'iOS'){
-			window.addEventListener('native.keyboardshow', keyboardShowHandler);
-			window.addEventListener('native.keyboardhide', keyboardHideHandler);
+			window.addEventListener('native.keyboardshow', keyboardWindowResize);
+			window.addEventListener('native.keyboardhide', keyboardWindowResize);
 			Keyboard.close();
 		}
 
-		function keyboardShowHandler(e){
-			var full = document.getElementsByTagName('body')[0].clientHeight
-			$rootScope.height = full - e.keyboardHeight
-			document.getElementById('app').setAttribute("style","height:"+$rootScope.height+"px !important");
+		function keyboardWindowResize(e){
+			var h = window.innerHeight
+			document.body.setAttribute("style","height: "+h+"px !important");
 		}
-
-		function keyboardHideHandler(e){
-			$rootScope.height = document.getElementsByTagName('body')[0].clientHeight
-			document.getElementById('app').setAttribute("style","height:"+$rootScope.height+"px !important");
-		}
-
 
 
 	}

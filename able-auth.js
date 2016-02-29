@@ -12,14 +12,14 @@
 			email: '',
 			password: '',
 			logout: false,
-			signup: signup,
+			signupQuest: signupQuest,
 			signin: signin,
 			signout: signout
 		}
 		return service
 
-		function signup(name, document, email, password){
-			var payload = {'name':name, 'document':document, 'email':email,'new_password':password};
+		function signupQuest(name, document, email, password, quest){
+			var payload = {'name':name, 'document':document, 'email':email,'new_password':password, 'quest':quest};
 			return $q(function(resolve, reject) {
 				$http.post(config.api + '/users', payload, {})
 					.then(
@@ -37,6 +37,24 @@
 			});
 		}
 
+		// function signup(name, document, email, password){
+		// 	var payload = {'name':name, 'document':document, 'email':email,'new_password':password};
+		// 	return $q(function(resolve, reject) {
+		// 		$http.post(config.api + '/users', payload, {})
+		// 			.then(
+		// 			function successCallback(response) {
+		// 				service.id = response.data.object.user;
+		// 				$localStorage.id = response.data.object.user;
+		// 				service.token = response.data.object.token;
+		// 				$localStorage.token = response.data.object.token;
+		// 				resolve(response);
+		// 			},
+		// 			function errorCallback(response) {
+		// 				reject(response);
+		// 			}
+		// 		);
+		// 	});
+		// }
 
 		function signin(email, password){
 			var login = {'email':email, 'password':password};

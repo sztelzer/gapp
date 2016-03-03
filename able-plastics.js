@@ -195,7 +195,7 @@
 			}
 
 			return $q(function(resolve, reject) {
-				Stripe.setPublishableKey($rootScope.stripeKey?$rootScope.stripeKey:config.stripe_key);
+				Stripe.setPublishableKey($rootScope.stripeKey);
 				Stripe.card.createToken(payload, function(status, response){
 					if (status < 200 || status > 299) {
 						reject(status)

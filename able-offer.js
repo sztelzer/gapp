@@ -83,30 +83,107 @@
 					vm.loading = false
 				},
 				function errorCallback(response) {
+					console.log(response)
 					vm.loading = false
+					if(response.status >= 400){
+						if(navigator && navigator.notification){
+							navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+						} else {
+							window.alert('Você precisa se logar novamente.')
+						}
+						auth.signout()
+						return
+					}
+
+					if(navigator && navigator.notification){
+						navigator.notification.alert('Verifique sua conexão.', false, 'Able', 'Ok')
+						return
+					} else {
+						window.alert('Verifique sua conexão.')
+						return
+					}
 				}
 			)
 		} // end loadOffer()
+		$rootScope.loadNewOffer = loadNewOffer
 
 
 		function updateOfferStocks(offerPath) {
+			vm.loading = true;
 			var req_config = {headers: {'Authorization': auth.token}}
 			$http.get(config.api + offerPath, req_config).then(
 				function successCallback(response) {
-					$localStorage.offer = response.data;
-					$rootScope.offer = response.data;
+					// $localStorage.offer = response.data;
+					if(!$rootScope.offer){
+						$rootScope.offer = $localStorage.offer
+					}
+					// pass over each promoted, updating stock. If quantity is greater, lower it.
+					var newPromos = response.data.object.promoteds
+					//console.log(newPromos)
+					var oldPromos = $rootScope.offer.object.promoteds
+					for (var oldKey in oldPromos) {
+						var hit = false
+						for (var newKey in newPromos) {
+							if(oldPromos[oldKey].path == newPromos[newKey].path){
+								hit = true
+								oldPromos[oldKey].object.max = newPromos[newKey].object.max
+								oldPromos[oldKey].object.wet = newPromos[newKey].object.wet
+								oldPromos[oldKey].object.dry = newPromos[newKey].object.dry
+								if(oldPromos[oldKey].quantity > oldPromos[oldKey].object.max){
+									oldPromos[oldKey].quantity = oldPromos[oldKey].object.max
+								}
+							}
+						}
+						console.log(oldPromos[oldKey])
+						if(hit == false){
+							console.log(oldPromos[oldKey])
+							oldPromos[oldKey].object.max = 0
+							oldPromos[oldKey].object.wet = 0
+							oldPromos[oldKey].object.dry = 0
+							oldPromos[oldKey].quantity = 0
+						}
+					}
+					$rootScope.offer.object.promoteds = oldPromos
+
+
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
 					$rootScope.workingTime()
 					$rootScope.updateDistance()
+					// $rootScope.updateCart()
+					$localStorage.offer = $rootScope.offer
 					vm.loading = false
 				},
 				function errorCallback(response) {
+					console.log(response)
 					vm.loading = false
+					if(response.status == 401){
+						if(navigator && navigator.notification){
+							navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+						} else {
+							window.alert('Você precisa se logar novamente.')
+						}
+						auth.signout()
+						return
+					}
+
+					if(response.status == 403){
+						toast(response.data.errors[0].error)
+						$rootScope.updateOfferStocks($rootScope.offer.path)
+						return
+					}
+
+					if(navigator && navigator.notification){
+						navigator.notification.alert('Verifique sua conexão.', updateOfferStocks(offerPath), 'Able', 'Ok')
+					} else {
+						window.alert('Verifique sua conexão.')
+						updateOfferStocks(offerPath)
+					}
 				}
 			)
 		} // end updateOffer()
+		$rootScope.updateOfferStocks = updateOfferStocks
 
-
+		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
 
 
 

@@ -3,41 +3,7 @@
 
 	angular
 		.module('able')
-		.factory('feedbacks', feedbacks)
 		.directive('elementFeedbacks', feedbacksDirective)
-
-
-
-	function feedbacks($http, $q, config, auth){
-		var service = {
-			list: "",
-			len: 0,
-			get: get
-		}
-		return service
-
-		function get() {
-			var req_config = {headers: {'Authorization': auth.token}};
-			return $q(function(resolve, reject) {
-				$http.get(config.api + '/users/' + auth.id + '/feedbacks', req_config)
-					.then(
-					function successCallback(response) {
-						console.log(response.data);
-						service.list = response.data.resources;
-						service.len = response.data.count;
-						resolve();
-					},
-					function errorCallback(response) {
-						service.list = "";
-						service.len = 0;
-						reject(response.data.errors);
-					}
-				); //end then
-			}) //end q
-		} //end get
-
-	}
-
 
 
 	function feedbacksDirective() {
@@ -50,34 +16,55 @@
 		return directive
 	}
 
-	function feedbacksController(feedbacks, auth, $http, config, $q){
-		var vm = this;
-		vm.loading = true;
-		vm.working = true;
-		vm.list = feedbacks.list;
-		vm.len = 0;
-		vm.touched = false;
-		vm.sent = false;
-		vm.get = get;
-		vm.send = send;
-		vm.clean = clean;
-		vm.get();
+	function feedbacksController(auth, $http, config, $q){
+		var vm = this
+		vm.loading = true
+		vm.touched = false
+		vm.allsent = false
+		vm.list = []
+		vm.send = send
+		vm.clean = clean
 
 		function get(){
-			vm.working = true
-			var get = feedbacks.get();
-			get.then(
-				function(resolve) {
-					vm.list = feedbacks.list;
-					vm.len = feedbacks.len;
-					vm.loading = false;
-					vm.working = false;
+			vm.loading = true
+			var req_config = {headers: {'Authorization': auth.token}}
+			$http.get(config.api + '/users/' + auth.id + '/feedbacks', req_config)
+				.then(
+				function successCallback(response) {
+					console.log(response)
+					vm.list = response.data.resources
+					vm.loading = false
 				},
-				function(reject) {
-					vm.working = false;
+				function errorCallback(response) {
+					console.log(response)
+					vm.loading = false
+					if(response.status == 401){
+						if(navigator && navigator.notification){
+							navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+						} else {
+							window.alert('Você precisa se logar novamente.')
+						}
+						auth.signout()
+						return
+					}
+
+					if(response.status == 403){
+						toast(response.data.errors[0].error)
+						return
+					}
+
+					if(navigator && navigator.notification){
+						navigator.notification.alert('Verifique sua conexão.', get, 'Able', 'Ok')
+						return
+					} else {
+						window.alert('Verifique sua conexão.')
+						get()
+						return
+					}
 				}
-			);
+			); //end then
 		}
+		get()
 
 		function send(){
 			vm.touched = false;
@@ -89,11 +76,33 @@
 					put(item).then(
 						function(resolve){
 							item.done = true;
+							item.sending = true;
 							vm.clean();
 						},
 						function(reject){
 							item.done = false;
-							vm.clean();
+							item.sending = false;
+							vm.touched = true;
+							if(response.status == 401){
+								if(navigator && navigator.notification){
+									navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+								} else {
+									window.alert('Você precisa se logar novamente.')
+								}
+								auth.signout()
+								return
+							}
+
+							if(response.status == 403){
+								toast(response.data.errors[0].error)
+								return
+							}
+
+							if(navigator && navigator.notification){
+								navigator.notification.alert('Verifique sua conexão.', false, 'Able', 'Ok')
+							} else {
+								window.alert('Verifique sua conexão.')
+							}
 						}
 					);
 				} //end if
@@ -101,14 +110,11 @@
 		}
 
 		function clean(){
-			vm.len = vm.list.length
 			vm.list.slice().reverse().forEach(function(item, index, object) {
 				if (item.done == true) {
 					vm.list.splice(object.length - 1 - index, 1);
-					vm.len -= 1;
 				}
 			})
-			vm.working = false
 		}
 
 

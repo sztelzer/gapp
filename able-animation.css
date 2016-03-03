@@ -11,12 +11,12 @@
 
 .startPage {
 	background-color: #F4F2EF !important;
-	z-index: 9000;
+	z-index: 6000;
 }
 
 .signinPage, .questPage {
 	background-color: #F4F2EF !important;
-	z-index: 8000;
+	z-index: 1000;
 }
 
 
@@ -72,13 +72,11 @@
 
 
 
-.checkout.opened {
-	/*-webkit-transform: translate3d(0,0,0);*/
+/*.checkout.opened {
 	max-height:100%;
 	transition: 0.5s ease-out;
 }
 .checkout.closed {
-	/*-webkit-transform: translate3d(0,100%,0);*/
 	max-height:0%;
 	transition: 0.5s ease-out;
-}
+}*/

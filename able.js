@@ -16,17 +16,17 @@
 	])
 
 	.value('config', {
-		api: 'http://127.0.0.1:8081',
-		company_path: '/companies/5629499534213120',
-		// api: 'https://autocraft-beta-1-dot-api-dot-heartbend.appspot.com',
-		// company_path: '/companies/5654313976201216',
+		// api: 'http://127.0.0.1:8081',
+		// company_path: '/companies/5629499534213120',
+		api: 'https://beta-5-dot-api-dot-heartbend.appspot.com',
+		company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6
 	})
 
 	.config(function ($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider, $anchorScrollProvider) {
 		$compileProvider.debugInfoEnabled(false);
-		$anchorScrollProvider.disableAutoScrolling()
+		$anchorScrollProvider.disableAutoScrolling(true)
 		// $animateProvider.classNameFilter( /\banimated\b|\bmd-sidenav-backdrop\b|\bmd-bottom\b|\bng-animate\b/ );
 		$localStorageProvider.setKeyPrefix('able_');
 		// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
@@ -226,6 +226,8 @@
 
 		$rootScope.platform = Platform
 		$rootScope.geocoder = new google.maps.Geocoder()
+		$rootScope.autocomplete = new google.maps.places.AutocompleteService()
+
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 			// $rootScope.workingTime()
@@ -372,10 +374,9 @@
 
 		function keyboardWindowResize(e){
 			var h = window.innerHeight
+			$rootScope.height = h
 			document.body.setAttribute("style","height: "+h+"px !important");
 		}
-
-
 	}
 
 

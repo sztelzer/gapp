@@ -7,7 +7,9 @@
 	<div flex layout="column">
 		<md-card class="card-full"
 		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path"
-		ng-controller="promotedController">
+		ng-controller="promotedController"
+		ng-if="promoted.object.max > 0"
+		>
 			<img class="md-card-image" alt="product image"
 				ng-repeat="content in promoted.object.sku.object.contents"
 				ng-if="content.object.function=='face_image'"
@@ -29,6 +31,15 @@
 			</div>
 
 			<md-card-content class="promoted-card-content">
+
+					<div layout="row" layout-align="start end" style="margin-bottom:16px;" class="robot" ng-class="$index < 6 ? 'blue' : ($index > 11 ? 'red' : 'orange')">
+						<md-icon md-svg-src="imgs/robot.svg" class="robot-icon"></md-icon>
+						<div flex class="robot-text" ng-if="$index<6">Recomendo.</div>
+						<div flex class="robot-text" ng-if="$index>=6 && $index<=11">Descubra.</div>
+						<div flex class="robot-text" ng-if="$index>11">Aventure-se.</div>
+					</div>
+
+
 					<div flex layout="row">
 						<div flex>
 						    <div class="promoted-recipe">{{promoted.object.sku.object.recipe.object.name}}</div>
@@ -39,7 +50,6 @@
 
 						<div flex="none" layout="column" layout-align="end end">
 							<div class="promoted-price">{{promoted.object.price | currency}}</div>
-							<!-- <div class="promoted-price">{{promoted.object.rank}}</div> -->
 						</div>
 					</div>
 
@@ -62,7 +72,7 @@
 
 
 <div flex='none' layout="column" layout-align='start center' style="width:100%;position:relative" ng-show="cart.quantity>0">
-	<div layout="row" ng-show="cart.sending" layout-align="center center" style="z-index:9999;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+	<div layout="row" ng-show="cart.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
 
@@ -72,9 +82,16 @@
 	style="position:relative"
 	ng-cloak>
 		<div><md-icon md-svg-icon="imgs/ic_done_white_48px.svg" class="small-icon"></md-icon> {{cart.quantity}}</div>
-		<div><md-icon md-svg-icon="imgs/ic_local_shipping_white_48px.svg" class="small-icon"></md-icon> {{cart.freight | currency}}</div>
-		<div><md-icon md-svg-icon="imgs/ic_schedule_white_48px.svg" class="small-icon"></md-icon> {{cart.estimated | secondsToMinutes}}min</div>
-		<div><md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="small-icon"></md-icon> {{cart.total | currency}}</div>
+
+		<div ng-show="$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_local_shipping_white_48px.svg" class="small-icon"></md-icon> {{cart.freight | currency}}</div>
+		<div ng-show="!$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_local_shipping_white_48px.svg" class="small-icon"></md-icon> --</div>
+
+		<div ng-show="$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_schedule_white_48px.svg" class="small-icon"></md-icon> {{cart.estimated | secondsToMinutes}}min</div>
+		<div ng-show="!$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_schedule_white_48px.svg" class="small-icon"></md-icon> --</div>
+
+		<div ng-show="$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="small-icon"></md-icon> {{cart.total | currency}}</div>
+		<div ng-show="!$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="small-icon"></md-icon> --</div>
+
 		<div>
 			<md-icon ng-hide="cart.open" md-svg-icon="imgs/ic_arrow_forward_black_48px.svg" class="svg-white"></md-icon>
 			<md-icon ng-show="cart.open" md-svg-icon="imgs/ic_close_white_48px.svg" class="svg-green"></md-icon>

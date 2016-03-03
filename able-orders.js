@@ -35,6 +35,30 @@
 			},
 			function errorCallback(response) {
 				vm.loading = false
+				if(response.status == 401){
+					if(navigator && navigator.notification){
+						navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+					} else {
+						window.alert('Você precisa se logar novamente.')
+					}
+					auth.signout()
+					return
+				}
+
+				if(response.status == 403){
+					toast(response.data.errors[0].error)
+					return
+				}
+
+				if(navigator && navigator.notification){
+					navigator.notification.alert('Verifique sua conexão.', get, 'Able', 'Ok')
+					return
+				} else {
+					window.alert('Verifique sua conexão.')
+					get()
+					return
+				}
+
 			})
 		}
 

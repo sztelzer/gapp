@@ -27,7 +27,6 @@
 		vm.tags_length = 1;
 
 
-
 		//load tags quest only when quest page is loaded.
 		$http.get('quest_tags.json').success(function (data){
 			vm.tags = data;

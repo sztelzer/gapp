@@ -4,7 +4,9 @@
 		<div style="position:absolute;top:50%;left:50%">
 			<md-icon md-svg-icon="imgs/map_pointer.svg" style="height:2.5em;width:1.5em;position:relative;top:-2.5em;left:-0.75em"></md-icon>
 		</div>
-
+		<div style="position:absolute;top:0%;left:50%">
+			<md-icon md-svg-icon="imgs/map_pointer.svg" style="height:2.5em;width:1.5em;position:relative;top:-2.5em;left:-0.75em"></md-icon>
+		</div>
 		<div ng-show="map.loading" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#F4F2EF" layout="column" layout-align="center center">
 			<md-progress-circular md-mode="indeterminate"></md-progress-circular>
 		</div>
@@ -23,7 +25,7 @@
 			md-items="item in search(searchText)"
 			md-item-text="item.description"
 			md-min-length="3"
-			md-floating-label="Endereço"
+			md-floating-label="Endereço com Número"
 			md-autofocus="true"
 			md-autoselect="true"
 			ng-class="no-errors"
@@ -36,7 +38,7 @@
 		<div flex layout="row">
 			<md-input-container flex class="md-block no-errors">
 				<label>Complemento</label>
-				<input type="text" ng-model="$root.place.complement"/>
+				<input type="text" ng-model="$root.place.complement" maxlength="32"/>
 			</md-input-container>
 		</div>
 

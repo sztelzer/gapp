@@ -96,7 +96,12 @@
 							vm.plastic = plastics[0]
 						}
 					},
-					function errorCallback(response){}
+					function errorCallback(response){
+						if(response.status == 401){
+							auth.signout()
+							return
+						}
+					}
 				)
 		}
 
@@ -132,13 +137,56 @@
 				function successCallback(response) {
 					empty()
 					$rootScope.last = response.data;
+					$rootScope.updateOfferStocks($rootScope.offer.path)
 					vm.sending = false
 					$state.go('storePage.confirmationPage');
 				},
 				function errorCallback(response) {
-					toast(errors(response.data.errors[0]))
-					console.log(response.data.errors[0])
+					console.log(response)
 					vm.sending = false
+					if(response.status == 401){
+						if(navigator && navigator.notification){
+							navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+						} else {
+							window.alert('Você precisa se logar novamente.')
+						}
+						auth.signout()
+						return
+					}
+
+					if(response.status == 403){
+
+						switch (response.data.errors[0].reference) {
+							case 'offer':
+								$rootScope.offer = {}
+								$localStorage.offer = {}
+								if(navigator && navigator.notification){
+									navigator.notification.alert(response.data.errors[0].error, refreshPage, 'Able', 'Ok')
+								} else {
+									window.alert(response.data.errors[0].error)
+									refreshPage()
+								}
+								break
+							case 'quantity':
+								toast(response.data.errors[0].error)
+								$rootScope.updateOfferStocks($rootScope.offer.path)
+								break
+							default:
+								toast(response.data.errors[0].error)
+								return
+						}
+
+
+
+
+						return
+					}
+
+					if(navigator && navigator.notification){
+						navigator.notification.alert('Verifique sua conexão.', false, 'Able', 'Ok')
+					} else {
+						window.alert('Verifique sua conexão.')
+					}
 				}
 			)
 
@@ -153,15 +201,24 @@
 		}
 
 
-		function errors(error){
-			switch (error.reference) {
-				case 'payment':
-					return "O pagamento não foi aceito."
-					break;
-				default:
-					return "Houve um erro inesperado. Reinicie o aplicativo."
-			}
-		}
+		// function errors(error){
+		// 	switch (error.reference) {
+		// 		case 'payment':
+		// 			return "O pagamento não foi aceito."
+		// 			break
+		// 		case 'time':
+		// 			return "Oops, não entregamos neste horário."
+		// 			break
+		// 		case 'distance':
+		// 			return "Oops, não entregamos neste local."
+		// 			break
+		// 		case 'quantity':
+		// 			return "Houve um erro inesperado. Reinicie o aplicativo."
+		// 			break
+		// 		default:
+		// 			return "Houve um erro inesperado. Reinicie o aplicativo."
+		// 	}
+		// }
 
 		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
 

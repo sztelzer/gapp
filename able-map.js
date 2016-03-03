@@ -17,6 +17,7 @@
 
 	function mapController($q, $state, $rootScope, $scope){
 		var vm = this
+
 		$scope.selectedItem
 		$scope.searchText
 		$scope.search = search
@@ -24,8 +25,8 @@
 		vm.setCartAddress = setCartAddress
 		vm.loading = true
 
-		var autocomplete = new google.maps.places.AutocompleteService()
 		var placer = new google.maps.places.PlacesService(document.getElementById('mapping2'))
+		var autocomplete = $rootScope.autocomplete
 		var geocoder = $rootScope.geocoder
 		var map
 
@@ -60,6 +61,7 @@
 			setListeners()
 		}
 
+
 		function setListeners(){
 			map.addListener('dragend', function() {
 				getAddress(map.getCenter().lat(), map.getCenter().lng())
@@ -74,6 +76,7 @@
 
 			map.addListener('idle', function() {
 				map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
+				google.maps.event.trigger(map, "resize");
 			});
 
 			map.addListener('resize', function() {
@@ -81,7 +84,6 @@
 			});
 
 			$scope.$watch(function w(scope){return( $rootScope.height )},function c(n,o){
-				console.log('height_changed')
 				google.maps.event.trigger(map, "resize");
 			});
 
@@ -177,7 +179,6 @@
 			$rootScope.updateCart()
 			$state.go('storePage.offerPage')
 		}
-
 
 
 	}

@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, $mdToast) {
+	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, $mdToast, $window) {
 		var vm = this;
 		vm.new = {}
 		vm.plastics = []
@@ -47,7 +47,32 @@
 			function errorCallback(response) {
 				vm.plastics = []
 				vm.loading = false
-				toast('Não conseguimos carregar seus cartões. Tente novamente.')
+				// toast('Não conseguimos carregar seus cartões. Tente novamente.')
+
+				if(response.status == 401){
+					if(navigator && navigator.notification){
+						navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+					} else {
+						window.alert('Você precisa se logar novamente.')
+					}
+					auth.signout()
+					return
+				}
+
+				if(response.status == 403){
+					toast(response.data.errors[0].error)
+					return
+				}
+
+				if(navigator && navigator.notification){
+					navigator.notification.alert('Verifique sua conexão.', get, 'Able', 'Ok')
+					return
+				} else {
+					window.alert('Verifique sua conexão.')
+					get()
+					return
+				}
+
 			})
 		}
 
@@ -83,7 +108,31 @@
 						},
 						function(response){
 							vm.sending = false
-							toast('Cartão inválido. Tente novamente.')
+							if(response.status == 401){
+								if(navigator && navigator.notification){
+									navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+								} else {
+									window.alert('Você precisa se logar novamente.')
+								}
+								auth.signout()
+								return
+							}
+
+							if(response.status == 403){
+								toast(response.data.errors[0].error)
+								return
+							}
+
+							if(navigator && navigator.notification){
+								navigator.notification.alert('Verifique sua conexão.', false, 'Able', 'Ok')
+								return
+							} else {
+								window.alert('Verifique sua conexão.')
+								return
+							}
+
+
+
 						}
 					);
 				},

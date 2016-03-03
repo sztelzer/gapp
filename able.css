@@ -20,6 +20,10 @@ html, body, .app {
 	tap-highlight-color: rgba(0,0,0,0);
 }
 
+md-toast {
+	z-index: 9999;
+}
+
 .md-button {
 	border-radius: 0 !important;
 }
@@ -29,7 +33,7 @@ html, body, .app {
 }
 
 .md-dialog-container {
-	z-index: 9999 !important;
+	z-index: 9998 !important;
 }
 
 .toolbar {
@@ -321,4 +325,33 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
 
 .not_attended {
 	color: red;
+}
+
+
+.robot.blue .robot-text, .robot.orange .robot-icon svg path {
+	color: #0080FF !important;
+	fill: #0080FF !important;
+}
+
+.robot.orange .robot-text, .robot.orange .robot-icon svg path {
+	color: #FF821C !important;
+	fill: #FF821C !important;
+}
+
+.robot.red .robot-text, .robot.red .robot-icon svg path {
+	color: #E41100 !important;
+	fill: #E41100 !important;
+}
+
+
+
+.robot-text {
+	font-family: "roboto slab";
+	font-weight: 300;
+	margin-left: 8px;
+}
+
+.robot-icon {
+	margin:0 !important;
+	padding:0 !important;
 }

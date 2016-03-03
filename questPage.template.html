@@ -7,7 +7,14 @@
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Criar Perfil</div>
 		<div flex="none" style="width:78px"></div>
 	</md-toolbar>
-	<md-content flex id="quest-content">
+	<md-content flex id="quest-content" ng-cloak>
+
+			<div layout="row" layout-align="start start" style="margin:16px;" class="robot blue">
+				<md-icon md-svg-src="imgs/robot.svg" class="robot-icon" style="width:3em;height:3em"></md-icon>
+				<div flex class="robot-text" style="color: black !important; font-weight: 500;">Me conte suas preferências, vou selecionar as melhores cervejas para seu paladar.</div>
+			</div>
+
+
 			<form name="questForm" novalidate ng-cloak>
 				<div style="margin-top:8px"></div>
 

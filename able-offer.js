@@ -79,7 +79,7 @@
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
 					$rootScope.workingTime()
 					$rootScope.updateDistance()
-					$rootScope.stripeKey = response.data.object.stripe_key
+					$locaoStorage.stripe = response.data.object.stripe_key
 					vm.loading = false
 				},
 				function errorCallback(response) {
@@ -134,9 +134,9 @@
 								}
 							}
 						}
-						console.log(oldPromos[oldKey])
+						// console.log(oldPromos[oldKey])
 						if(hit == false){
-							console.log(oldPromos[oldKey])
+							// console.log(oldPromos[oldKey])
 							oldPromos[oldKey].object.max = 0
 							oldPromos[oldKey].object.wet = 0
 							oldPromos[oldKey].object.dry = 0
@@ -144,6 +144,7 @@
 						}
 					}
 					$rootScope.offer.object.promoteds = oldPromos
+					$localStorage.stripe = response.data.object.stripe_key
 
 
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)

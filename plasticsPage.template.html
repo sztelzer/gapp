@@ -1,4 +1,4 @@
-<md-content plastics-element layout="column">
+<md-content flex="fill" plastics-element layout="column">
 		<div layout="row" ng-show="plastics.loading" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 			<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 		</div>
@@ -8,12 +8,12 @@
 		</div> -->
 
 
-		<div style="margin-top:8px"></div>
-		<div class="md-padding md-caption" flex="none" layout="row" layout-align="center end">
+		<div flex="none" style="margin-top:8px"></div>
+		<div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end">
 			<span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança.</span>
 		</div>
 
-		<md-card layout="row" class="card-full card-credit md-padding" ng-class="plastics.plastic.path == plastic.path ? 'md-whiteframe-8dp background-white' : '' " style="margin-top:0px;position:relative" ng-repeat="plastic in plastics.plastics track by plastic.path">
+		<md-card flex="none" layout="row" class="card-full card-credit md-padding" ng-class="plastics.plastic.path == plastic.path ? 'md-whiteframe-8dp background-white' : '' " style="margin-top:0px;position:relative" ng-repeat="plastic in plastics.plastics track by plastic.path">
 				<div flex layout="row" layout-align="center center" class="md-body">
 					****{{plastic.object.mask}}
 				</div>
@@ -37,11 +37,8 @@
 
 		</md-card>
 
-
-		<md-card class="card-full card-credit md-padding background-white" style="position:relative">
-
+		<md-card flex="none" flex="none" class="card-full card-credit md-padding background-white" style="position:relative">
 			<div class="md-caption">Aceitamos cartões de crédito VISA, Mastercard e American&nbsp;Express</div>
-
 			<form layout="column" name="plasticForm" ng-cloak>
 				<md-input-container flex="none" class="no-errors">
 					<label>Número do Cartão</label>
@@ -61,7 +58,7 @@
 				</div>
 			</form>
 
-			<div layout="row" ng-show="plastics.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+			<div flex="none" layout="row" ng-show="plastics.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 				<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 			</div>
 

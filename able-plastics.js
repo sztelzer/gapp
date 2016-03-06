@@ -138,6 +138,7 @@
 				},
 				function(rejectedToken){
 					vm.sending = false
+					toast("O cartão não foi aceito. Verifique se os dados são de um cartão de crédito válido.")
 				}
 			)
 		}
@@ -195,7 +196,7 @@
 			}
 
 			return $q(function(resolve, reject) {
-				Stripe.setPublishableKey($rootScope.stripeKey);
+				Stripe.setPublishableKey($localStorage.stripe);
 				Stripe.card.createToken(payload, function(status, response){
 					if (status < 200 || status > 299) {
 						reject(status)
@@ -209,7 +210,7 @@
 		function toast(msg){$mdToast.show(
 			$mdToast.simple()
 			.textContent(msg)
-			.hideDelay(5000)
+			.hideDelay(10000)
 			.action('Ok')
 			.theme('default')
 		)};

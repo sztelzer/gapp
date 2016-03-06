@@ -9,6 +9,7 @@
 		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path"
 		ng-controller="promotedController"
 		ng-if="promoted.object.max > 0"
+		ng-cloak
 		>
 			<img class="md-card-image" alt="product image"
 				ng-repeat="content in promoted.object.sku.object.contents"
@@ -17,10 +18,11 @@
 				ng-src="{{content.object.url}}"
 				width="1080"
 				height="1080"
-				style="width:100%;height:auto;min-height:0;image-rendering:-webkit-optimize-contrast;border-radius: 0px;"
+				style="width:100%;height:auto;min-height:0;image-rendering:-webkit-optimize-contrast !important;image-rendering: pixelated !important;border-radius: 0px;"
+				ng-cloak
 			/>
 
-			<div layout="row" style="border-bottom: 1px solid white">
+			<div layout="row" style="border-bottom: 1px solid white" ng-cloak>
 				<md-button flex ng-click="promoted.takeOne()" class="promoted-button" aria-label="retirar" ng-cloak>
 				  <md-icon md-svg-icon="imgs/minus.svg" class="svg-black"></md-icon>
 				</md-button>
@@ -30,7 +32,7 @@
 				</md-button>
 			</div>
 
-			<md-card-content class="promoted-card-content">
+			<md-card-content class="promoted-card-content" ng-cloak>
 
 					<div layout="row" layout-align="start end" style="margin-bottom:16px;" class="robot" ng-class="$index < 6 ? 'blue' : ($index > 11 ? 'red' : 'orange')">
 						<md-icon md-svg-src="imgs/robot.svg" class="robot-icon"></md-icon>

@@ -7,11 +7,9 @@
 		<img flex="none" src="imgs/able-white.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Login</div>
 		<div flex="none" style="width:83px"></div>
-
 	</md-toolbar>
 
 	<md-content flex layout="column" layout-align="center center" ng-cloak class="md-padding">
-
 		<md-input-container flex='none' class="md-block" style="width:100%">
 	      <label>E-mail</label>
 	      <input type="email" name="email" ng-model="signin.email" minlength="10" maxlength="256" ng-pattern="/^.+@.+\..+$/" />
@@ -26,10 +24,8 @@
 			<md-button flex="none" ng-click="signin.reset()">Recuperar Senha</md-button>
 			<div flex="5"></div>
 			<md-button flex class="md-raised md-accent" ng-click="signin.signin()">Entrar<div layout="row" ng-show="signin.working" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgb(38, 189, 73);;">
-						<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular></div>
+				<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular></div>
 			</md-button>
 		</div>
-
 	</md-content>
-	<div flex="none" style="height:80px;"></div>
 </div>

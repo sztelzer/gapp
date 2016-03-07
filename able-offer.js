@@ -62,6 +62,8 @@
 
 
 		function loadNewOffer() {
+			vm.loading = true;
+
 			var payload = {
 				company: config.company_path,
 				node_function: config.node_function,
@@ -83,7 +85,6 @@
 					vm.loading = false
 				},
 				function errorCallback(response) {
-					console.log(response)
 					vm.loading = false
 					if(response.status >= 400){
 						if(navigator && navigator.notification){
@@ -113,7 +114,6 @@
 			var req_config = {headers: {'Authorization': auth.token}}
 			$http.get(config.api + offerPath, req_config).then(
 				function successCallback(response) {
-					// $localStorage.offer = response.data;
 					if(!$rootScope.offer){
 						$rootScope.offer = $localStorage.offer
 					}
@@ -155,7 +155,6 @@
 					vm.loading = false
 				},
 				function errorCallback(response) {
-					console.log(response)
 					vm.loading = false
 					if(response.status == 401){
 						if(navigator && navigator.notification){

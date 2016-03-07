@@ -1,4 +1,4 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.7">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.9">
   <name>Able</name>
   <description>Experimente ótimas cervejas artesanais selecionadas pelo nosso sommelier virtual especialmente para você. Melhore ainda mais sua experiência ao longo do tempo enquanto ele aprende com suas escolhas e avaliações. Receba suas garrafas geladas onde estiver, na mesma hora. Disponível agora em São Paulo/SP.</description>
   <author href="https://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
@@ -29,18 +29,15 @@
   <preference name="StatusBarStyle" value="blacktranslucent" />
   <preference name="BackgroundColor" value="0xfff4f2ef"/>
 
-  <!-- <allow-navigation href="/*" /> -->
-  <!-- <allow-intent href="*" /> -->
-  <!-- <access origin="*" /> -->
+  <allow-navigation href="/*" />
+  <allow-intent href="*" />
+  <access origin="*" />
 
-  <access origin="https://api-dot-heartbend.appspot.com" />
+  <!-- <access origin="https://api-dot-heartbend.appspot.com" />
   <access origin="https://*.googleapis.com" />
   <access origin="https://*.stripe.com" />
   <access origin="https://*.gstatic.com" />
-
-  <allow-navigation href="https://*.stripe.com/*" />
-
-
+  <allow-navigation href="https://*.stripe.com/*" /> -->
 
 	<platform name="ios">
 		<allow-intent href="itms:*"/>

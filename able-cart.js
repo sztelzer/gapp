@@ -60,7 +60,7 @@
 					products += promoteds[key].object.price * promoteds[key].quantity
 				}
 
-				var freight = +($rootScope.freight - (products * 0.10))
+				var freight = +($rootScope.freight - (products * 0.15))
 				if(freight < 0){freight = 0}
 				var total = products + freight
 

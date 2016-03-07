@@ -15,7 +15,7 @@
 		return directive
 	}
 
-	function offerController($rootScope, $localStorage, config, auth, $http) {
+	function offerController($rootScope, $localStorage, config, auth, $http, $mdToast) {
 		var vm = this
 		vm.loading = true;
 
@@ -81,7 +81,7 @@
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
 					$rootScope.workingTime()
 					$rootScope.updateDistance()
-					$locaoStorage.stripe = response.data.object.stripe_key
+					$localStorage.stripe = response.data.object.stripe_key
 					vm.loading = false
 				},
 				function errorCallback(response) {

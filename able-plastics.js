@@ -138,7 +138,7 @@
 				},
 				function(rejectedToken){
 					vm.sending = false
-					toast("O cartão não foi aceito. Verifique se os dados são de um cartão de crédito válido.")
+					toast("Este cartão não foi aceito. Verifique os dados.")
 				}
 			)
 		}

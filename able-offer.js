@@ -168,7 +168,11 @@
 
 					if(response.status == 403){
 						toast(response.data.errors[0].error)
-						$rootScope.updateOfferStocks($rootScope.offer.path)
+						if($rootScope.offer && $rootScope.offer.path){
+							$rootScope.updateOfferStocks($rootScope.offer.path)
+						} else {
+							loadNewOffer()
+						}
 						return
 					}
 

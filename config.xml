@@ -1,4 +1,4 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.9">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="cool.able" version="0.9.10">
   <name>Able</name>
   <description>Experimente ótimas cervejas artesanais selecionadas pelo nosso sommelier virtual especialmente para você. Melhore ainda mais sua experiência ao longo do tempo enquanto ele aprende com suas escolhas e avaliações. Receba suas garrafas geladas onde estiver, na mesma hora. Disponível agora em São Paulo/SP.</description>
   <author href="https://able.cool" email="help@able.cool">United Beverages of America, LLC. Able.Cool Team</author>
@@ -10,6 +10,12 @@
   <plugin name="cordova-plugin-splashscreen"/>
   <plugin name="cordova-plugin-device"/>
   <plugin name="ionic-plugin-keyboard"/>
+  <plugin name="helpshift-support-plugin"/>
+  <plugin name="phonegap-plugin-push">
+      <variable name="SENDER_ID" value="828347553479" />
+  </plugin>
+  <plugin name="cordova-plugin-badge"/>
+
 
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="webviewbounce" value="false"/>

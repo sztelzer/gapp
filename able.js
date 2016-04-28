@@ -16,12 +16,20 @@
 	])
 
 	.value('config', {
+        //heartbend
 		api: 'http://127.0.0.1:8081',
-		company_path: '/companies/5629499534213120',
+		company_path: '/companies/5066549580791808',
 		// api: 'https://api-dot-heartbend.appspot.com',
 		// company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
-		offers_count: 6
+		offers_count: 6,
+
+        //helpshift
+        helpshift_api_key: 'd39dcb147a53f4491218d67c09ad6103',
+        helpshift_domain: 'able.helpshift.com',
+        helpshift_app_id_ios: 'able_platform_20151202232813761-cc37683499f9965',
+        helpshift_app_id_android: 'able_platform_20151216171356528-7e3568cf679c8cd',
+        helpshift_app_id : ''
 	})
 
 	.config(function ($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider, $anchorScrollProvider) {
@@ -322,22 +330,12 @@
 			})
 		}
 
-		// $rootScope.alert = function(msg) {
-		// 	alert = $mdDialog.alert({
-		// 		textContent: msg,
-		// 		ok: 'Ok'
-		// 	})
-		// 	$mdDialog.show( alert )
-		// }
-
 	})
-
-
 
 	.filter('secondsToTime', function() {
 	    return function(seconds) {
 	        var d = new Date(0,0,0,0,0,0,0);
-	        d.setSeconds( Math.round(seconds) );
+	        d.setSeconds(Math.round(seconds))
 	        return d;
     	}
 	})
@@ -347,6 +345,10 @@
 	        return Math.round(seconds/60);
     	}
 	})
+
+
+
+
 
 
 	.directive('appElement', appDirective)
@@ -361,22 +363,68 @@
 		return directive
 	}
 
-	function appController(auth, $state, $rootScope){
-		var vm = this;
-		vm.auth = auth;
-		vm.state = $state;
+	function appController(auth, $state, $rootScope, config){
+		var vm = this
+		vm.auth = auth
+		vm.state = $state
 
 		if(Keyboard && device.platform == 'iOS'){
-			window.addEventListener('native.keyboardshow', keyboardWindowResize);
-			window.addEventListener('native.keyboardhide', keyboardWindowResize);
-			Keyboard.close();
+			window.addEventListener('native.keyboardshow', keyboardWindowResize)
+			window.addEventListener('native.keyboardhide', keyboardWindowResize)
+			Keyboard.close()
 		}
 
 		function keyboardWindowResize(e){
 			var h = window.innerHeight
 			$rootScope.height = h
-			document.body.setAttribute("style","height: "+h+"px !important");
+			document.body.setAttribute("style","height: "+h+"px !important")
 		}
+
+        //init HelpShift
+        if(HelpShift && device.platform){
+            device.platform == 'iOS' ? config.helpshift_app_id = config.helpshift_app_id_ios : config.helpshift_app_id = config.helpshift_app_id_android
+            HelpShift.install(config.helpshift_api_key, config.helpshift_domain, config.helpshift_app_id)
+            vm.showFAQs = HelpShift.showFAQs
+            vm.showConversation = HelpShift.showConversation
+        }
+
+        function updateBadge() {
+            if(HelpShift && Badge){
+                HelpShift.getNotificationCount("YES", function(count){
+                    setBadge(count)
+                    //code to update the badge count (plugin badge...?)
+                });
+            }
+        }
+
+        function sessionStart() {
+            updateBadge()
+        }
+
+        function didReceiveNotificationCount(count){
+            setBadge(count)
+        }
+
+        if(HelpShift && Badge){
+            HelpShift.registerSessionDelegates(sessionStart,didReceiveNotificationCount);
+        }
+
+        function setBadge(count){
+            if(Badge){
+                Badge.set(count)
+            }
+        }
+
+        if(Push){
+            Push.on('registration', function(data) {
+                HelpShift.registerDeviceToken(data.registrationId)
+            });
+            Push.on('notification', function(data) {
+                HelpShift.handleRemoteNotification(data.additionalData)
+            });
+        }
+
+
 	}
 
 

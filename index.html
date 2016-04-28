@@ -70,6 +70,9 @@
 		function bootOnlineBrowser(){
 			Platform = "Browser"
 			Keyboard = false
+      HelpShift = false
+      Push = false
+      Badge = false
 			angular.bootstrap(document, ['able'])
 		}
 
@@ -78,10 +81,26 @@
 			// Keyboard.hideFormAccessoryBar(false);
 			// Keyboard.disableScrollingInShrinkView(true);
 			// Keyboard.automaticScrollToTopOnHiding = true;
+
 			Platform = device.platform
 			Keyboard = cordova.plugins.Keyboard
-			Keyboard.disableScroll(true);
-			navigator.splashscreen.hide();
+      HelpShift = window.HelpshiftPlugin
+      Push = PushNotification.init({
+        android: {
+            senderID: "828347553479"
+        },
+        ios: {
+            alert: "true",
+            badge: "true",
+            sound: "true"
+        }
+      });
+      Badge = cordova.plugins.notification.badge
+
+
+			Keyboard.disableScroll(true)
+      navigator.splashscreen.hide()
+
 			angular.bootstrap(document, ['able'])
 		}
 

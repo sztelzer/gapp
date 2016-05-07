@@ -167,14 +167,21 @@
 					}
 
 					if(response.status == 403){
-						toast(response.data.errors[0].error)
-						if($rootScope.offer && $rootScope.offer.path){
-							$rootScope.updateOfferStocks($rootScope.offer.path)
-						} else {
-							loadNewOffer()
+                        console.log(response)
+                        //if error is offer doesn't exists anymore, request a new offer.
+						if(response && response.data && response.data.errors && response.data.errors[0].reference == "loading_object"){
+                            loadNewOffer()
+                            return
 						}
+                        //else, load from localstorage
+                        $rootScope.offer = $localStorage.offer
 						return
 					}
+
+                    // if(response.status == 404){
+					// 	loadNewOffer()
+					// 	return
+					// }
 
 					if(navigator && navigator.notification){
 						navigator.notification.alert('Verifique sua conexão.', updateOfferStocks(offerPath), 'Able', 'Ok')

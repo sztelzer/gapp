@@ -15,6 +15,7 @@
       <variable name="SENDER_ID" value="828347553479" />
   </plugin>
   <plugin name="cordova-plugin-badge"/>
+  <plugin name="cordova-plugin-console"/>
 
 
   <preference name="DisallowOverscroll" value="true"/>
@@ -52,7 +53,7 @@
 		<preference name="FadeSplashScreenDuration" value="500"/>
 		<preference name="AutoHideSplashScreen" value="false"/>
 		<preference name="fullscreen" value="true"/>
-		<preference name="deployment-target" value="7.1" />
+		<preference name="deployment-target" value="8.3" />
 
 
 		<icon src="res/ios/icon.png" width="57" height="57"/>

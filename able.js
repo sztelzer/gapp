@@ -367,6 +367,7 @@
 		var vm = this
 		vm.auth = auth
 		vm.state = $state
+        vm.badge = 0
 
 		if(Keyboard && device.platform == 'iOS'){
 			window.addEventListener('native.keyboardshow', keyboardWindowResize)
@@ -383,41 +384,96 @@
         //init HelpShift
         if(HelpShift && device.platform){
             device.platform == 'iOS' ? config.helpshift_app_id = config.helpshift_app_id_ios : config.helpshift_app_id = config.helpshift_app_id_android
+            // var setup = {
+            //     "enableContactUs":"ALWAYS",
+            //     "gotoConversationAfterContactUs":"YES",
+            //     "hideNameAndEmail":"YES"
+            // }
             HelpShift.install(config.helpshift_api_key, config.helpshift_domain, config.helpshift_app_id)
-            vm.showFAQs = HelpShift.showFAQs
-            vm.showConversation = HelpShift.showConversation
+            HelpShift.registerSessionDelegates(sessionStart,sessionEnd)
+            HelpShift.registerConversationDelegates(newConversationStarted, userRepliedToConversation, userCompletedCustomerSatisfactionSurvey, didReceiveNotification, didReceiveInAppNotificationWithMessageCount, displayAttachmentFile)
+
+//          window.HelpshiftPlugin.setNameAndEmail("John Doe", "john.doe@johndoe.com");
+
+            // vm.showFAQs = HelpShift.showFAQs
+            // vm.showConversation = HelpShift.showConversation
+            vm.showFAQs = function(){
+                if(vm.badge == 0){
+                    HelpShift.showFAQs()
+                } else {
+                    HelpShift.showConversation()
+                    setBadges(0)
+                }
+            }
+
+            vm.showConversation = function(){
+                HelpShift.showConversation()
+                setBadges(0)
+            }
+
+
+            document.addEventListener("resume", getNotifications, false);
+            // document.addEventListener("pause", getNotifications, false);
         }
 
-        function updateBadge() {
-            if(HelpShift && Badge){
-                HelpShift.getNotificationCount("YES", function(count){
-                    setBadge(count)
-                    //code to update the badge count (plugin badge...?)
-                });
+        function getNotifications() {
+            if(HelpShift){
+                console.log("getting notifications")
+                HelpShift.getNotificationCount("YES", false);
             }
         }
 
-        function sessionStart() {
-            updateBadge()
-        }
-
-        function didReceiveNotificationCount(count){
-            setBadge(count)
-        }
-
-        if(HelpShift && Badge){
-            HelpShift.registerSessionDelegates(sessionStart,didReceiveNotificationCount);
-        }
-
-        function setBadge(count){
+        function setBadges(count){
+            count < 0 ? count = 0 : count = count
             if(Badge){
                 Badge.set(count)
             }
+            vm.badge = count
+        }
+
+        function sessionStart(){
+            console.log('sessionStart')
+        }
+        function sessionEnd(){
+            console.log('sessionEnd')
+            getNotifications()
+            $rootScope.$digest()
+        }
+        function newConversationStarted(message){
+            console.log('newConversationStarted')
+            console.log(message)
+        }
+        function userRepliedToConversation(message){
+            console.log('userRepliedToConversation')
+            console.log(message)
+        }
+        function userCompletedCustomerSatisfactionSurvey(rating, message){
+            console.log('userCompletedCustomerSatisfactionSurvey')
+            console.log(rating)
+            console.log(message)
+        }
+        function didReceiveNotification(message){
+            console.log('didReceiveNotification')
+            console.log(message)
+            setBadges(message)
+            $rootScope.$digest()
+        }
+        function didReceiveInAppNotificationWithMessageCount(message){
+            console.log('didReceiveInAppNotificationWithMessageCount')
+            console.log(message)
+            setBadges(message)
+            $rootScope.$digest()
+        }
+        function displayAttachmentFile(message){
+            console.log('displayAttachmentFile')
+            console.log(message)
         }
 
         if(Push){
             Push.on('registration', function(data) {
                 HelpShift.registerDeviceToken(data.registrationId)
+                getNotifications()
+                // $rootScope.$digest()
             });
             Push.on('notification', function(data) {
                 HelpShift.handleRemoteNotification(data.additionalData)

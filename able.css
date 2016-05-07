@@ -211,6 +211,14 @@ div > md-icon {
 	padding: 8px
 }
 
+.md-list-item-inner > md-icon {
+	height: 1em;
+	width: 1em;
+	padding: 0;
+    margin: -0.1em 0.5em 0 -0.25em !important;
+}
+
+
 
 
 
@@ -328,7 +336,7 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
 }
 
 
-.robot.blue .robot-text, .robot.orange .robot-icon svg path {
+.robot.blue .robot-text, .robot.blue .robot-icon svg path {
 	color: #0080FF !important;
 	fill: #0080FF !important;
 }
@@ -343,8 +351,6 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
 	fill: #E41100 !important;
 }
 
-
-
 .robot-text {
 	font-family: "roboto slab";
 	font-weight: 300;
@@ -354,4 +360,29 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
 .robot-icon {
 	margin:0 !important;
 	padding:0 !important;
+}
+
+.badge {
+    width: 0.75em;
+    height: 0.75em;
+    background-color: red;
+    border: 1px solid white;
+    border-radius: 0.5em;
+    position: absolute;
+    left:1.1em;
+    top:2em;
+}
+
+.menu-badge {
+    width: 1em;
+    height: 1em;
+    background-color: red;
+    border-radius: 0.5em;
+}
+
+.badge-text {
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 0.6em;
+    color: white;
 }

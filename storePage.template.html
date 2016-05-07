@@ -1,11 +1,15 @@
 <div layout="column" flex="none" layout-fill>
 	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-cloak ng-class="$root.platform">
+
 		<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
 		  <md-icon md-svg-icon="imgs/ic_menu_white_48px.svg" class="svg-white"></md-icon>
 		</md-button>
 
+    <div flex="none" class="badge" ng-click="toolbar.toggleLeftMenu('able-left-menu')" ng-show="app.badge>0"><div class="badge-text"><center>{{app.badge}}</center></div></div>
+
 		<img flex="none" src="imgs/able-white.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">{{app.state.current.data.title}}</div>
+
 		<div flex="none" style="width:83px"></div>
 
 	</md-toolbar>
@@ -20,17 +24,30 @@
 	<md-subheader class="sidenav" style="background-color:#004582;height:56px" class="md-caption" ng-class="$root.platform"></md-subheader>
 	<md-subheader class="md-caption">Able.cool</md-subheader>
 	<md-list flex="none">
-		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">Indicações</md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.offerPage')"><md-icon md-svg-icon="imgs/robot.svg" class="svg-black"></md-icon><p>Indicações</p></md-list-item>
+    <md-list-item ng-click="leftmenu.go('storePage.feedbacksPage')"><md-icon md-svg-icon="imgs/ic_grade_black_48px.svg" class="svg-black"></md-icon><p>Avaliações</p></md-list-item>
     	<!-- <md-list-item ng-click="">Perfil</md-list-item> -->
-		<md-list-item ng-click="leftmenu.go('storePage.ordersPage')">Pedidos</md-list-item>
-		<md-list-item ng-click="leftmenu.go('storePage.confirmationPage')" ng-disabled="!$root.last">Ultimo Pedido</md-list-item>
-		<md-list-item ng-click="leftmenu.go('storePage.feedbacksPage')">Avaliações</md-list-item>
-		<md-list-item ng-click="leftmenu.go('storePage.plasticsPage')">Cartões de Crédito</md-list-item>
-		<!-- <md-list-item ng-click="leftmenu.go('storePage.mapPage')">Mapa</md-list-item> -->
-		<!-- https://able.helpshift.com/a/able/?l=pt -->
-		<!-- <md-divider></md-divider>
-		<md-list-item ng-click="">Ajuda</md-list-item> -->
+		<md-list-item ng-click="leftmenu.go('storePage.ordersPage')"><md-icon md-svg-icon="imgs/ic_history_black_48px.svg" class="svg-black"></md-icon><p>Pedidos</p></md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.confirmationPage')" ng-disabled="!$root.last"><md-icon md-svg-icon="imgs/bike.svg" class="svg-black"></md-icon><p>Ultimo Pedido</p></md-list-item>
+		<md-list-item ng-click="leftmenu.go('storePage.plasticsPage')"><md-icon md-svg-icon="imgs/ic_payment_black_48px.svg" class="svg-black"></md-icon><p>Cartões de Crédito</p></md-list-item>
+
+    <md-divider></md-divider>
+    <md-list-item ng-click="app.showFAQs()"><md-icon md-svg-icon="imgs/ic_help_black_48px.svg" class="svg-black"></md-icon><p>Ajuda</p></md-list-item>
+    <md-list-item ng-click="app.showConversation()"><md-icon md-svg-icon="imgs/ic_chat_black_48px.svg" class="svg-black"></md-icon>
+      <p>Contato</p>
+      <div class="menu-badge" ng-show="app.badge>0"></div>
+    </md-list-item>
+    <md-list-item ng-click="app.showConversation()"><md-icon md-svg-icon="imgs/ic_launch_black_48px.svg" class="svg-black"></md-icon><p>http://able.cool</p></md-list-item>
+
 		<md-divider></md-divider>
-		<md-list-item ng-click="app.auth.signout()">Desconectar Conta</md-list-item>
+		<md-list-item ng-click="app.auth.signout()"><md-icon md-svg-icon="imgs/ic_cancel_black_48px.svg" class="svg-black"></md-icon><p>Desconectar Conta</md-list-item>
   	</md-list>
 </md-sidenav>
+
+
+<!-- <div flex="none" layout="row" style="width:100%">
+  <md-button flex class="md-primary full-button" ng-click="app.showFAQs()">Ajuda</md-button>
+</div>
+<div flex="none" layout="row" style="width:100%">
+  <md-button flex class="md-primary full-button" ng-click="app.showConversation()">Contato</md-button>
+</div> -->

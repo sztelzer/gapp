@@ -25,6 +25,8 @@
 		vm.remove = remove
 		vm.sending = false
 		vm.loading = true
+        vm.saveDucument = saveDocument
+        vm.sendingDocument = false
 
 		if(typeof $localStorage.plastic == "undefined") {
 			$localStorage.plastic = {}
@@ -215,8 +217,37 @@
 			.theme('default')
 		)};
 
+        function saveDocument(){
+            console.log('saving document')
+            if(Keyboard) {
+                Keyboard.close()
+            }
+            vm.sendingDocument = true
+
+            var payload = {
+                document: angular.copy(vm.document)
+            }
+
+            auth.patchUser(payload).then(
+                function(resolve) {
+                    console.log(resolve)
+                    vm.sendingDocument = false
+                },
+                function(reject) {
+                    console.log(reject)
+                    vm.sendingDocument = false
+                    // if(reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email"){
+                    //     toast("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")
+                    // } else {
+                    //     toast("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.")
+                    // }
+                }
+            );
+        }
+
 
 	}
+
 
 
 })();

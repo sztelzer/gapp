@@ -14,7 +14,6 @@
 				<div flex class="robot-text" style="color: black !important; font-weight: 500;">Me conte suas preferências, vou selecionar as melhores cervejas para seu paladar.</div>
 			</div>
 
-
 			<form name="questForm" novalidate ng-cloak>
 				<div style="margin-top:8px"></div>
 
@@ -43,22 +42,20 @@
 						</div>
 					</md-input-container>
 
-					<md-input-container>
+					<!-- <md-input-container>
 						<label>CPF</label>
 						<input type="tel" name="document" ng-model="quest.user.document" validate-cpf minlength="11" maxlength="11" ng-required="true" required ng-blur="Keyboard.close()"/>
 						<div ng-messages="questForm.document.$error">
 							<div ng-message-exp="['required', 'minlength', 'maxlength', 'cpf']" class="ng-animate">Um CPF válido é necessário para emissão de nota fiscal.</div>
 						</div>
-					</md-input-container>
-
+					</md-input-container> -->
 
 					<md-input-container>
 					  <label>E-mail</label>
 					  <input name="email" ng-model="quest.user.email" type="email" minlength="6" maxlength="100" ng-pattern="/^.+@.+\..+$/" ng-required="true" required ng-blur="Keyboard.close()"/>
 					  <div ng-messages="questForm.email.$error">
-			            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']" class="ng-animate">Seu e-mail deve ser válido.</div>
-			          </div>
-
+	            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']" class="ng-animate">Seu e-mail deve ser válido.</div>
+	          </div>
 					</md-input-container>
 
 					<md-input-container>

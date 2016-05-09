@@ -39,6 +39,7 @@
 			vm.answered = Object.keys(vm.payload).length
 			vm.least_tags = (Object.keys(vm.payload).length < vm.tags_length) ? true : false;
 
+            //this block would roll the page, but is buggy
 			// var element = document.getElementById('quest-content')
 			// var last_height = element.scrollHeight
 			// if(vm.least_tags == false){

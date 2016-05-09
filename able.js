@@ -363,11 +363,13 @@
 		return directive
 	}
 
-	function appController(auth, $state, $rootScope, config){
+	function appController(auth, $state, $rootScope, config, $http){
 		var vm = this
 		vm.auth = auth
 		vm.state = $state
         vm.badge = 0
+        vm.user = {}
+        auth.getUser()
 
 		if(Keyboard && device.platform == 'iOS'){
 			window.addEventListener('native.keyboardshow', keyboardWindowResize)
@@ -380,6 +382,7 @@
 			$rootScope.height = h
 			document.body.setAttribute("style","height: "+h+"px !important")
 		}
+
 
         //init HelpShift
         if(HelpShift && device.platform){

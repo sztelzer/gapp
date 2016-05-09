@@ -20,6 +20,8 @@
 		var vm = this;
 		vm.last = $rootScope.last
 		vm.phone = ''
+        vm.save = save
+        vm.back = back
 
 
 		function get(){
@@ -56,12 +58,10 @@
 		}
 		get();
 
-		vm.back = back
 		function back(){
 			$state.go('storePage.offerPage')
 		}
 
-		vm.save = save
 		function save(){
 			var req_config = {headers: {'Authorization': auth.token}};
 			var payload = {phone:vm.phone};

@@ -68,34 +68,36 @@
 		}
 
         function getUser(){
-            var req_config = {headers: {'Authorization': service.token}};
-            $http.get(config.api + '/users/' + service.id, req_config)
-            .then(
-                function successCallback(response) {
-                    service.user = response.data.object;
-                },
-                function errorCallback(response) {
-                    if(response.status == 401 || response.status == 404){
-                        if(navigator && navigator.notification){
-                            navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
-                        } else {
-                            window.alert('Você precisa se logar novamente.')
+            if(service.id){
+                var req_config = {headers: {'Authorization': service.token}};
+                $http.get(config.api + '/users/' + service.id, req_config)
+                .then(
+                    function successCallback(response) {
+                        service.user = response.data.object;
+                    },
+                    function errorCallback(response) {
+                        if(response.status == 401 || response.status == 404){
+                            if(navigator && navigator.notification){
+                                navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+                            } else {
+                                window.alert('Você precisa se logar novamente.')
+                            }
+                            signout()
+                            return
                         }
-                        signout()
-                        return
-                    }
 
-                    if(navigator && navigator.notification){
-                        navigator.notification.alert('Verifique sua conexão.', getUser, 'Able', 'Tentar Novamente')
-                        return
-                    } else {
-                        window.alert('Verifique sua conexão.')
-                        getUser()
-                        return
-                    }
+                        if(navigator && navigator.notification){
+                            navigator.notification.alert('Verifique sua conexão.', getUser, 'Able', 'Tentar Novamente')
+                            return
+                        } else {
+                            window.alert('Verifique sua conexão.')
+                            getUser()
+                            return
+                        }
 
-                }
-            )
+                    }
+                )
+            }
         }
 
         function patchUser(payload){

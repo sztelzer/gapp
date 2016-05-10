@@ -130,7 +130,7 @@
 					<span ng-show="$root.plastic.object.type">{{cart.plastic.object.type}} {{cart.plastic.object.mask}} {{cart.plastic.object.expiry}}</span>
 				</div>
 				<div flex="none">
-					<md-button class="md-icon-button" aria-label="Editar Cartão" >
+					<md-button class="md-icon-button" aria-label="Editar Cartão">
 						<md-icon md-svg-icon="imgs/ic_edit_black_48px.svg" class="svg-black"></md-icon>
 					</md-button>
 				</div>
@@ -138,7 +138,7 @@
 		</div>
 		<div flex></div>
 		<div flex="none" layout="row">
-			<md-button class="md-raised md-accent full-button" style="margin-top:0px" ng-click="cart.send()" ng-disabled="!cart.plastic || !cart.place || cart.sending || $root.not_attending || !$root.attended">Enviar Pedido</md-button>
+			<md-button class="md-raised md-accent full-button" style="margin-top:0px" ng-click="cart.send()" ng-disabled="!cart.plastic || !$root.plastic.path || !cart.place || cart.sending || $root.not_attending || !$root.attended">Enviar Pedido</md-button>
 		</div>
 	</div>
 </div>

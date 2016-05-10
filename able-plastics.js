@@ -159,7 +159,7 @@
 			.then(
 				function(response){
 					console.log(response)
-					if(plastic == vm.plastic){
+					if(plastic.path == vm.plastic.path){
 						$localStorage.plastic = ''
 						$rootScope.plastic = ''
 						vm.plastic = ''

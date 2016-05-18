@@ -103,7 +103,6 @@
 							vm.new = {}
 							$scope.plasticForm.$setPristine()
 							$scope.plasticForm.$setUntouched()
-							// console.log(response)
 							activate(response.data)
 							get()
 							vm.sending = false
@@ -158,7 +157,6 @@
 			$http.delete(config.api + plastic.path, req_config)
 			.then(
 				function(response){
-					console.log(response)
 					if(plastic.path == vm.plastic.path){
 						$localStorage.plastic = ''
 						$rootScope.plastic = ''
@@ -174,7 +172,6 @@
 
 				},
 				function(response){
-					console.log(response)
 					toast('Houve um erro ao remover este cartão. Tente novamente.')
 				}
 			)
@@ -218,7 +215,6 @@
 		)};
 
         function saveDocument(){
-            console.log('saving document')
             if(Keyboard) {
                 Keyboard.close()
             }
@@ -230,11 +226,9 @@
 
             auth.patchUser(payload).then(
                 function(resolve) {
-                    console.log(resolve)
                     vm.sendingDocument = false
                 },
                 function(reject) {
-                    console.log(reject)
                     vm.sendingDocument = false
                     // if(reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email"){
                     //     toast("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")

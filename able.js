@@ -12,15 +12,15 @@
 		'ct.ui.router.extras',
 		'ngAria',
 		'angularPayments',
-		'dcbImgFallback'
+		'dcbImgFallback',
 	])
 
 	.value('config', {
         //heartbend
-		api: 'http://127.0.0.1:8081',
-		company_path: '/companies/5066549580791808',
-		// api: 'https://api-dot-heartbend.appspot.com',
-		// company_path: '/companies/5654313976201216',
+		// api: 'http://127.0.0.1:8081',
+		// company_path: '/companies/5066549580791808',
+		api: 'https://api-dot-heartbend.appspot.com',
+		company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6,
 
@@ -104,6 +104,16 @@
 					accessLogged: true
 				}
 			})
+            .state('storePage.profilePage', {
+				url: "/profile",
+				templateUrl: "profilePage.template.html",
+				data: {
+					title: "Perfil",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+
 			.state('storePage.plasticsPage', {
 				url: "/plastics",
 				templateUrl: "plasticsPage.template.html",
@@ -230,11 +240,10 @@
 
 	.run(function ($rootScope, $state, auth, $window, $interval, config, $mdDialog) {
 
-		console.log(config.api)
-
 		$rootScope.platform = Platform
 		$rootScope.geocoder = new google.maps.Geocoder()
 		$rootScope.autocomplete = new google.maps.places.AutocompleteService()
+        $rootScope.distancer = new google.maps.DistanceMatrixService()
 
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
@@ -293,31 +302,60 @@
 
 		$rootScope.updateDistance = function(){
 			if($rootScope.offer && $rootScope.offer.object){
-				var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
-				$rootScope.attended = linear < $rootScope.offer.object.node_radius ? true : false
-				var distance = linear * 1.5
-				// console.log(distance)
-				$rootScope.estimated = +((distance * 0.33) + 1200).toFixed(2)
-				var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
-				$rootScope.freight = +((over)*1.80 + 22.90).toFixed(2)
+                var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
+                var distance
+                var estimated
+                $rootScope.attended = linear < $rootScope.offer.object.node_radius ? true : false
+                if($rootScope.attended){
+                    var distanceRequest = {
+                        destinations:[{'lat': $rootScope.latitude, 'lng': $rootScope.longitude}],
+                        origins:[{'lat': $rootScope.offer.object.node_latitude, 'lng': $rootScope.offer.object.node_longitude}],
+                        travelMode:google.maps.TravelMode.DRIVING
+                    }
+                    $rootScope.distancer.getDistanceMatrix(distanceRequest, function(response, status){
+                        if (status !== google.maps.DistanceMatrixStatus.OK) {
+                            distance = linear * 1.5
+                            estimated = +((distance * 0.33) + 1200).toFixed(2)
+                        } else {
+                            distance = +(response.rows[0].elements[0].distance.value).toFixed(2)
+                            estimated = +(+(response.rows[0].elements[0].duration.value) + 1200).toFixed(2)
+                        }
+                        $rootScope.estimated = +(estimated).toFixed(2)
+        				var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
+        				$rootScope.freight = +((over)*1.80 + 22.90).toFixed(2)
+                        $rootScope.$digest()
+                    });
+                }
 			}
 		}
 
 		$rootScope.workingTime = function(){
 			if($rootScope.offer){
+                var weekdays = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]
 				var times = $rootScope.offer.object.node_resource.object.times
 				var start
 				var end
 				var now = new Date()
 				var today = now.getDay()
+                var now_minutes = now.getHours()*60 + now.getMinutes()
+                var next_key
+                var next_day
 				for (var key in times) {
 					if(times[key].day == today){
-						start = times[key].start
-						end = times[key].end
+                        $rootScope.not_attending = now_minutes < times[key].start || now_minutes > times[key].end ? true : false
+                        now_minutes > times[key].start ? next_key = parseInt(key) + 1 : next_key = parseInt(key)
+                        next_key == 7 ? next_key = 0 : next_key = next_key
+						start = times[next_key].start
+						end = times[next_key].end
+                        next_key == key ? next_day = "Hoje" : next_day = "Amanhã"
+        				// $rootScope.not_attending = now_minutes < start || now_minutes > end ? true : false
+                        $rootScope.next_start = start
+                        $rootScope.next_end = end
+                        $rootScope.next_day = next_day
+                        $rootScope.next_weekday = weekdays[next_key]
+                        break
 					}
 				}
-				var nowMinutes = now.getHours()*60 + now.getMinutes()
-				$rootScope.not_attending = nowMinutes < start || nowMinutes > end ? true : false
 			}
 		}
 
@@ -340,13 +378,21 @@
     	}
 	})
 
+    .filter('minutesToTime', function() {
+	    return function(minutes) {
+            var h = Math.floor(minutes/60)
+            var m = minutes-h*60
+            h < 10 ? h = "0"+h : h = h
+            m < 10 ? m = "0"+m : m = m
+	        return h+":"+m;
+    	}
+	})
+
 	.filter('secondsToMinutes', function() {
 	    return function(seconds) {
 	        return Math.round(seconds/60);
     	}
 	})
-
-
 
 
 
@@ -369,6 +415,9 @@
 		vm.state = $state
         vm.badge = 0
         vm.user = {}
+        // vm.showSingleFAQs = function(){console.log('hit')}
+
+
         auth.getUser()
 
 		if(Keyboard && device.platform == 'iOS'){
@@ -398,7 +447,6 @@
 
 //          window.HelpshiftPlugin.setNameAndEmail("John Doe", "john.doe@johndoe.com");
 
-            // vm.showFAQs = HelpShift.showFAQs
             // vm.showConversation = HelpShift.showConversation
             vm.showFAQs = function(){
                 if(vm.badge == 0){
@@ -414,6 +462,7 @@
                 setBadges(0)
             }
 
+            vm.showSingleFAQ = HelpShift.showSingleFAQ
 
             document.addEventListener("resume", getNotifications, false);
             // document.addEventListener("pause", getNotifications, false);
@@ -421,7 +470,6 @@
 
         function getNotifications() {
             if(HelpShift){
-                console.log("getting notifications")
                 HelpShift.getNotificationCount("YES", false);
             }
         }
@@ -435,41 +483,27 @@
         }
 
         function sessionStart(){
-            console.log('sessionStart')
+            setBadges(0)
         }
         function sessionEnd(){
-            console.log('sessionEnd')
             getNotifications()
             $rootScope.$digest()
         }
         function newConversationStarted(message){
-            console.log('newConversationStarted')
-            console.log(message)
         }
         function userRepliedToConversation(message){
-            console.log('userRepliedToConversation')
-            console.log(message)
         }
         function userCompletedCustomerSatisfactionSurvey(rating, message){
-            console.log('userCompletedCustomerSatisfactionSurvey')
-            console.log(rating)
-            console.log(message)
         }
         function didReceiveNotification(message){
-            console.log('didReceiveNotification')
-            console.log(message)
             setBadges(message)
             $rootScope.$digest()
         }
         function didReceiveInAppNotificationWithMessageCount(message){
-            console.log('didReceiveInAppNotificationWithMessageCount')
-            console.log(message)
             setBadges(message)
             $rootScope.$digest()
         }
         function displayAttachmentFile(message){
-            console.log('displayAttachmentFile')
-            console.log(message)
         }
 
         if(Push){

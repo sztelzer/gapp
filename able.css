@@ -92,8 +92,11 @@ md-content {
 }
 
 md-card {
-	margin: 0px 0px 8px 0px !important;
-	box-shadow: none !important;
+	margin: 0 0 1em 0 !important;
+}
+
+md-card.no-shadow {
+    box-shadow: none !important;
 }
 
 img.md-card-image {
@@ -226,6 +229,10 @@ div > md-icon {
 	fill: #000000 !important;
 }
 
+.svg-lightgrey > svg {
+	fill: #CCCCCC !important;
+}
+
 .svg-white > svg {
 	fill: #FFFFFF !important;
 }
@@ -237,6 +244,13 @@ div > md-icon {
 .svg-green > svg {
 	fill: #26BD49 !important;
 }
+
+.svg-lightred > svg {
+	fill: #ff9999 !important;
+}
+
+
+
 
 .md-icon-button {
 	margin:0 !important;
@@ -282,16 +296,43 @@ div.counter {
 }
 
 .promoted-maker {
-
+    font-family: "Roboto";
+    font-size: 1em;
+    font-weight: 400;
 }
 
 .promoted-desc {
+    font-family: "Roboto";
+    font-size: 1em;
+    font-weight: 400;
+    /*border: 1px solid black;*/
+    margin-right: 1em;
+}
 
+.promoted-style {
+    font-family: "Roboto Slab";
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.promoted-perception {
+    font-family: "Roboto Slab";
+    font-size: 1em;
+    font-weight: 300;
+    overflow: hidden;
+}
+
+.promoted-price {
+    font-family: "Roboto Slab";
+    font-weight: 400;
+    font-size: 1em;
+    color: #00A000;
 }
 
 .promoted-content > p {
 	font-family: 'Roboto Slab';
 	font-weight: 300;
+    font-size: 1em;
 }
 
 
@@ -354,12 +395,15 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
 .robot-text {
 	font-family: "roboto slab";
 	font-weight: 300;
-	margin-left: 8px;
+	margin-left: 0.25em;
 }
 
 .robot-icon {
 	margin:0 !important;
 	padding:0 !important;
+    position: relative;
+    left: -0.125em;
+    bottom: 0.2em;
 }
 
 .badge {
@@ -385,4 +429,51 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
     font-weight: 700;
     font-size: 0.6em;
     color: white;
+}
+
+
+.promoted-content {
+    position: relative;
+}
+
+.promoted-content {
+    outline: none !important;
+}
+
+* {
+    outline: none !important;
+}
+
+.promoted-content.short {
+    height: 4.96em;
+    overflow: hidden;
+}
+
+.promoted-content.long {
+    height: 100%;
+    overflow: hidden;
+}
+
+.lastlinefill {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 1.32em;
+    /* background-color: red; */
+    background-image: url(imgs/linearfill.png);
+    background-size: 100%;
+}
+
+.promoted-content.long > div.lastlinefill {
+    display: none !important;
+}
+
+.lastlinesignal {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    font-family: 'Roboto Slab';
+    font-size: 0.875em;
+    line-height: 1.32em;
+    font-weight: 400;
 }

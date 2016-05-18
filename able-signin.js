@@ -51,7 +51,6 @@
 		function reset(){
 			var emailPattern = new RegExp(/^.+@.+\..+$/)
 			if(!emailPattern.test(vm.email)){
-				console.log("no email")
 				toast("Digite um e-mail válido no campo E-mail.")
 				return
 			}
@@ -60,11 +59,9 @@
 			$http.patch(config.api + '/tokens', payload)
 				.then(
 				function successCallback(response) {
-					console.log("ok")
 					toastex("Enviamos um e-mail com instruções de recuperação da senha para "+vm.email)
 				},
 				function errorCallback(response) {
-					console.log("nok")
 					if(response.status == -1){
 						toast("Verifique sua conexão.")
 						return

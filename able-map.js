@@ -168,15 +168,13 @@
 					$scope.searchText = results[0].formatted_address
 					$scope.$apply()
 				} else {
-					console.log(status)
 				}
 			});
 		}
 
-
 		function setCartAddress() {
 			$rootScope.updateDistance()
-			$rootScope.updateCart()
+			// $rootScope.updateCart()
 			$state.go('storePage.offerPage')
 		}
 

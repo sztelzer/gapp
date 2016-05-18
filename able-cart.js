@@ -79,6 +79,11 @@
 			vm.complement = $rootScope.complement
 		});
 
+        $scope.$watch(function w(scope){return( $rootScope.estimated )},function c(n,o){
+            updateCart()
+		});
+
+
 		$scope.$watch(function w(scope){return( $rootScope.plastic )},function c(n,o){
 			vm.plastic = $rootScope.plastic
 		});
@@ -142,7 +147,6 @@
 					$state.go('storePage.confirmationPage');
 				},
 				function errorCallback(response) {
-					console.log(response)
 					vm.sending = false
 					if(response.status == 401){
 						if(navigator && navigator.notification){

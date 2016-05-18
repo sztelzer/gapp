@@ -60,12 +60,10 @@
 			auth.signupQuest(vm.user.name, vm.user.document, vm.user.email, vm.user.password, JSON.stringify(vm.payload))
 			.then(
 				function(resolve) {
-					console.log(resolve)
 					$state.go('storePage')
 					vm.sending = false
 				},
 				function(reject) {
-					console.log(reject)
 					vm.sending = false
 					if(reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email"){
 						toast("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")

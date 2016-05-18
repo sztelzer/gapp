@@ -31,12 +31,10 @@
 			$http.get(config.api + '/users/' + auth.id + '/feedbacks', req_config)
 				.then(
 				function successCallback(response) {
-					console.log(response)
 					vm.list = response.data.resources
 					vm.loading = false
 				},
 				function errorCallback(response) {
-					console.log(response)
 					vm.loading = false
 					if(response.status == 401){
 						if(navigator && navigator.notification){

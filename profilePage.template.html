@@ -1,0 +1,82 @@
+<md-content flex="fill" layout="column" profile-element>
+		<div layout="row" ng-show="profile.loading" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+			<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+		</div>
+
+		<!-- <div ng-show="!plastics.loading && !plastics.plastics" class="md-padding" ng-cloak>
+			<strong>Nenhum cartão salvo.</strong> Aqui você gerencia os cartões salvos para utilização na loja.
+		</div> -->
+
+		<!-- <div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end">
+			<span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais.</span>
+		</div> -->
+
+    <div flex="none" class="md-padding" ng-cloak>
+			<strong>Sua conta: {{app.auth.user.email}}</strong>
+      <div class="md-caption">Por segurança, o e-mail de sua conta só pode ser alterado através do nosso atendimento.</div>
+		</div>
+
+      <md-card flex="none" class="card-full md-padding background-white no-shadow" style="position:relative">
+  			<!-- <div class="md-caption"><center>Antes de salvar um cartão, preencha seu CPF para a emissão de notas fiscais das compras realizadas.</center></div> -->
+  			<form layout="column" name="profileForm" ng-cloak>
+
+          <md-input-container flex class="no-errors">
+						<label>Nome Completo</label>
+						<input name="name" ng-model="profile.user.name" minlength="10" maxlength="64" ng-required="true" required ng-blur="Keyboard.close()"/>
+						<div ng-messages="profileForm.name.$error">
+							<div ng-message-exp="['required', 'minlength', 'maxlength']">Seu nome é necessário para entregas e identificação.<br/>Entre 10 a 64 caracteres.</div>
+						</div>
+					</md-input-container>
+
+          <md-input-container flex class="no-errors">
+            <label>CPF</label>
+            <input type="tel" name="document" ng-model="profile.user.document" validate-cpf minlength="11" maxlength="11" ng-required="true" required ng-blur="Keyboard.close()"/>
+            <div ng-messages="profileForm.document.$error">
+              <div ng-message-exp="['required', 'minlength', 'maxlength', 'cpf']" class="ng-animate">Digite um CPF válido.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container flex class="no-errors">
+            <label>Telefone</label>
+            <input type="tel" name="phone" ng-model="profile.user.phone" minlength="9" maxlength="12" ng-required="true" required ng-blur="Keyboard.close()"/>
+            <div ng-messages="profileForm.phone.$error">
+              <div ng-message-exp="['minlength', 'maxlength']" class="ng-animate">Digite um número para contato de soluções de entregas. Entre 9 e 12 dígitos.</div>
+            </div>
+          </md-input-container>
+
+  			</form>
+
+        <div flex="none" layout="row" ng-show="profile.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+  				<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+  			</div>
+      </md-card>
+
+      <div flex="none" layout="row">
+  			<md-button class="md-raised md-accent full-button" ng-click="profile.save()" ng-disabled="profileForm.$invalid || profile.sending || profileForm.$pristine">Salvar alterações</md-button>
+  		</div>
+
+      <md-divider></md-divider>
+      <div flex="none" class="md-padding">
+        <strong>Alterar senha</strong>
+        <div class="md-caption">
+          Para alterar sua senha clique no botão abaixo e enviaremos um e-mail para <strong>{{app.auth.user.email}}</strong>. Siga as instruções recebidas. Ao voltar ao aplicativo você terá que se logar com sua nova senha.
+        </div>
+      </div>
+      <div flex="none" layout="row">
+        <md-button class="md-raised md-primary full-button" ng-click="profile.resetPass()">Enviar pedido de alteração de senha</md-button>
+      </div>
+
+      <md-divider></md-divider>
+      <div flex="none" class="md-padding">
+        <strong>Desconectar conta</strong>
+        <div class="md-caption">
+          Você será levado para a tela inicial e todas as informações de sua conta neste dispositivo serão apagadas. Não se preocupe, tudo está protegido. Use para trocar de usuário.
+        </div>
+      </div>
+
+      <div flex="none" layout="row">
+        <md-button class="md-raised md-warn full-button" ng-click="app.auth.signout()">Desconectar Conta</md-button>
+      </div>
+      <md-divider></md-divider>
+
+</md-content>

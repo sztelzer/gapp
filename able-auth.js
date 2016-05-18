@@ -5,7 +5,7 @@
 		.module('able')
 		.factory('auth', auth)
 
-	function auth($http, $state, config, $q, $localStorage, $window){
+	function auth($http, $state, config, $q, $localStorage, $rootScope, $window){
 		var service = {
 			id: $localStorage.id,
 			token: $localStorage.token,
@@ -68,34 +68,39 @@
 		}
 
         function getUser(){
-            var req_config = {headers: {'Authorization': service.token}};
-            $http.get(config.api + '/users/' + service.id, req_config)
-            .then(
-                function successCallback(response) {
-                    service.user = response.data.object;
-                },
-                function errorCallback(response) {
-                    if(response.status == 401 || response.status == 404){
-                        if(navigator && navigator.notification){
-                            navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
-                        } else {
-                            window.alert('Você precisa se logar novamente.')
+            if(service.id){
+                var req_config = {headers: {'Authorization': service.token}};
+                return $q(function(resolve, reject) {
+                    $http.get(config.api + '/users/' + service.id, req_config)
+                    .then(
+                        function successCallback(response) {
+                            service.user = response.data.object
+                            resolve()
+                        },
+                        function errorCallback(response) {
+                            if(response.status == 401 || response.status == 404 || response.status == 403){
+                                if(navigator && navigator.notification){
+                                    navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+                                } else {
+                                    window.alert('Você precisa se logar novamente.')
+                                }
+                                signout()
+                                return
+                            }
+
+                            if(navigator && navigator.notification){
+                                navigator.notification.alert('Verifique sua conexão.', getUser, 'Able', 'Tentar Novamente')
+                                return
+                            } else {
+                                window.alert('Verifique sua conexão.')
+                                getUser()
+                                return
+                            }
+
                         }
-                        signout()
-                        return
-                    }
-
-                    if(navigator && navigator.notification){
-                        navigator.notification.alert('Verifique sua conexão.', getUser, 'Able', 'Tentar Novamente')
-                        return
-                    } else {
-                        window.alert('Verifique sua conexão.')
-                        getUser()
-                        return
-                    }
-
-                }
-            )
+                    )
+                })
+            }
         }
 
         function patchUser(payload){
@@ -104,7 +109,7 @@
                 $http.patch(config.api + '/users/' + service.id, payload, req_config)
                 .then(
                     function successCallback(response) {
-                        service.user = response.data.object;
+                        service.user = response.data.object
                         resolve(response)
                     },
                     function errorCallback(response) {
@@ -131,10 +136,7 @@
                     }
                 )
             })
-
-
         }
-
 
 
 

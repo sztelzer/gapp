@@ -9,37 +9,39 @@
 
 
 		<div flex="none" style="margin-top:8px"></div>
-		<div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end">
-			<span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais.</span>
+		<div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end" ng-click="app.showSingleFAQ('22')">
+			<span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais<md-icon md-svg-icon="imgs/ic_help_circle_black_48px.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>
 		</div>
 
-		<md-card flex="none" layout="row" class="card-full card-credit md-padding" ng-class="plastics.plastic.path == plastic.path ? 'md-whiteframe-8dp background-white' : '' " style="margin-top:0px;position:relative" ng-repeat="plastic in plastics.plastics track by plastic.path">
-				<div flex layout="row" layout-align="center center" class="md-body">
-					****{{plastic.object.mask}}
-				</div>
-				<div flex layout="row" layout-align="start center" class="md-body">
-					{{plastic.object.expiry}}
-				</div>
+    <md-divider></md-divider>
+    <div ng-repeat="plastic in plastics.plastics track by plastic.path">
+  		<md-card flex="none" layout="row" class="card-full card-credit md-padding no-shadow" ng-class="plastics.plastic.path == plastic.path ? 'background-white' : '' " style="margin-top:0px;position:relative;margin-bottom:0px !important">
+  				<div flex layout="row" layout-align="center center" class="md-body">
+  					****{{plastic.object.mask}}
+  				</div>
+  				<div flex layout="row" layout-align="start center" class="md-body">
+  					{{plastic.object.expiry}}
+  				</div>
 
-				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action md-caption" style="color:#FF6666" ng-click="plastics.remove(plastic);plastic.deleting=true">Apagar</md-button>
-				</div>
+  				<div flex layout="row" layout-align="center center">
+  					<md-button class="card-action md-caption" style="color:#FF6666" ng-click="plastics.remove(plastic);plastic.deleting=true">Apagar</md-button>
+  				</div>
 
-				<div flex layout="row" layout-align="center center">
-					<md-button class="card-action" ng-class="plastics.plastic.path == plastic.path ? '' : 'md-accent'" ng-click="plastics.activate(plastic)" ng-disable="plastics.plastic.path == plastic.path">
-						{{plastics.plastic.path == plastic.path ? "Em Uso" : "Usar"}}
-					</md-button>
-				</div>
+  				<div flex layout="row" layout-align="center center">
+  					<md-button class="card-action" ng-class="plastics.plastic.path == plastic.path ? '' : 'md-accent'" ng-click="plastics.activate(plastic)" ng-disable="plastics.plastic.path == plastic.path">
+  						{{plastics.plastic.path == plastic.path ? "Em Uso" : "Usar"}}
+  					</md-button>
+  				</div>
 
-				<div layout="row" ng-show="plastic.deleting" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
-					<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
-				</div>
-
-		</md-card>
-
+  				<div layout="row" ng-show="plastic.deleting" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+  					<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+  				</div>
+  		</md-card>
+      <md-divider></md-divider>
+    </div>
 
     <div ng-hide="app.auth.user.document">
-      <md-card flex="none" class="card-full md-padding background-white" style="position:relative">
+      <md-card flex="none" class="card-full md-padding background-white no-shadow" style="position:relative">
   			<div class="md-caption"><center>Antes de salvar um cartão, preencha seu CPF para a emissão de notas fiscais das compras realizadas.</center></div>
   			<form layout="column" name="documentForm" ng-cloak>
 
@@ -64,7 +66,7 @@
     </div>
 
     <div ng-show="app.auth.user.document">
-  		<md-card flex="none" class="card-full card-credit md-padding background-white" style="position:relative">
+  		<md-card flex="none" class="card-full card-credit md-padding background-white no-shadow" style="position:relative">
   			<div class="md-caption"><center>Aceitamos cartões de crédito Visa e Mastercard.</center></div>
   			<form layout="column" name="plasticForm" ng-cloak>
   				<md-input-container flex="none" class="no-errors">

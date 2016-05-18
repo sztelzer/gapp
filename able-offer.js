@@ -19,12 +19,15 @@
 		var vm = this
 		vm.loading = true;
 
-		if (checkOffer() == true) {
-			updateOfferStocks($localStorage.offer.path)
-		} else {
-			loadNewOffer()
-		}
-
+        runOffer()
+        function runOffer(){
+    		if (checkOffer() == true) {
+    			updateOfferStocks($localStorage.offer.path)
+    		} else {
+    			loadNewOffer()
+    		}
+        }
+        document.addEventListener("resume", runOffer, false);
 
 
 		function checkOffer() {
@@ -86,6 +89,7 @@
 				},
 				function errorCallback(response) {
 					vm.loading = false
+                    console.log(response)
 					if(response.status >= 400){
 						if(navigator && navigator.notification){
 							navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
@@ -119,7 +123,6 @@
 					}
 					// pass over each promoted, updating stock. If quantity is greater, lower it.
 					var newPromos = response.data.object.promoteds
-					//console.log(newPromos)
 					var oldPromos = $rootScope.offer.object.promoteds
 					for (var oldKey in oldPromos) {
 						var hit = false
@@ -134,9 +137,7 @@
 								}
 							}
 						}
-						// console.log(oldPromos[oldKey])
 						if(hit == false){
-							// console.log(oldPromos[oldKey])
 							oldPromos[oldKey].object.max = 0
 							oldPromos[oldKey].object.wet = 0
 							oldPromos[oldKey].object.dry = 0
@@ -145,7 +146,6 @@
 					}
 					$rootScope.offer.object.promoteds = oldPromos
 					$localStorage.stripe = response.data.object.stripe_key
-
 
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
 					$rootScope.workingTime()
@@ -167,7 +167,6 @@
 					}
 
 					if(response.status == 403){
-                        console.log(response)
                         //if error is offer doesn't exists anymore, request a new offer.
 						if(response && response.data && response.data.errors && response.data.errors[0].reference == "loading_object"){
                             loadNewOffer()
@@ -178,10 +177,10 @@
 						return
 					}
 
-                    // if(response.status == 404){
-					// 	loadNewOffer()
-					// 	return
-					// }
+                    if(response.status == 404){
+						loadNewOffer()
+						return
+					}
 
 					if(navigator && navigator.notification){
 						navigator.notification.alert('Verifique sua conexão.', updateOfferStocks(offerPath), 'Able', 'Ok')
@@ -200,6 +199,8 @@
 
 
 	} // end controller
+
+
 
 
 

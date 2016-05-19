@@ -23,11 +23,9 @@
         vm.sending = false
         vm.resetPass = reset
 
-
-        console.log($scope)
+        auth.getUser()
 
         $scope.$watch(function w(scope){return( auth.user )},function c(n,o){
-            console.log(auth.user)
             vm.user = auth.user
 		});
 

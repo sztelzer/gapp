@@ -15,7 +15,7 @@
 		return directive
 	}
 
-	function signinController(auth, $state, $scope, $mdToast, $http, config) {
+	function signinController(auth, $state, $scope, $http, config) {
 		var vm = this
 		vm.email = ''
 		vm.password = ''
@@ -39,9 +39,18 @@
 					vm.password = ''
 					vm.working = false;
 					if(reject.status == -1){
-						toast("Verifique sua conexão.")
+                        if(navigator && navigator.notification){
+    						navigator.notification.alert("Verifique sua conexão.", false, 'Able', 'Ok')
+    					} else {
+    						window.alert("Verifique sua conexão.")
+    					}
+
 					} else {
-						toast("That's a no-no :(")
+                        if(navigator && navigator.notification){
+    						navigator.notification.alert("Verifique seus dados e tente novamente.", false, 'Able', 'Ok')
+    					} else {
+    						window.alert("Verifique seus dados e tente novamente.")
+    					}
 					}
 				}
 			)
@@ -51,8 +60,11 @@
 		function reset(){
 			var emailPattern = new RegExp(/^.+@.+\..+$/)
 			if(!emailPattern.test(vm.email)){
-				console.log("no email")
-				toast("Digite um e-mail válido no campo E-mail.")
+                if(navigator && navigator.notification){
+                    navigator.notification.alert("Digite um e-mail válido no campo E-mail.", false, 'Able', 'Ok')
+                } else {
+                    window.alert("Digite um e-mail válido no campo E-mail.")
+                }
 				return
 			}
 
@@ -60,28 +72,30 @@
 			$http.patch(config.api + '/tokens', payload)
 				.then(
 				function successCallback(response) {
-					console.log("ok")
-					toastex("Enviamos um e-mail com instruções de recuperação da senha para "+vm.email)
+                    if(navigator && navigator.notification){
+                        navigator.notification.alert("Enviamos um e-mail com instruções de recuperação da senha para "+vm.email, false, 'Able', 'Ok')
+                    } else {
+                        window.alert("Enviamos um e-mail com instruções de recuperação da senha para "+vm.email)
+                    }
 				},
 				function errorCallback(response) {
-					console.log("nok")
-					if(response.status == -1){
-						toast("Verifique sua conexão.")
-						return
-					}
 					if(response.data && response.data.errors && response.data.errors[0]){
-						toast(response.data.errors[0].error)
+	                    if(navigator && navigator.notification){
+    						navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+    					} else {
+    						window.alert(response.data.errors[0].error)
+    					}
 						return
 					}
-					toast("That's a no-no :(")
+
+                    if(navigator && navigator.notification){
+						navigator.notification.alert("Verifique sua conexão.", false, 'Able', 'Ok')
+					} else {
+						window.alert("Verifique sua conexão.")
+					}
+
 				});
 		}
-
-		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
-		function toastex(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(9000))};
-
-
-
 
 
 	} // end controller

@@ -15,24 +15,28 @@
 		return directive
 	}
 
-	function offerController($rootScope, $localStorage, config, auth, $http, $mdToast) {
+	function offerController($rootScope, $localStorage, config, auth, $http) {
 		var vm = this
 		vm.loading = true;
 
-		if (checkOffer() == true) {
-			updateOfferStocks($localStorage.offer.path)
-		} else {
-			loadNewOffer()
-		}
-
+        runOffer()
+        function runOffer(){
+    		if (checkOffer() == true) {
+    			updateOfferStocks($localStorage.offer.path)
+    		} else {
+    			loadNewOffer()
+    		}
+        }
+        document.addEventListener("resume", runOffer, false);
 
 
 		function checkOffer() {
 			// check if have some offer loaded.
-			var storedOffer = $localStorage.offer;
-			if (storedOffer == undefined || storedOffer == '' || storedOffer == {}) {
-				return false;
-			}
+            if(typeof $localStorage.offer == "undefined") {
+    			return false
+    		}
+
+            var storedOffer = $localStorage.offer;
 
 			// check if is too old
 			var now = new Date();
@@ -86,6 +90,7 @@
 				},
 				function errorCallback(response) {
 					vm.loading = false
+                    console.log(response)
 					if(response.status >= 400){
 						if(navigator && navigator.notification){
 							navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
@@ -119,7 +124,6 @@
 					}
 					// pass over each promoted, updating stock. If quantity is greater, lower it.
 					var newPromos = response.data.object.promoteds
-					//console.log(newPromos)
 					var oldPromos = $rootScope.offer.object.promoteds
 					for (var oldKey in oldPromos) {
 						var hit = false
@@ -134,9 +138,7 @@
 								}
 							}
 						}
-						// console.log(oldPromos[oldKey])
 						if(hit == false){
-							// console.log(oldPromos[oldKey])
 							oldPromos[oldKey].object.max = 0
 							oldPromos[oldKey].object.wet = 0
 							oldPromos[oldKey].object.dry = 0
@@ -145,7 +147,6 @@
 					}
 					$rootScope.offer.object.promoteds = oldPromos
 					$localStorage.stripe = response.data.object.stripe_key
-
 
 					$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
 					$rootScope.workingTime()
@@ -167,12 +168,18 @@
 					}
 
 					if(response.status == 403){
-						toast(response.data.errors[0].error)
-						if($rootScope.offer && $rootScope.offer.path){
-							$rootScope.updateOfferStocks($rootScope.offer.path)
-						} else {
-							loadNewOffer()
+                        //if error is offer doesn't exists anymore, request a new offer.
+						if(response && response.data && response.data.errors && response.data.errors[0].reference == "loading_object"){
+                            loadNewOffer()
+                            return
 						}
+                        //else, load from localstorage
+                        $rootScope.offer = $localStorage.offer
+						return
+					}
+
+                    if(response.status == 404){
+						loadNewOffer()
 						return
 					}
 
@@ -187,12 +194,10 @@
 		} // end updateOffer()
 		$rootScope.updateOfferStocks = updateOfferStocks
 
-		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
-
-
-
 
 	} // end controller
+
+
 
 
 

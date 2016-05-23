@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, $mdToast, $window) {
+	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, $window) {
 		var vm = this;
 		vm.new = {}
 		vm.plastics = []
@@ -25,6 +25,8 @@
 		vm.remove = remove
 		vm.sending = false
 		vm.loading = true
+        vm.saveDucument = saveDocument
+        vm.sendingDocument = false
 
 		if(typeof $localStorage.plastic == "undefined") {
 			$localStorage.plastic = {}
@@ -47,7 +49,6 @@
 			function errorCallback(response) {
 				vm.plastics = []
 				vm.loading = false
-				// toast('Não conseguimos carregar seus cartões. Tente novamente.')
 
 				if(response.status == 401){
 					if(navigator && navigator.notification){
@@ -60,7 +61,11 @@
 				}
 
 				if(response.status == 403){
-					toast(response.data.errors[0].error)
+                    if(navigator && navigator.notification){
+						navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+					} else {
+						window.alert(response.data.errors[0].error)
+					}
 					return
 				}
 
@@ -101,7 +106,6 @@
 							vm.new = {}
 							$scope.plasticForm.$setPristine()
 							$scope.plasticForm.$setUntouched()
-							// console.log(response)
 							activate(response.data)
 							get()
 							vm.sending = false
@@ -119,7 +123,11 @@
 							}
 
 							if(response.status == 403){
-								toast(response.data.errors[0].error)
+                                if(navigator && navigator.notification){
+									navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+								} else {
+									window.alert('Você precisa se logar novamente.')
+								}
 								return
 							}
 
@@ -131,14 +139,19 @@
 								return
 							}
 
-
-
 						}
 					);
 				},
 				function(rejectedToken){
 					vm.sending = false
-					toast("Este cartão não foi aceito. Verifique os dados.")
+
+                    if(navigator && navigator.notification){
+                        navigator.notification.alert("Este cartão não foi aceito. Verifique os dados.", false, 'Able', 'Ok')
+                    } else {
+                        window.alert("Este cartão não foi aceito. Verifique os dados.")
+                    }
+
+
 				}
 			)
 		}
@@ -156,8 +169,7 @@
 			$http.delete(config.api + plastic.path, req_config)
 			.then(
 				function(response){
-					console.log(response)
-					if(plastic == vm.plastic){
+					if(plastic.path == vm.plastic.path){
 						$localStorage.plastic = ''
 						$rootScope.plastic = ''
 						vm.plastic = ''
@@ -172,8 +184,13 @@
 
 				},
 				function(response){
-					console.log(response)
-					toast('Houve um erro ao remover este cartão. Tente novamente.')
+                    if(navigator && navigator.notification){
+                        navigator.notification.alert('Houve um erro ao remover este cartão. Tente novamente.', false, 'Able', 'Ok')
+                        return
+                    } else {
+                        window.alert('Houve um erro ao remover este cartão. Tente novamente.')
+                        return
+                    }
 				}
 			)
 		}
@@ -207,16 +224,29 @@
 			})
 		}
 
-		function toast(msg){$mdToast.show(
-			$mdToast.simple()
-			.textContent(msg)
-			.hideDelay(10000)
-			.action('Ok')
-			.theme('default')
-		)};
+        function saveDocument(){
+            if(Keyboard) {
+                Keyboard.close()
+            }
+            vm.sendingDocument = true
+
+            var payload = {
+                document: angular.copy(vm.document)
+            }
+
+            auth.patchUser(payload).then(
+                function(resolve) {
+                    vm.sendingDocument = false
+                },
+                function(reject) {
+                    vm.sendingDocument = false
+                }
+            );
+        }
 
 
 	}
+
 
 
 })();

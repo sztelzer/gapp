@@ -34,7 +34,7 @@
 	},
 	{
 		"i":"i4",
-		"q":"Beringela",
+		"q":"Berinjela",
 		"c":"#9195B3",
 		"t":"#FFFFFF",
 		"a":[
@@ -128,7 +128,7 @@
 		"a":[
 			{"v":1,"s":"Sério? Tanta coisa melhor para experimentar."},
 			{"v":2,"s":"Um ou outro, ainda tenho que dirigir."},
-			{"v":3,"s":"Vim de taxi, quero três."}
+			{"v":3,"s":"Vim de táxi, quero três."}
 		]
 	},
 	{

@@ -12,16 +12,24 @@
 		'ct.ui.router.extras',
 		'ngAria',
 		'angularPayments',
-		'dcbImgFallback'
+		'dcbImgFallback',
 	])
 
 	.value('config', {
-		api: 'http://127.0.0.1:8081',
-		company_path: '/companies/5629499534213120',
-		// api: 'https://api-dot-heartbend.appspot.com',
-		// company_path: '/companies/5654313976201216',
+        //heartbend
+		// api: 'http://127.0.0.1:8081',
+		// company_path: '/companies/5066549580791808',
+		api: 'https://api-dot-heartbend.appspot.com',
+		company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
-		offers_count: 6
+		offers_count: 6,
+
+        //helpshift
+        helpshift_api_key: 'd39dcb147a53f4491218d67c09ad6103',
+        helpshift_domain: 'able.helpshift.com',
+        helpshift_app_id_ios: 'able_platform_20151202232813761-cc37683499f9965',
+        helpshift_app_id_android: 'able_platform_20151216171356528-7e3568cf679c8cd',
+        helpshift_app_id : ''
 	})
 
 	.config(function ($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider, $anchorScrollProvider) {
@@ -96,6 +104,16 @@
 					accessLogged: true
 				}
 			})
+            .state('storePage.profilePage', {
+				url: "/profile",
+				templateUrl: "profilePage.template.html",
+				data: {
+					title: "Perfil",
+					requireLogin: true,
+					accessLogged: true
+				}
+			})
+
 			.state('storePage.plasticsPage', {
 				url: "/plastics",
 				templateUrl: "plasticsPage.template.html",
@@ -221,12 +239,10 @@
 	})
 
 	.run(function ($rootScope, $state, auth, $window, $interval, config, $mdDialog) {
-
-		console.log(config.api)
-
 		$rootScope.platform = Platform
 		$rootScope.geocoder = new google.maps.Geocoder()
 		$rootScope.autocomplete = new google.maps.places.AutocompleteService()
+        $rootScope.distancer = new google.maps.DistanceMatrixService()
 
 		$rootScope.$state = $state;
 		$rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
@@ -285,33 +301,84 @@
 
 		$rootScope.updateDistance = function(){
 			if($rootScope.offer && $rootScope.offer.object){
-				var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
-				$rootScope.attended = linear < $rootScope.offer.object.node_radius ? true : false
-				var distance = linear * 1.5
-				// console.log(distance)
-				$rootScope.estimated = +((distance * 0.33) + 1200).toFixed(2)
-				var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
-				$rootScope.freight = +((over)*1.80 + 22.90).toFixed(2)
+                var distance
+                var estimated
+                var distanceRequest = {
+                    destinations:[{'lat': $rootScope.latitude, 'lng': $rootScope.longitude}],
+                    origins:[{'lat': $rootScope.offer.object.node_latitude, 'lng': $rootScope.offer.object.node_longitude}],
+                    travelMode:google.maps.TravelMode.DRIVING
+                }
+                $rootScope.distancer.getDistanceMatrix(distanceRequest, function(response, status){
+                    if (status !== google.maps.DistanceMatrixStatus.OK) {
+                        var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
+                        distance = linear * 1.5
+                        estimated = +((distance * 0.33) + 1200).toFixed(2)
+                    } else {
+                        distance = +(response.rows[0].elements[0].distance.value).toFixed(2)
+                        estimated = +(+(response.rows[0].elements[0].duration.value) + 1200).toFixed(2)
+                    }
+                    if(!distance){distance=1}
+                    $rootScope.attended = distance < $rootScope.offer.object.node_max_distance ? true : false
+                    $rootScope.estimated = +(estimated).toFixed(2)
+                    $rootScope.distance = distance
+
+                    $rootScope.$digest()
+                });
 			}
 		}
+        $rootScope.updateFreight = function(){
+            if($rootScope.distance == 0){
+                $rootScope.updateDistance()
+            } else {
+                var distance = $rootScope.distance
+                if(distance > 11000){
+                    var contribution = $rootScope.products_value ? $rootScope.products_value * 0.20 : 0
+                    var full_freight = (distance/1000*1.862)+7.90
+                    var freight = full_freight - contribution
+                    if(freight <= 0){freight = 0}
+                    $rootScope.freight = +(freight).toFixed(2)
+                } else {
+                    var contribution = $rootScope.products_value ? $rootScope.products_value * 0.20 : 0
+                    var full_freight = 22.90
+                    var freight = full_freight - contribution
+                    if(freight <= 0){freight = 0}
+                    $rootScope.freight = +(freight).toFixed(2)
+                }
+
+            }
+        }
+
 
 		$rootScope.workingTime = function(){
 			if($rootScope.offer){
+                var weekdays = ["Domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "Sábado"]
 				var times = $rootScope.offer.object.node_resource.object.times
 				var start
 				var end
 				var now = new Date()
 				var today = now.getDay()
+                var now_minutes = now.getHours()*60 + now.getMinutes()
+                var next_key
+                var next_day
 				for (var key in times) {
 					if(times[key].day == today){
-						start = times[key].start
-						end = times[key].end
+                        $rootScope.not_attending = now_minutes < times[key].start || now_minutes > times[key].end ? true : false
+                        now_minutes > times[key].start ? next_key = parseInt(key) + 1 : next_key = parseInt(key)
+                        next_key == 7 ? next_key = 0 : next_key = next_key
+						start = times[next_key].start
+						end = times[next_key].end
+                        next_key == key ? next_day = "Hoje" : next_day = "Amanhã"
+        				// $rootScope.not_attending = now_minutes < start || now_minutes > end ? true : false
+                        $rootScope.next_start = start
+                        $rootScope.next_end = end
+                        $rootScope.next_day = next_day
+                        $rootScope.next_weekday = weekdays[next_key]
+                        break
 					}
 				}
-				var nowMinutes = now.getHours()*60 + now.getMinutes()
-				$rootScope.not_attending = nowMinutes < start || nowMinutes > end ? true : false
 			}
 		}
+
 
 		$interval($rootScope.workingTime, 60 * 1000); //60 seconds * 1000 miliseconds
 
@@ -322,23 +389,23 @@
 			})
 		}
 
-		// $rootScope.alert = function(msg) {
-		// 	alert = $mdDialog.alert({
-		// 		textContent: msg,
-		// 		ok: 'Ok'
-		// 	})
-		// 	$mdDialog.show( alert )
-		// }
-
 	})
-
-
 
 	.filter('secondsToTime', function() {
 	    return function(seconds) {
 	        var d = new Date(0,0,0,0,0,0,0);
-	        d.setSeconds( Math.round(seconds) );
+	        d.setSeconds(Math.round(seconds))
 	        return d;
+    	}
+	})
+
+    .filter('minutesToTime', function() {
+	    return function(minutes) {
+            var h = Math.floor(minutes/60)
+            var m = minutes-h*60
+            h < 10 ? h = "0"+h : h = h
+            m < 10 ? m = "0"+m : m = m
+	        return h+":"+m;
     	}
 	})
 
@@ -347,6 +414,8 @@
 	        return Math.round(seconds/60);
     	}
 	})
+
+
 
 
 	.directive('appElement', appDirective)
@@ -361,22 +430,123 @@
 		return directive
 	}
 
-	function appController(auth, $state, $rootScope){
-		var vm = this;
-		vm.auth = auth;
-		vm.state = $state;
+	function appController(auth, $state, $rootScope, config, $http){
+		var vm = this
+		vm.auth = auth
+		vm.state = $state
+        vm.badge = 0
+
+        console.log(auth)
+        if(auth.id != ""){auth.getUser()}
 
 		if(Keyboard && device.platform == 'iOS'){
-			window.addEventListener('native.keyboardshow', keyboardWindowResize);
-			window.addEventListener('native.keyboardhide', keyboardWindowResize);
-			Keyboard.close();
+			window.addEventListener('native.keyboardshow', keyboardWindowResize)
+			window.addEventListener('native.keyboardhide', keyboardWindowResize)
+			Keyboard.close()
 		}
 
 		function keyboardWindowResize(e){
 			var h = window.innerHeight
 			$rootScope.height = h
-			document.body.setAttribute("style","height: "+h+"px !important");
+			document.body.setAttribute("style","height: "+h+"px !important")
 		}
+
+        if(PushNotification){
+            Push = PushNotification.init({
+              android: {
+                  senderID: "828347553479"
+              },
+              ios: {
+                  alert: "true",
+                  badge: "true",
+                  sound: "true"
+              }
+            })
+
+            Push.on('registration', function(data) {
+                HelpShift.registerDeviceToken(data.registrationId)
+                auth.push = data.registrationId
+                getNotifications()
+            });
+            Push.on('notification', function(data) {
+                HelpShift.handleRemoteNotification(data.additionalData)
+            });
+        }
+
+
+
+        //init HelpShift
+        if(HelpShift && device.platform){
+            device.platform == 'iOS' ? config.helpshift_app_id = config.helpshift_app_id_ios : config.helpshift_app_id = config.helpshift_app_id_android
+            // var setup = {
+            //     "enableContactUs":"ALWAYS",
+            //     "gotoConversationAfterContactUs":"YES",
+            //     "hideNameAndEmail":"YES"
+            // }
+            HelpShift.install(config.helpshift_api_key, config.helpshift_domain, config.helpshift_app_id)
+            HelpShift.registerSessionDelegates(sessionStart,sessionEnd)
+            HelpShift.registerConversationDelegates(newConversationStarted, userRepliedToConversation, userCompletedCustomerSatisfactionSurvey, didReceiveNotification, didReceiveInAppNotificationWithMessageCount, displayAttachmentFile)
+
+            // vm.showConversation = HelpShift.showConversation
+            vm.showFAQs = function(){
+                if(vm.badge == 0){
+                    HelpShift.showFAQs()
+                } else {
+                    HelpShift.showConversation()
+                    setBadges(0)
+                }
+            }
+
+            vm.showConversation = function(){
+                HelpShift.showConversation()
+                setBadges(0)
+            }
+
+            vm.showSingleFAQ = HelpShift.showSingleFAQ
+
+            document.addEventListener("resume", getNotifications, false);
+            // document.addEventListener("pause", getNotifications, false);
+        }
+
+        function getNotifications() {
+            if(HelpShift){
+                HelpShift.getNotificationCount("YES", false);
+            }
+        }
+
+        function setBadges(count){
+            count < 0 ? count = 0 : count = count
+            if(Badge){
+                Badge.set(count)
+            }
+            vm.badge = count
+        }
+
+        function sessionStart(){
+            setBadges(0)
+        }
+        function sessionEnd(){
+            getNotifications()
+            $rootScope.$digest()
+        }
+        function newConversationStarted(message){
+        }
+        function userRepliedToConversation(message){
+        }
+        function userCompletedCustomerSatisfactionSurvey(rating, message){
+        }
+        function didReceiveNotification(message){
+            setBadges(message)
+            $rootScope.$digest()
+        }
+        function didReceiveInAppNotificationWithMessageCount(message){
+            setBadges(message)
+            $rootScope.$digest()
+        }
+        function displayAttachmentFile(message){
+        }
+
+
 	}
 
 

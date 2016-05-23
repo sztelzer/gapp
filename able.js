@@ -17,10 +17,10 @@
 
 	.value('config', {
         //heartbend
-		// api: 'http://127.0.0.1:8081',
-		// company_path: '/companies/5066549580791808',
-		api: 'https://api-dot-heartbend.appspot.com',
-		company_path: '/companies/5654313976201216',
+		api: 'http://127.0.0.1:8081',
+		company_path: '/companies/5066549580791808',
+		// api: 'https://api-dot-heartbend.appspot.com',
+		// company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6,
 
@@ -302,32 +302,81 @@
 
 		$rootScope.updateDistance = function(){
 			if($rootScope.offer && $rootScope.offer.object){
-                var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
                 var distance
                 var estimated
-                $rootScope.attended = linear < $rootScope.offer.object.node_radius ? true : false
-                if($rootScope.attended){
+                // if($rootScope.attended){
                     var distanceRequest = {
                         destinations:[{'lat': $rootScope.latitude, 'lng': $rootScope.longitude}],
                         origins:[{'lat': $rootScope.offer.object.node_latitude, 'lng': $rootScope.offer.object.node_longitude}],
                         travelMode:google.maps.TravelMode.DRIVING
                     }
+                    console.log('getting distance matrix')
                     $rootScope.distancer.getDistanceMatrix(distanceRequest, function(response, status){
                         if (status !== google.maps.DistanceMatrixStatus.OK) {
+                            console.log('couldnt get matrix')
+                            var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
                             distance = linear * 1.5
                             estimated = +((distance * 0.33) + 1200).toFixed(2)
                         } else {
+                            console.log('got matrix')
                             distance = +(response.rows[0].elements[0].distance.value).toFixed(2)
                             estimated = +(+(response.rows[0].elements[0].duration.value) + 1200).toFixed(2)
                         }
+                        $rootScope.attended = distance < $rootScope.offer.object.node_max_distance ? true : false
+                        console.log($rootScope.attended)
                         $rootScope.estimated = +(estimated).toFixed(2)
-        				var over = distance-10000 > 0 ? (distance-10000)/1000 : 0
-        				$rootScope.freight = +((over)*1.80 + 22.90).toFixed(2)
+                        console.log($rootScope.estimated)
+                        $rootScope.distance = distance
+                        console.log($rootScope.distance)
+                        //$rootScope.updateFreight()
+
+
                         $rootScope.$digest()
                     });
-                }
+                // }
 			}
 		}
+        $rootScope.updateFreight = function(){
+            console.log('updatingFreight')
+            if($rootScope.distance == 0){
+                console.log('must get distance')
+                $rootScope.updateDistance()
+            } else {
+                console.log('already have distance')
+                var distance = $rootScope.distance
+                if(distance > 11000){
+                    console.log('distance is greater. using greater calculation and applying margin')
+
+                    var margemTotal = $rootScope.products_value ? $rootScope.products_value * 0.15 : 0
+                    console.log('margem total: '+margemTotal)
+
+                    var margemDisp = margemTotal * 0.5
+                    console.log('margem disponível: '+margemDisp)
+
+                    var freteIncluso = $rootScope.products_value ? $rootScope.products_value * 0.15 : 0
+                    console.log('frete incluso: '+freteIncluso)
+
+                    var freteTotal = (distance/1000*1.862)+7.90
+                    console.log('frete total: '+freteTotal)
+
+                    var freteFaltante = freteTotal-freteIncluso
+                    console.log('frete faltante: '+freteFaltante)
+
+                    var adicionalFaltante = freteFaltante - margemDisp
+                    if(adicionalFaltante <= 0){adicionalFaltante = 0}
+
+                    $rootScope.freight = adicionalFaltante
+                    console.log($rootScope.freight)
+                } else {
+                    console.log('distance is lesser. not using margin')
+                    var contribution = $rootScope.products_value ? $rootScope.products_value * 0.15 : 0
+                    $rootScope.freight = 22.90-contribution
+                    console.log($rootScope.freight)
+                }
+
+            }
+        }
+
 
 		$rootScope.workingTime = function(){
 			if($rootScope.offer){

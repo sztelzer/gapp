@@ -1,49 +1,30 @@
-<md-content flex="fill" plastics-element layout="column">
-		<div layout="row" ng-show="plastics.loading" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
-			<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
-		</div>
+<md-content flex="fill" layout="column">
+  <div layout="row" ng-show="plastics.loading" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+    <md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+  </div>
 
-		<!-- <div ng-show="!plastics.loading && !plastics.plastics" class="md-padding" ng-cloak>
-			<strong>Nenhum cartão salvo.</strong> Aqui você gerencia os cartões salvos para utilização na loja.
-		</div> -->
+  <!-- <div ng-show="!plastics.loading && !plastics.plastics" class="md-padding" ng-cloak>
+  <strong>Nenhum cartão salvo.</strong> Aqui você gerencia os cartões salvos para utilização na loja.
+</div> -->
+
+  <div flex="none" style="margin-top:8px"></div>
+  <div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end" ng-click="app.showSingleFAQ('22')">
+    <span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais<md-icon md-svg-icon="imgs/ic_help_circle_black_48px.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>
+  </div>
+  <md-divider></md-divider>
 
 
-		<div flex="none" style="margin-top:8px"></div>
-		<div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end" ng-click="app.showSingleFAQ('22')">
-			<span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais<md-icon md-svg-icon="imgs/ic_help_circle_black_48px.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>
-		</div>
 
-    <md-divider></md-divider>
-    <div ng-repeat="plastic in plastics.plastics track by plastic.path">
-  		<md-card flex="none" layout="row" class="card-full card-credit md-padding no-shadow" ng-class="plastics.plastic.path == plastic.path ? 'background-white' : '' " style="margin-top:0px;position:relative;margin-bottom:0px !important">
-  				<div flex layout="row" layout-align="center center" class="md-body">
-  					****{{plastic.object.mask}}
-  				</div>
-  				<div flex layout="row" layout-align="start center" class="md-body">
-  					{{plastic.object.expiry}}
-  				</div>
-
-  				<div flex layout="row" layout-align="center center">
-  					<md-button class="card-action md-caption" style="color:#FF6666" ng-click="plastics.remove(plastic);plastic.deleting=true">Apagar</md-button>
-  				</div>
-
-  				<div flex layout="row" layout-align="center center">
-  					<md-button class="card-action" ng-class="plastics.plastic.path == plastic.path ? '' : 'md-accent'" ng-click="plastics.activate(plastic)" ng-disable="plastics.plastic.path == plastic.path">
-  						{{plastics.plastic.path == plastic.path ? "Em Uso" : "Usar"}}
-  					</md-button>
-  				</div>
-
-  				<div layout="row" ng-show="plastic.deleting" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
-  					<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
-  				</div>
-  		</md-card>
-      <md-divider></md-divider>
-    </div>
-
+  <div plastics-element>
     <div ng-hide="app.auth.user.document">
       <md-card flex="none" class="card-full md-padding background-white no-shadow" style="position:relative">
-  			<div class="md-caption"><center>Antes de salvar um cartão, preencha seu CPF para a emissão de notas fiscais das compras realizadas.</center></div>
-  			<form layout="column" name="documentForm" ng-cloak>
+        <div flex="none">
+          <strong>Adicionar Documento</strong>
+          <div class="md-caption">Antes de salvar seu primeito cartão, preencha seu CPF para a emissão de notas fiscais das compras realizadas.</div>
+        </div>
+
+
+        <form layout="column" name="documentForm" ng-cloak>
 
           <md-input-container flex class="no-errors">
             <label>CPF</label>
@@ -53,50 +34,157 @@
             </div>
           </md-input-container>
 
-  			</form>
+        </form>
 
         <div flex="none" layout="row" ng-show="plastics.sendingDocument" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
-  				<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
-  			</div>
+          <md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+        </div>
       </md-card>
 
       <div flex="none" layout="row">
-  			<md-button class="md-raised md-accent full-button" ng-click="plastics.saveDucument()" ng-disabled="documentForm.$invalid || plastics.sendingDocument">Próximo</md-button>
-  		</div>
+        <md-button class="md-raised md-accent full-button" ng-click="plastics.saveDucument()" ng-disabled="documentForm.$invalid || plastics.sendingDocument">Próximo</md-button>
+      </div>
     </div>
+
+
+
+
 
     <div ng-show="app.auth.user.document">
-  		<md-card flex="none" class="card-full card-credit md-padding background-white no-shadow" style="position:relative">
-  			<div class="md-caption"><center>Aceitamos cartões de crédito Visa e Mastercard.</center></div>
-  			<form layout="column" name="plasticForm" ng-cloak>
-  				<md-input-container flex="none" class="no-errors">
-  					<label>Número do Cartão</label>
-  					<input type="tel" name="number" ng-model="plastics.new.number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class='creditForm.number.$card.type' ng-required="true" required/>
-  				</md-input-container>
 
-  				<div flex="none" layout="row" layout-align="spacebetween center">
-  					<md-input-container flex class="no-errors">
-  						<label>Validade</label>
-  						<input type="tel" ng-model="plastics.new.expiry" payments-validate="expiry" payments-format="expiry" ng-required="true" required/>
-  					</md-input-container>
+      <!-- CARDS -->
+      <div flex="none" class="md-padding" ng-cloak>
+        <strong>Cartões de Crédito Salvos</strong>
+        <!-- <div class="md-caption" ng-show="plastics.plastics.length">Estes são seus cartões salvos. Eles estão seguros</div> -->
+        <div class="md-caption" ng-hide="plastics.plastics.length">Você não possui nenhum cartão salvo.</div>
+      </div>
 
-  					<md-input-container flex class="no-errors">
-  						<label>Código de Segurança</label>
-  						<input type="tel" ng-model="plastics.new.cvc" payments-validate="cvc" payments-format="cvc" ng-required="true" required payments-type-model="type"/>
-  					</md-input-container>
+      <div ng-repeat="plastic in plastics.plastics track by plastic.path">
+        <md-card flex="none" layout="row" class="card-full card-credit md-padding no-shadow" ng-class="plastics.plastic.path == plastic.path ? 'background-white' : '' " style="margin-top:0px;position:relative;margin-bottom:0px !important">
+          <div flex layout="row" layout-align="center center" class="md-body">
+            ****{{plastic.object.mask}}
+          </div>
+          <div flex layout="row" layout-align="start center" class="md-body">
+            {{plastic.object.expiry}}
+          </div>
 
-  				</div>
-  			</form>
+          <div flex layout="row" layout-align="center center">
+            <md-button class="card-action md-caption" style="color:#FF6666" ng-click="plastics.remove(plastic);plastic.deleting=true">Apagar</md-button>
+          </div>
 
-  			<div flex="none" layout="row" ng-show="plastics.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
-  				<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
-  			</div>
+          <div flex layout="row" layout-align="center center">
+            <md-button class="card-action" ng-class="plastics.plastic.path == plastic.path ? '' : 'md-accent'" ng-click="plastics.activate(plastic)" ng-disable="plastics.plastic.path == plastic.path">
+              {{plastics.plastic.path == plastic.path ? "Em Uso" : "Usar"}}
+            </md-button>
+          </div>
 
-  		</md-card>
+          <div layout="row" ng-show="plastic.deleting" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+            <md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+          </div>
+        </md-card>
+      </div>
+      <md-divider></md-divider>
 
-  		<div flex="none" layout="row">
-  			<md-button class="md-raised md-accent full-button" ng-click="plastics.save()" ng-disabled="plasticForm.$invalid || plastics.sending">Salvar Cartão</md-button>
-  		</div>
+
+
+      <!-- NEW CARD -->
+      <md-card flex="none" class="card-full card-credit md-padding background-white no-shadow" style="position:relative">
+        <div flex="none" ng-cloak>
+          <strong>Adicionar Cartão</strong>
+          <div class="md-caption">Aceitamos cartões de crédito Visa e Mastercard.</div>
+        </div>
+
+        <form layout="column" name="plasticForm" ng-cloak>
+          <md-input-container flex="none" class="no-errors">
+            <label>Número do Cartão</label>
+            <input type="tel" name="number" ng-model="plastics.new.number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class='creditForm.number.$card.type' ng-required="true" required/>
+          </md-input-container>
+
+          <div flex="none" layout="row" layout-align="spacebetween center">
+            <md-input-container flex class="no-errors">
+              <label>Validade</label>
+              <input type="tel" ng-model="plastics.new.expiry" payments-validate="expiry" payments-format="expiry" ng-required="true" required/>
+            </md-input-container>
+
+            <md-input-container flex class="no-errors">
+              <label>Código de Segurança</label>
+              <input type="tel" ng-model="plastics.new.cvc" payments-validate="cvc" payments-format="cvc" ng-required="true" required payments-type-model="type"/>
+            </md-input-container>
+
+          </div>
+        </form>
+        <div flex="none" layout="row" ng-show="plastics.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+          <md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+        </div>
+      </md-card>
+      <div flex="none" layout="row">
+        <md-button class="md-raised md-accent full-button" ng-click="plastics.save()" ng-disabled="plasticForm.$invalid || plastics.sending">Salvar Cartão</md-button>
+      </div>
+
     </div>
+  </div>
+  <!-- END PLASTICS ELEMENT -->
+
+
+  <!-- VOUCHERS -->
+  <div vouchers-element>
+    <div ng-show="app.auth.user.document">
+      <md-divider></md-divider>
+      <div flex="none" class="md-padding" ng-cloak>
+        <strong>Cupons</strong>
+        <div class="md-caption" ng-hide="vouchers.vouchers.length">Você não possui nenhum coupon salvo.</div>
+      </div>
+
+      <div ng-repeat="voucher in vouchers.vouchers track by voucher.path">
+        <md-card flex="none" layout="row" class="card-full md-padding no-shadow" style="margin-top:0px;position:relative;margin-bottom:0px !important">
+          <div flex layout="column" layout-align="center start" class="md-caption">
+            <span>
+              <md-icon md-svg-icon="imgs/ic_whatshot_black_48px.svg" ng-class="voucher.errors.length ? 'svg-lightgrey' : 'svg-red'" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>
+              <span ng-class="voucher.errors.length ? 'voucher-bad' : 'voucher-good'">{{voucher.object.description}}</span><br/>
+              <span ng-show="voucher.errors[0].reference=='burn_not_started'">
+                <md-icon  md-svg-icon="imgs/ic_alarm_black_48px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>
+                Início: {{voucher.object.start | date : 'dd/MM/yyyy'}}
+              </span>
+            </span>
+            <span ng-show="voucher.object.value_available>0" class="md-caption">{{voucher.object.value_available}}</span>
+          </div>
+        </md-card>
+      </div>
+
+      <!-- NEW VOUCHER -->
+      <md-divider></md-divider>
+
+      <md-card flex="none" class="card-full md-padding no-shadow" style="position:relative">
+        <div flex="none" ng-cloak>
+          <strong>Adicionar Cupom</strong>
+          <div class="md-caption">Garanta promoções especiais.</div>
+        </div>
+
+        <form layout="column" name="voucherForm" ng-cloak>
+          <md-input-container flex="none" class="no-errors">
+            <label>Código do Cupom</label>
+            <input name="code" ng-model="vouchers.code" ng-required="true" required minlength="8" maxlength="16" ng-blur="Keyboard.close()"/>
+            <div ng-messages="voucherForm.code.$error">
+              <div ng-message-exp="['required', 'minlength', 'maxlength']" class="ng-animate">Nossos códigos possuem pelo menos 8 caracteres.</div>
+            </div>
+
+          </md-input-container>
+        </form>
+        <div flex="none" layout="row" ng-show="vouchers.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
+          <md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+        </div>
+      </md-card>
+      <div flex="none" layout="row">
+        <md-button class="md-raised md-accent full-button" ng-click="vouchers.save()" ng-disabled="voucherForm.$invalid || vouchers.sending">Salvar Cupom</md-button>
+      </div>
+    </div>
+    <!-- END HIDE ELEMENT -->
+
+
+  </div>
+  <!-- END VOUCHERS ELEMENT -->
+
+
+
 
 </md-content>

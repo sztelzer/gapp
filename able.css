@@ -245,6 +245,11 @@ div > md-icon {
 	fill: #26BD49 !important;
 }
 
+.svg-red > svg {
+	fill: #FF0000 !important;
+}
+
+
 .svg-lightred > svg {
 	fill: #ff9999 !important;
 }
@@ -476,4 +481,14 @@ md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
     font-size: 0.875em;
     line-height: 1.32em;
     font-weight: 400;
+}
+
+
+.voucher-good {
+
+}
+
+.voucher-bad {
+    color: #AAAAAA;
+    text-decoration: line-through;
 }

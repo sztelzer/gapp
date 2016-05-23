@@ -37,16 +37,16 @@
 		return directive
 	}
 
-	function cartController($scope, $rootScope, config, auth, $http, $localStorage, $mdToast, $state) {
+	function cartController($scope, $rootScope, config, auth, $http, $localStorage, $state) {
 		var vm = this;
 		vm.send = send;
-		//vm.empty = empty;
-
 		vm.quantity
 		vm.freight
 		vm.products
 		vm.estimated_time
 		vm.total
+        vm.discount
+        vm.voucher
 
 		//pass over offers, checking what we have selected
 		function updateCart(){
@@ -59,21 +59,35 @@
 					quantity += promoteds[key].quantity
 					products += promoteds[key].object.price * promoteds[key].quantity
 				}
-                $rootScope.products_value = products
-                console.log($rootScope.products_value)
-                console.log($rootScope.freight)
 
+                $rootScope.products_value = products
                 $rootScope.updateFreight()
                 var freight = $rootScope.freight
-                console.log('new freight:'+freight)
+                var total = products + freight
 
-				if(freight < 0){freight = 0}
-				var total = products + freight
+                //apply selected voucher
+                var initial_total = total
+                if ($rootScope.voucher && $rootScope.voucher.object){
+                    var voucher = $rootScope.voucher
+                    if (!voucher.object.burns.burnt){
+                        if (voucher.object.value_available > 0) {
+                            total -= voucher.object.value_available
+                        } else if (voucher.object.rate > 0) {
+                            products -= products * voucher.object.rate
+                            total = products + freight
+                        }
+                        if(total<0){total=0}
+                        if (initial_total != total){
+                            vm.voucher = $rootScope.voucher.path
+                        }
+                    }
+                }
 
 				vm.quantity = +(quantity).toFixed(2)
 				vm.freight = +(freight).toFixed(2)
 				vm.products = +(products).toFixed(2)
 				vm.total = +(total).toFixed(2)
+                vm.discount = +(initial_total - total).toFixed(2)
 				vm.estimated = $rootScope.estimated
 			}
 		}
@@ -89,6 +103,9 @@
             updateCart()
 		});
 
+        $scope.$watch(function w(scope){return( $rootScope.voucher )},function c(n,o){
+            updateCart()
+		});
 
 		$scope.$watch(function w(scope){return( $rootScope.plastic )},function c(n,o){
 			vm.plastic = $rootScope.plastic
@@ -115,6 +132,25 @@
 					}
 				)
 		}
+        //if vouchers are not loaded, get all.
+        if(!$rootScope.vouchers){
+			var req_config = {headers: {'Authorization': auth.token}}
+			$http.get(config.api + '/users/' + auth.id + '/vouchers', req_config)
+			.then(
+				function successCallback(response) {
+					$rootScope.vouchers = response.data.resources
+                    $rootScope.voucher = $localStorage.voucher
+				},
+				function errorCallback(response){
+					if(response.status == 401){
+						auth.signout()
+						return
+					}
+				}
+			)
+		}
+
+
 
 
 		function send(){
@@ -147,6 +183,7 @@
 			$http.post(config.api + '/users/' + auth.id + '/orders', payload, req_config).then(
 				function successCallback(response) {
 					empty()
+                    delete $rootScope.voucher
 					$rootScope.last = response.data;
 					$rootScope.updateOfferStocks($rootScope.offer.path)
 					vm.sending = false
@@ -168,8 +205,8 @@
 
 						switch (response.data.errors[0].reference) {
 							case 'offer':
-								$rootScope.offer = {}
-								$localStorage.offer = {}
+								delete $rootScope.offer
+								delete $localStorage.offer
 								if(navigator && navigator.notification){
 									navigator.notification.alert(response.data.errors[0].error, refreshPage, 'Able', 'Ok')
 								} else {
@@ -178,11 +215,19 @@
 								}
 								break
 							case 'quantity':
-								toast(response.data.errors[0].error)
+                                if(navigator && navigator.notification){
+                                    navigator.notification.alert(response.data.errors[0].error, nil, 'Able', 'Ok')
+                                } else {
+                                    window.alert(response.data.errors[0].error)
+                                }
 								$rootScope.updateOfferStocks($rootScope.offer.path)
 								break
 							default:
-								toast(response.data.errors[0].error)
+                                if(navigator && navigator.notification){
+                                    navigator.notification.alert(response.data.errors[0].error, nil, 'Able', 'Ok')
+                                } else {
+                                    window.alert(response.data.errors[0].error)
+                                }
 								return
 						}
 
@@ -229,8 +274,6 @@
 		// 			return "Houve um erro inesperado. Reinicie o aplicativo."
 		// 	}
 		// }
-
-		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
 
 	}//end controller
 

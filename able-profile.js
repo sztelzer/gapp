@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function profileController($scope, auth, $http, config, $mdToast) {
+	function profileController($scope, auth, $http, config) {
 		var vm = this
 
         vm.save = save
@@ -53,18 +53,9 @@
                 },
                 function(reject) {
                     vm.sending = false
-                    console.log('error sending')
                 }
             );
         }
-
-        function toast(msg){$mdToast.show(
-			$mdToast.simple()
-			.textContent(msg)
-			.hideDelay(10000)
-			.action('Ok')
-			.theme('default')
-		)};
 
 
         function reset(){
@@ -72,18 +63,34 @@
 			$http.patch(config.api + '/tokens', payload)
 				.then(
 				function successCallback(response) {
-					toast("Enviamos um e-mail com instruções de recuperação da senha para "+auth.user.email)
+                    if(navigator && navigator.notification){
+                        navigator.notification.alert("Enviamos um e-mail com instruções de recuperação da senha para "+auth.user.email, false, 'Able', 'Ok')
+                        return
+                    } else {
+                        window.alert("Enviamos um e-mail com instruções de recuperação da senha para "+auth.user.email)
+                        return
+                    }
+
 				},
 				function errorCallback(response) {
 					if(response.status == -1){
-						toast("Verifique sua conexão.")
-						return
+                        if(navigator && navigator.notification){
+                            navigator.notification.alert("Verifique a sua conexão.", false, 'Able', 'Ok')
+                            return
+                        } else {
+                            window.alert("Verifique a sua conexão.")
+                            return
+                        }
 					}
 					if(response.data && response.data.errors && response.data.errors[0]){
-						toast(response.data.errors[0].error)
-						return
+                        if(navigator && navigator.notification){
+                            navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+                            return
+                        } else {
+                            window.alert(response.data.errors[0].error)
+                            return
+                        }
 					}
-					toast("That's a no-no :(")
 				});
 		}
 

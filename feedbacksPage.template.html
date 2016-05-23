@@ -4,7 +4,7 @@
 	</div>
 
 
-	<md-content flex ng-cloak layout="column" class="" style="overflow-x:hidden !important" ng-cloak>
+	<md-content flex ng-cloak layout="column" class="md-padding" style="overflow-x:hidden !important" ng-cloak>
 
 		<div ng-show="!feedbacks.list.length" flex="none" class="md-padding" ng-cloak>
 			<strong>Nenhuma avaliação pendente.</strong> Quando você receber nossos produtos você poderá avaliá-los aqui. É muito importante que você tenha experimentado cada cerveja,
@@ -24,22 +24,38 @@
 					  />
 				</div>
 			</div>
-			<div layout="column" class="">
-				<md-slider md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-init="feedback.object.float=1" ng-change="feedbacks.touched = true;feedback.object.touched = true"></md-slider>
-				<div flex layout="row" layout-align="space-between start">
-					<div flex="none" class="md-caption">1</div>
-					<div flex="none" class="md-caption">2</div>
-					<div flex="none" class="md-caption">3</div>
-					<div flex="none" class="md-caption">4</div>
-					<div flex="none" class="md-caption">5</div>
-				</div>
-				<div flex layout="row" layout-align="space-between start">
-					<div flex="none" class="md-caption">Não Gostei</div>
-					<div flex="none" class="md-caption">Adorei</div>
-				</div>
 
 
-			</div>
+
+      <div layout="row" style="width:100%">
+        <div flex="20" style="margin-top:3px">
+          <md-button class="md-icon-button" ng-click="feedbacks.untouch(feedback.path)">
+            <md-icon md-svg-icon="imgs/close.svg" class="svg-black" style=""></md-icon>
+          </md-button>
+        </div>
+
+  			<div flex layout="column" style="margin:0px 16px 8px 8px">
+  				<md-slider md-discrete ng-model="feedback.object.float" step="1" min="1" max="5" aria-label="rating" ng-init="feedback.object.float=0" ng-change="feedbacks.touch(feedback.path)"></md-slider>
+  				<div flex layout="row" layout-align="space-between start">
+  					<div flex="none" class="md-caption">1</div>
+  					<div flex="none" class="md-caption">2</div>
+  					<div flex="none" class="md-caption">3</div>
+  					<div flex="none" class="md-caption">4</div>
+  					<div flex="none" class="md-caption">5</div>
+  				</div>
+  				<div flex layout="row" layout-align="space-between center" style="width:100%">
+  					<div flex="none" class="md-caption">Não Gostei</div>
+  					<div flex="none" class="md-caption">Adorei</div>
+  				</div>
+  			</div>
+
+      </div>
+
+
+
+
+
+
 		</md-card>
 
 	</md-content>

@@ -20,10 +20,6 @@ html, body, .app {
 	tap-highlight-color: rgba(0,0,0,0);
 }
 
-md-toast {
-	z-index: 9999 !important;
-}
-
 .md-button {
 	border-radius: 0 !important;
 }
@@ -139,41 +135,39 @@ input.ng-touched.ng-invalid {
 
 
 .cart {
-	padding: 0 0em 0em 0.5em;
+	padding: 0;
 	margin: 0;
 	height: 3em;
 	width: 100%;
-	font-size: 0.9em;
-	font-weight: 400;
+	font-size: 0.8em;
+	font-weight: 300;
 }
 
 
 
 md-icon.small-icon {
-	height: 1em;
-	width: 1em;
-	margin-top: -0.1em;
-	padding-right: 0;
+    height: 1em;
+    width: 1em;
+    margin-top: -0.25em;
+    padding-right: 0.1em;
 }
 
 
 .cart.opened {
 	background-color: #F4F2EF;
 	color: black;
-	border-top: 1px solid #d1cfcd;
 }
 
 .cart.closed {
 	background-color: #26BD49;
 	color: white;
-	border-top: 1px solid #1d8f37;
 }
 
 .cart.closed > div > md-icon > svg {
-	fill: #ffffff;
+	fill: #ffffff !important;
 }
 .cart.opened > div > md-icon > svg {
-	fill: #000000;
+	fill: #000000 !important;
 }
 
 .carting-go {
@@ -189,7 +183,7 @@ md-icon.small-icon {
 }
 
 .cart.closed > .carting-go > md-icon > svg {
-	fill: #ffffff;
+	fill: #FFFFFF;
 }
 
 .cart.opened > .carting-go > md-icon > svg {
@@ -204,15 +198,71 @@ md-icon.small-icon {
 }
 
 
+
+
+.products {
+	padding: 0;
+	margin: 0;
+	height: 3em;
+	font-size: 0.8em;
+	font-weight: 300;
+}
+
+.products.opened {
+	background-color: #F4F2EF;
+	color: black;
+}
+
+.products.closed {
+	background-color: rgb(0, 144, 33);
+	color: white;
+}
+
+.products.cartopen {
+	background-color: #F4F2EF;
+	color: black;
+}
+
+
+.products.closed > div > md-icon > svg {
+	fill: #ffffff !important;
+}
+
+.products.cartopen > div > center > md-icon > svg {
+    fill: #000000 !important;
+}
+
+.products.opened > div > md-icon > svg {
+	fill: #000000 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .full-button {
 	width: 100%;
 	font-size: 14px !important;
 	/*height: 3em;*/
 }
 
-div > md-icon {
-	padding: 8px
-}
 
 .md-list-item-inner > md-icon {
 	height: 1em;
@@ -226,35 +276,45 @@ div > md-icon {
 
 
 .svg-black > svg {
-	fill: #000000 !important;
+	fill: #000000;
 }
 
 .svg-lightgrey > svg {
-	fill: #CCCCCC !important;
+	fill: #CCCCCC;
 }
 
 .svg-white > svg {
-	fill: #FFFFFF !important;
+	fill: #FFFFFF;
 }
 
 .svg-blue > svg {
-	fill: #0080FF !important;
+	fill: #0080FF;
 }
 
 .svg-green > svg {
-	fill: #26BD49 !important;
+	fill: #26BD49;
 }
 
 .svg-red > svg {
-	fill: #FF0000 !important;
+	fill: #FF0000;
 }
 
 
 .svg-lightred > svg {
-	fill: #ff9999 !important;
+	fill: #ff9999;
 }
 
+.red {
+    color: red;
+}
 
+.green {
+    color: #26BD49;
+}
+
+.black {
+    color: black;
+}
 
 
 .md-icon-button {

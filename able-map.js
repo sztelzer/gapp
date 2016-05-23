@@ -173,6 +173,7 @@
 		}
 
 		function setCartAddress() {
+            $rootScope.place_verified = true
 			$rootScope.updateDistance()
 			// $rootScope.updateCart()
 			$state.go('storePage.offerPage')

@@ -9,13 +9,14 @@
 
   <div flex="none" style="margin-top:8px"></div>
   <div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end" ng-click="app.showSingleFAQ('22')">
-    <span><md-icon md-svg-icon="imgs/ic_https_black_24px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais<md-icon md-svg-icon="imgs/ic_help_circle_black_48px.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>
+    <span><md-icon md-svg-icon="imgs/https.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais<md-icon md-svg-icon="imgs/info.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>
   </div>
   <md-divider></md-divider>
+  <div flex="none" style="height:2em;"></div>
 
 
 
-  <div plastics-element>
+  <div flex="none" plastics-element>
     <div ng-hide="app.auth.user.document">
       <md-card flex="none" class="card-full md-padding background-white no-shadow" style="position:relative">
         <div flex="none">
@@ -54,7 +55,7 @@
 
       <!-- CARDS -->
       <div flex="none" class="md-padding" ng-cloak>
-        <strong>Cartões de Crédito Salvos</strong>
+        <strong>Cartões de Crédito</strong>
         <!-- <div class="md-caption" ng-show="plastics.plastics.length">Estes são seus cartões salvos. Eles estão seguros</div> -->
         <div class="md-caption" ng-hide="plastics.plastics.length">Você não possui nenhum cartão salvo.</div>
       </div>
@@ -83,12 +84,11 @@
           </div>
         </md-card>
       </div>
-      <md-divider></md-divider>
 
 
 
       <!-- NEW CARD -->
-      <md-card flex="none" class="card-full card-credit md-padding background-white no-shadow" style="position:relative">
+      <md-card flex="none" class="card-full card-credit md-padding background-white no-shadow" style="position:relative;background-color:white;margin:0!important">
         <div flex="none" ng-cloak>
           <strong>Adicionar Cartão</strong>
           <div class="md-caption">Aceitamos cartões de crédito Visa e Mastercard.</div>
@@ -117,8 +117,8 @@
           <md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
         </div>
       </md-card>
-      <div flex="none" layout="row">
-        <md-button class="md-raised md-accent full-button" ng-click="plastics.save()" ng-disabled="plasticForm.$invalid || plastics.sending">Salvar Cartão</md-button>
+      <div flex="none" layout="row" style="background-color:white;margin:0!important">
+        <md-button class="md-raised md-accent full-button" ng-click="plastics.save()" ng-disabled="plasticForm.$invalid || plastics.sending">Adicionar Cartão</md-button>
       </div>
 
     </div>
@@ -127,34 +127,45 @@
 
 
   <!-- VOUCHERS -->
-  <div vouchers-element>
-    <div ng-show="app.auth.user.document">
-      <md-divider></md-divider>
+  <md-divider></md-divider>
+  <div flex="none" style="height:2em;"></div>
+
+  <div flex="none" vouchers-element>
+    <div flex="none" ng-show="app.auth.user.document">
       <div flex="none" class="md-padding" ng-cloak>
         <strong>Cupons</strong>
         <div class="md-caption" ng-hide="vouchers.vouchers.length">Você não possui nenhum coupon salvo.</div>
       </div>
 
-      <div ng-repeat="voucher in vouchers.vouchers track by voucher.path">
-        <md-card flex="none" layout="row" class="card-full md-padding no-shadow" style="margin-top:0px;position:relative;margin-bottom:0px !important">
-          <div flex layout="column" layout-align="center start" class="md-caption">
-            <span>
-              <md-icon md-svg-icon="imgs/ic_whatshot_black_48px.svg" ng-class="voucher.errors.length ? 'svg-lightgrey' : 'svg-red'" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>
-              <span ng-class="voucher.errors.length ? 'voucher-bad' : 'voucher-good'">{{voucher.object.description}}</span><br/>
-              <span ng-show="voucher.errors[0].reference=='burn_not_started'">
-                <md-icon  md-svg-icon="imgs/ic_alarm_black_48px.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>
-                Início: {{voucher.object.start | date : 'dd/MM/yyyy'}}
-              </span>
-            </span>
-            <span ng-show="voucher.object.value_available>0" class="md-caption">{{voucher.object.value_available}}</span>
+      <div ng-repeat="voucher in vouchers.vouchers track by voucher.path" ng-if="!voucher.object.burns.burnt || voucher.object.burns.before_start">
+        <md-card flex="none" layout="column" class="card-full md-padding no-shadow" style="margin-top:0px;position:relative;margin-bottom:0px !important">
+          <div flex layout="row" layout-align="start center">
+            <div flex="none">
+              <md-icon flex="none" md-svg-icon="imgs/whatshot.svg" ng-class="voucher.object.burns.burnt ? 'svg-lightgrey' : 'svg-red'" style="height: 1.5em;position:relative;top:0em;padding:0"></md-icon>
+            </div>
+            <div flex class="md-caption" ng-class="voucher.object.burns.burnt ? 'voucher-bad' : 'voucher-good'">
+              {{voucher.object.description}}
+            </div>
+            <div flex="none">
+              <md-button flex="none" class="card-action" ng-class="vouchers.active == voucher ? '' : 'md-accent'" ng-click="vouchers.activate(voucher)" ng-disable="vouchers.active == voucher" ng-show="!voucher.object.burns.burnt">
+                {{vouchers.active == voucher ? "Em Uso" : "Usar"}}
+              </md-button>
+            </div>
+          </div>
+
+          <div flex layout="row" layout-align="start center" ng-show="voucher.object.burns.before_start">
+            <md-icon flex="none" md-svg-icon="imgs/alarm.svg" class="svg-green" style="height: 1em;position:relative;top:0em;padding:0"></md-icon>
+          <div flex class="md-caption">Início: {{voucher.object.start | date : 'dd/MM/yyyy'}}</div>
+          </div>
+          <!-- <span ng-show="voucher.object.value_available > 0" class="md-caption">Valor disponível: {{voucher.object.value_available | currency}}</span> -->
+
           </div>
         </md-card>
       </div>
 
       <!-- NEW VOUCHER -->
-      <md-divider></md-divider>
 
-      <md-card flex="none" class="card-full md-padding no-shadow" style="position:relative">
+      <md-card flex="none" class="card-full md-padding no-shadow" style="position:relative;background-color:white;margin:0!important">
         <div flex="none" ng-cloak>
           <strong>Adicionar Cupom</strong>
           <div class="md-caption">Garanta promoções especiais.</div>
@@ -174,14 +185,16 @@
           <md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
         </div>
       </md-card>
-      <div flex="none" layout="row">
-        <md-button class="md-raised md-accent full-button" ng-click="vouchers.save()" ng-disabled="voucherForm.$invalid || vouchers.sending">Salvar Cupom</md-button>
+      <div flex="none" layout="row" style="background-color:white;margin:0!important">
+        <md-button class="md-raised md-accent full-button" ng-click="vouchers.save()" ng-disabled="voucherForm.$invalid || vouchers.sending">Adicionar Cupom</md-button>
       </div>
+      <md-divider></md-divider>
     </div>
     <!-- END HIDE ELEMENT -->
 
 
   </div>
+
   <!-- END VOUCHERS ELEMENT -->
 
 

@@ -1,7 +1,6 @@
-<div flex="none" ng-show="$root.not_attending" class="md-padding md-caption" style="width:100%;background-color:red;color:white;" ng-click="app.showSingleFAQ('23')">
-	<center>Infelizmente não entregamos neste horário. :(<br/>
-    {{$root.next_day}} ({{$root.next_weekday}}) atenderemos das {{$root.next_start | minutesToTime}} às {{$root.next_end | minutesToTime}}.<md-icon md-svg-icon="imgs/ic_help_circle_black_48px.svg" class="svg-lightred" style="height:1.5em;position:relative;top:-0.15em;"></md-icon>
-  </center>
+<div flex="none" layout="column" layout-align="center center" ng-show="$root.not_attending" class="md-padding md-caption" style="width:100%;background-color:red;color:white;" ng-click="app.showSingleFAQ('23')">
+	<span>Infelizmente não entregamos neste horário :( Saiba mais <md-icon md-svg-icon="imgs/info.svg" class="svg-lightred" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>
+  <span ng-cloak>{{$root.next_day}} ({{$root.next_weekday}}) atenderemos das {{$root.next_start | minutesToTime}} às {{$root.next_end | minutesToTime}}.</span>
 </div>
 
 <md-content offer-element flex ng-cloak>
@@ -84,73 +83,99 @@
 
 
 
+<div flex='none' layout="column" layout-align='start center' style="width:100%;position:relative;box-shadow: 0px 0px 20px 0px rgba(109, 96, 92, 0.54);" ng-show="cart.quantity>0">
 
-
-<div flex='none' layout="column" layout-align='start center' style="width:100%;position:relative" ng-show="cart.quantity>0">
 	<div layout="row" ng-show="cart.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
 
-	<a flex='none' layout="row" class="cart" layout-align="space-between center" ng-click="cart.open = !cart.open"
-	ng-class="cart.open?'opened':'closed'"
-	md-ink-ripple="cart.open?'#000000':'#FFFFFF'"
-	style="position:relative"
-	ng-cloak>
-		<div><md-icon md-svg-icon="imgs/ic_done_white_48px.svg" class="small-icon"></md-icon> {{cart.quantity}}</div>
+	<div flex="none" layout="row" style="width:100%;position:relative;">
+    <a flex="20" layout="row" layout-align="start center"
+    ng-click="cart.productsOpen = !cart.productsOpen"
+    class="products"
+    ng-class="cart.productsOpen ? 'opened' : (cart.open ? 'cartopen' : 'closed') "
+  	md-ink-ripple="cart.productsOpen?'#000000':'#FFFFFF'"
+  	style="position:relative;border-right:1px solid #26BD49">
+      <div flex></div>
+  		<div flex="none"><md-icon md-svg-icon="imgs/receipt.svg" class="small-icon"></md-icon></div>
+      <div flex="none" ng-show="$root.attended" style="font-weight:500">{{cart.quantity}}</div>
+      <div flex></div>
+      <div flex="none" style="width:3em">
+        <center>
+          <md-icon ng-hide="cart.productsOpen" md-svg-icon="imgs/arrow_up.svg" class="svg-white" ng-cloak></md-icon>
+          <md-icon ng-show="cart.productsOpen" md-svg-icon="imgs/close.svg" class="svg-green" ng-cloak></md-icon>
+        </center>
+      </div>
+    </a>
 
-		<div ng-show="$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_local_shipping_white_48px.svg" class="small-icon"></md-icon> {{cart.freight | currency}}</div>
-		<div ng-show="!$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_local_shipping_white_48px.svg" class="small-icon"></md-icon> --</div>
+    <a flex="80" layout="row"
+    ng-click="cart.open = !cart.open"
+    class="cart" layout-align="start center"
+    ng-class="cart.open?'opened':'closed'"
+  	md-ink-ripple="cart.open?'#000000':'#FFFFFF'"
+  	style="position:relative">
+      <div flex></div>
+      <div flex="none"><md-icon md-svg-icon="imgs/bike.svg" class="small-icon svg-white"></md-icon></div>
+      <div flex="none" ng-show="$root.attended">{{cart.freight | currency}}</div>
+      <div flex="none" ng-hide="$root.attended">--</div>
+      <div flex></div>
+  		<div flex="none"><md-icon md-svg-icon="imgs/schedule.svg" class="small-icon"></md-icon></div>
+      <div flex="none" ng-show="$root.attended">{{cart.estimated | secondsToMinutes}}min</div>
+      <div flex="none" ng-hide="$root.attended">--</div>
+      <div flex></div>
+  		<div flex="none"><md-icon md-svg-icon="imgs/credit_card.svg" class="small-icon"></md-icon></div>
+      <div flex="none"><md-icon md-svg-icon="imgs/whatshot.svg" class="small-icon svg-red" ng-show="cart.discount"></md-icon></div>
+      <div flex="none" ng-show="$root.attended" style="font-weight:500">{{cart.total | currency}}</div>
+      <div flex="none" ng-hide="$root.attended">--</div>
+      <div flex></div>
+  		<div flex="none" style="width:3em">
+        <center>
+        	<md-icon ng-hide="cart.open" md-svg-icon="imgs/arrow_right.svg" class="svg-white"></md-icon>
+    			<md-icon ng-show="cart.open" md-svg-icon="imgs/close.svg" class="svg-green"></md-icon>
+        </center>
+  		</div>
+    </a>
+	</div>
 
-		<div ng-show="$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_schedule_white_48px.svg" class="small-icon"></md-icon> {{cart.estimated | secondsToMinutes}}min</div>
-		<div ng-show="!$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_schedule_white_48px.svg" class="small-icon"></md-icon> --</div>
+  <div flex='none' class="productList md-padding md-caption" ng-show="cart.productsOpen" ng-class="cart.productsOpen?'products-opened':'products-closed'" style="width:100%;background-color:white" layout="column">
+    <div layout="row" layout-align="space-between center" style="width:100%" ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.sku.object.recipe.object.taste.drinkability':1 track by promoted.path" ng-if="promoted.quantity">
+      <div>{{promoted.quantity}}x
+      {{promoted.object.sku.object.recipe.object.name}}
+      {{promoted.object.sku.object.volume}}ml</div>
+      <div>{{promoted.object.sku.object.recipe.object.taste.style}}</div>
+    </div>
+  </div>
 
-		<div ng-show="$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="small-icon"></md-icon> {{cart.total | currency}}</div>
-		<div ng-show="!$root.attended" ng-cloak><md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="small-icon"></md-icon> --</div>
+	<div flex='none' class="checkout" ng-show="cart.open" ng-class="cart.open?'opened':'closed'" style="width:100%;" layout="column" ng-cloak>
+		<a class="" style="width:100%;min-height:3em;padding:8px 8px" layout="row" layout-align="start center" ng-click="$state.go('storePage.mapPage')">
+			<div flex="none"><md-icon md-svg-icon="imgs/place.svg" class="svg-black" style="margin-right:8px"></md-icon></div>
+			<div flex ng-class="$root.attended?'attended':'not_attended'">
+				<span ng-hide="$root.place.description" style="color:red">Nenhum endereço informado.</span>
+				<span ng-bind="$root.place.description" ng-class="$root.place_verified ? 'black' : 'red' "></span>
+				<span ng-show="$root.place.complement"> - <span ng-bind="$root.place.complement"></span></span>
+				<span ng-show="!$root.attended" style="color:red"><br/>Não atendemos neste endereço :(</span>
+			</div>
+			<div flex="none">
+				<md-icon md-svg-icon="imgs/edit.svg" class="svg-black"></md-icon>
+			</div>
+		</a>
 
-		<div>
-			<md-icon ng-hide="cart.open" md-svg-icon="imgs/ic_arrow_forward_black_48px.svg" class="svg-white"></md-icon>
-			<md-icon ng-show="cart.open" md-svg-icon="imgs/ic_close_white_48px.svg" class="svg-green"></md-icon>
-		</div>
-	</a>
+		<a class="" style="width:100%;height:3em;padding:0 8px" layout="row" layout-align="start center" ng-click="$state.go('storePage.plasticsPage')">
+			<div flex="none">
+				<md-icon md-svg-icon="imgs/credit_card.svg" class="svg-black"  style="margin-right:8px"></md-icon>
+			</div>
+			<div flex="none" style="margin-right:8px">
+				<span ng-hide="$root.plastic.object.type" style="color:red">Nenhum cartão cadastrado.</span>
+				<span ng-show="$root.plastic.object.type">{{cart.plastic.object.type}} {{cart.plastic.object.mask}} {{cart.plastic.object.expiry}}</span>
+			</div>
+      <div flex>
+				<span ng-show="!cart.voucher && $root.vouchers.length" style="color:red">Selecione um cupom.</span>
+				<span ng-show="cart.voucher" style="color:green">Desconto: {{cart.discount | currency}}</span>
+			</div>
+			<div flex="none"><md-icon md-svg-icon="imgs/edit.svg" class="svg-black"></md-icon></div>
+		</a>
 
-
-	<div flex='none' class="checkout" ng-show="cart.open" ng-class="cart.open?'opened':'closed'" style="width:100%;height:10em" layout="column" ng-cloak>
-		<div flex></div>
-		<div flex="none" layout="column" layout-align="end center">
-			<a class="" style="width:100%" layout="row" layout-align="start center" ng-click="$state.go('storePage.mapPage')">
-				<div flex="none">
-					<md-icon md-svg-icon="imgs/ic_place_black_48px.svg" class="svg-black"></md-icon>
-				</div>
-				<div flex ng-class="$root.attended?'attended':'not_attended'">
-					<span ng-hide="$root.place.description" style="color:red">Nenhum endereço.</span>
-					<span ng-bind="$root.place.description"></span>
-					<span ng-show="$root.place.complement"> - <span ng-bind="$root.place.complement"></span></span>
-					<span ng-show="!$root.attended" style="color:red"><br/>Não atendemos neste endereço :(</span>
-				</div>
-				<div flex="none">
-					<md-button class="md-icon-button" aria-label="Editar Endereço" >
-						<md-icon md-svg-icon="imgs/ic_edit_black_48px.svg" class="svg-black"></md-icon>
-					</md-button>
-				</div>
-			</a>
-
-			<a class="" style="width:100%"  layout="row" layout-align="start center" ng-click="$state.go('storePage.plasticsPage')">
-				<div flex="none">
-					<md-icon md-svg-icon="imgs/ic_credit_card_white_48px.svg" class="svg-black"></md-icon>
-				</div>
-				<div flex>
-					<span ng-hide="$root.plastic.object.type" style="color:red">Nenhum cartão cadastrado.</span>
-					<span ng-show="$root.plastic.object.type">{{cart.plastic.object.type}} {{cart.plastic.object.mask}} {{cart.plastic.object.expiry}}</span>
-				</div>
-				<div flex="none">
-					<md-button class="md-icon-button" aria-label="Editar Cartão">
-						<md-icon md-svg-icon="imgs/ic_edit_black_48px.svg" class="svg-black"></md-icon>
-					</md-button>
-				</div>
-			</a>
-		</div>
-		<div flex></div>
-		<div flex="none" layout="row">
+		<div flex="none" layout="row" style="padding-top:8px">
 			<md-button class="md-raised md-accent full-button" style="margin-top:0px" ng-click="cart.send()" ng-disabled="!cart.plastic || !$root.plastic.path || !cart.place || cart.sending || $root.not_attending || !$root.attended">Enviar Pedido</md-button>
 		</div>
 	</div>

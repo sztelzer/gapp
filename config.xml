@@ -16,6 +16,7 @@
   </plugin>
   <plugin name="cordova-plugin-badge"/>
   <plugin name="cordova-plugin-console"/>
+  <plugin name="cordova-plugin-dialogs"/>
 
 
   <preference name="DisallowOverscroll" value="true"/>

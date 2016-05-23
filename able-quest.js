@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function questController($http, auth, $scope, $state, $mdToast, $location, $anchorScroll, $timeout, $element) {
+	function questController($http, auth, $scope, $state, $location, $anchorScroll, $timeout, $element) {
 		var vm = this;
 		vm.payload = {};
 		vm.user = {};
@@ -66,9 +66,21 @@
 				function(reject) {
 					vm.sending = false
 					if(reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email"){
-						toast("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")
+                        if(navigator && navigator.notification){
+                            navigator.notification.alert("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.", false, 'Able', 'Ok')
+                            return
+                        } else {
+                            window.alert("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")
+                            return
+                        }
 					} else {
-						toast("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.")
+                        if(navigator && navigator.notification){
+                            navigator.notification.alert("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.", false, 'Able', 'Ok')
+                            return
+                        } else {
+                            window.alert("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.")
+                            return
+                        }
 					}
 				}
 			);
@@ -125,11 +137,6 @@
 		// 		);
 		// 	});
 		// }
-
-		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
-
-
-
 
 
 	} // end questController

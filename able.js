@@ -17,10 +17,10 @@
 
 	.value('config', {
         //heartbend
-		api: 'http://127.0.0.1:8081',
-		company_path: '/companies/5066549580791808',
-		// api: 'https://api-dot-heartbend.appspot.com',
-		// company_path: '/companies/5654313976201216',
+		// api: 'http://127.0.0.1:8081',
+		// company_path: '/companies/5066549580791808',
+		api: 'https://api-dot-heartbend.appspot.com',
+		company_path: '/companies/5654313976201216',
 		node_function: 'productConsumerDispatch',
 		offers_count: 6,
 
@@ -239,7 +239,6 @@
 	})
 
 	.run(function ($rootScope, $state, auth, $window, $interval, config, $mdDialog) {
-
 		$rootScope.platform = Platform
 		$rootScope.geocoder = new google.maps.Geocoder()
 		$rootScope.autocomplete = new google.maps.places.AutocompleteService()
@@ -304,74 +303,46 @@
 			if($rootScope.offer && $rootScope.offer.object){
                 var distance
                 var estimated
-                // if($rootScope.attended){
-                    var distanceRequest = {
-                        destinations:[{'lat': $rootScope.latitude, 'lng': $rootScope.longitude}],
-                        origins:[{'lat': $rootScope.offer.object.node_latitude, 'lng': $rootScope.offer.object.node_longitude}],
-                        travelMode:google.maps.TravelMode.DRIVING
+                var distanceRequest = {
+                    destinations:[{'lat': $rootScope.latitude, 'lng': $rootScope.longitude}],
+                    origins:[{'lat': $rootScope.offer.object.node_latitude, 'lng': $rootScope.offer.object.node_longitude}],
+                    travelMode:google.maps.TravelMode.DRIVING
+                }
+                $rootScope.distancer.getDistanceMatrix(distanceRequest, function(response, status){
+                    if (status !== google.maps.DistanceMatrixStatus.OK) {
+                        var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
+                        distance = linear * 1.5
+                        estimated = +((distance * 0.33) + 1200).toFixed(2)
+                    } else {
+                        distance = +(response.rows[0].elements[0].distance.value).toFixed(2)
+                        estimated = +(+(response.rows[0].elements[0].duration.value) + 1200).toFixed(2)
                     }
-                    console.log('getting distance matrix')
-                    $rootScope.distancer.getDistanceMatrix(distanceRequest, function(response, status){
-                        if (status !== google.maps.DistanceMatrixStatus.OK) {
-                            console.log('couldnt get matrix')
-                            var linear = geolib.getDistance({latitude:$rootScope.latitude, longitude:$rootScope.longitude},{latitude:$rootScope.offer.object.node_latitude, longitude:$rootScope.offer.object.node_longitude})
-                            distance = linear * 1.5
-                            estimated = +((distance * 0.33) + 1200).toFixed(2)
-                        } else {
-                            console.log('got matrix')
-                            distance = +(response.rows[0].elements[0].distance.value).toFixed(2)
-                            estimated = +(+(response.rows[0].elements[0].duration.value) + 1200).toFixed(2)
-                        }
-                        $rootScope.attended = distance < $rootScope.offer.object.node_max_distance ? true : false
-                        console.log($rootScope.attended)
-                        $rootScope.estimated = +(estimated).toFixed(2)
-                        console.log($rootScope.estimated)
-                        $rootScope.distance = distance
-                        console.log($rootScope.distance)
-                        //$rootScope.updateFreight()
+                    if(!distance){distance=1}
+                    $rootScope.attended = distance < $rootScope.offer.object.node_max_distance ? true : false
+                    $rootScope.estimated = +(estimated).toFixed(2)
+                    $rootScope.distance = distance
 
-
-                        $rootScope.$digest()
-                    });
-                // }
+                    $rootScope.$digest()
+                });
 			}
 		}
         $rootScope.updateFreight = function(){
-            console.log('updatingFreight')
             if($rootScope.distance == 0){
-                console.log('must get distance')
                 $rootScope.updateDistance()
             } else {
-                console.log('already have distance')
                 var distance = $rootScope.distance
                 if(distance > 11000){
-                    console.log('distance is greater. using greater calculation and applying margin')
-
-                    var margemTotal = $rootScope.products_value ? $rootScope.products_value * 0.15 : 0
-                    console.log('margem total: '+margemTotal)
-
-                    var margemDisp = margemTotal * 0.5
-                    console.log('margem disponível: '+margemDisp)
-
-                    var freteIncluso = $rootScope.products_value ? $rootScope.products_value * 0.15 : 0
-                    console.log('frete incluso: '+freteIncluso)
-
-                    var freteTotal = (distance/1000*1.862)+7.90
-                    console.log('frete total: '+freteTotal)
-
-                    var freteFaltante = freteTotal-freteIncluso
-                    console.log('frete faltante: '+freteFaltante)
-
-                    var adicionalFaltante = freteFaltante - margemDisp
-                    if(adicionalFaltante <= 0){adicionalFaltante = 0}
-
-                    $rootScope.freight = adicionalFaltante
-                    console.log($rootScope.freight)
+                    var contribution = $rootScope.products_value ? $rootScope.products_value * 0.20 : 0
+                    var full_freight = (distance/1000*1.862)+7.90
+                    var freight = full_freight - contribution
+                    if(freight <= 0){freight = 0}
+                    $rootScope.freight = +(freight).toFixed(2)
                 } else {
-                    console.log('distance is lesser. not using margin')
-                    var contribution = $rootScope.products_value ? $rootScope.products_value * 0.15 : 0
-                    $rootScope.freight = 22.90-contribution
-                    console.log($rootScope.freight)
+                    var contribution = $rootScope.products_value ? $rootScope.products_value * 0.20 : 0
+                    var full_freight = 22.90
+                    var freight = full_freight - contribution
+                    if(freight <= 0){freight = 0}
+                    $rootScope.freight = +(freight).toFixed(2)
                 }
 
             }
@@ -380,7 +351,7 @@
 
 		$rootScope.workingTime = function(){
 			if($rootScope.offer){
-                var weekdays = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]
+                var weekdays = ["Domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "Sábado"]
 				var times = $rootScope.offer.object.node_resource.object.times
 				var start
 				var end
@@ -407,6 +378,7 @@
 				}
 			}
 		}
+
 
 		$interval($rootScope.workingTime, 60 * 1000); //60 seconds * 1000 miliseconds
 
@@ -463,11 +435,9 @@
 		vm.auth = auth
 		vm.state = $state
         vm.badge = 0
-        vm.user = {}
-        // vm.showSingleFAQs = function(){console.log('hit')}
 
-
-        auth.getUser()
+        console.log(auth)
+        if(auth.id != ""){auth.getUser()}
 
 		if(Keyboard && device.platform == 'iOS'){
 			window.addEventListener('native.keyboardshow', keyboardWindowResize)
@@ -481,6 +451,29 @@
 			document.body.setAttribute("style","height: "+h+"px !important")
 		}
 
+        if(PushNotification){
+            Push = PushNotification.init({
+              android: {
+                  senderID: "828347553479"
+              },
+              ios: {
+                  alert: "true",
+                  badge: "true",
+                  sound: "true"
+              }
+            })
+
+            Push.on('registration', function(data) {
+                HelpShift.registerDeviceToken(data.registrationId)
+                auth.push = data.registrationId
+                getNotifications()
+            });
+            Push.on('notification', function(data) {
+                HelpShift.handleRemoteNotification(data.additionalData)
+            });
+        }
+
+
 
         //init HelpShift
         if(HelpShift && device.platform){
@@ -493,8 +486,6 @@
             HelpShift.install(config.helpshift_api_key, config.helpshift_domain, config.helpshift_app_id)
             HelpShift.registerSessionDelegates(sessionStart,sessionEnd)
             HelpShift.registerConversationDelegates(newConversationStarted, userRepliedToConversation, userCompletedCustomerSatisfactionSurvey, didReceiveNotification, didReceiveInAppNotificationWithMessageCount, displayAttachmentFile)
-
-//          window.HelpshiftPlugin.setNameAndEmail("John Doe", "john.doe@johndoe.com");
 
             // vm.showConversation = HelpShift.showConversation
             vm.showFAQs = function(){
@@ -553,17 +544,6 @@
             $rootScope.$digest()
         }
         function displayAttachmentFile(message){
-        }
-
-        if(Push){
-            Push.on('registration', function(data) {
-                HelpShift.registerDeviceToken(data.registrationId)
-                getNotifications()
-                // $rootScope.$digest()
-            });
-            Push.on('notification', function(data) {
-                HelpShift.handleRemoteNotification(data.additionalData)
-            });
         }
 
 

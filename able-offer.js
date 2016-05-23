@@ -15,7 +15,7 @@
 		return directive
 	}
 
-	function offerController($rootScope, $localStorage, config, auth, $http, $mdToast) {
+	function offerController($rootScope, $localStorage, config, auth, $http) {
 		var vm = this
 		vm.loading = true;
 
@@ -32,10 +32,11 @@
 
 		function checkOffer() {
 			// check if have some offer loaded.
-			var storedOffer = $localStorage.offer;
-			if (storedOffer == undefined || storedOffer == '' || storedOffer == {}) {
-				return false;
-			}
+            if(typeof $localStorage.offer == "undefined") {
+    			return false
+    		}
+
+            var storedOffer = $localStorage.offer;
 
 			// check if is too old
 			var now = new Date();
@@ -192,10 +193,6 @@
 			)
 		} // end updateOffer()
 		$rootScope.updateOfferStocks = updateOfferStocks
-
-		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
-
-
 
 
 	} // end controller

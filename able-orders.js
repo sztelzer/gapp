@@ -46,7 +46,11 @@
 				}
 
 				if(response.status == 403){
-					toast(response.data.errors[0].error)
+                    if(navigator && navigator.notification){
+						navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+					} else {
+						window.alert(response.data.errors[0].error)
+					}
 					return
 				}
 

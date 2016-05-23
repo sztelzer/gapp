@@ -77,6 +77,7 @@
 			Platform = "Browser"
 			Keyboard = false
       HelpShift = false
+      PushNotification = false
       Push = false
       Badge = false
 			angular.bootstrap(document, ['able'])
@@ -88,19 +89,12 @@
 			// Keyboard.disableScrollingInShrinkView(true);
 			// Keyboard.automaticScrollToTopOnHiding = true;
 
+
 			Platform = device.platform
 			Keyboard = cordova.plugins.Keyboard
       HelpShift = window.HelpshiftPlugin
-      Push = PushNotification.init({
-        android: {
-            senderID: "828347553479"
-        },
-        ios: {
-            alert: "true",
-            badge: "true",
-            sound: "true"
-        }
-      });
+      // PushNotification = PushNotification.init()...
+      Push = false
       Badge = cordova.plugins.notification.badge
 
 

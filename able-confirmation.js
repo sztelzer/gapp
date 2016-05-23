@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function confirmationController($rootScope, $state, auth, config, $http, $mdToast) {
+	function confirmationController($rootScope, $state, auth, config, $http) {
 		var vm = this;
 		vm.last = $rootScope.last
 		vm.phone = ''
@@ -43,7 +43,11 @@
 					}
 
 					if(response.status == 403){
-						toast(response.data.errors[0].error)
+                        if(navigator && navigator.notification){
+							navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+						} else {
+							window.alert(response.data.errors[0].error)
+						}
 						return
 					}
 
@@ -83,7 +87,11 @@
 					}
 
 					if(response.status == 403){
-						toast(response.data.errors[0].error)
+                        if(navigator && navigator.notification){
+							navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+						} else {
+							window.alert(response.data.errors[0].error)
+						}
 						return
 					}
 
@@ -97,13 +105,7 @@
 
 				});
 
-
 		}
-
-
-		function toast(msg){$mdToast.show($mdToast.simple().textContent(msg).hideDelay(3000))};
-
-
 
 	} // end controller
 

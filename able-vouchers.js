@@ -16,12 +16,20 @@
 		return directive
 	}
 
-	function vouchersController($localStorage, $scope, auth, $http, config, $q, $mdToast) {
+	function vouchersController($localStorage, $rootScope, $scope, auth, $http, config, $q) {
 		var vm = this
         vm.loading = false
         vm.vouchers = []
         vm.get = get
         vm.save = save
+        vm.activate = activate
+
+        if(typeof $localStorage.voucher == "undefined") {
+			$localStorage.voucher = {}
+		}
+        vm.active = $localStorage.voucher
+		$rootScope.voucher = $localStorage.voucher
+
 
         get()
 		function get(){
@@ -29,21 +37,24 @@
 			$http.get(config.api + '/users/' + auth.id + '/vouchers', req_config)
 			.then(
 			function successCallback(response) {
-                console.log(response)
-
                 for (var key in response.data.resources) {
                     vm.vouchers.push(response.data.resources[key])
                 }
-                console.log(vm.vouchers)
-
-                $localStorage.vouchers = response.data.resources
+                $rootScope.vouchers = response.data.resources
+                if(vm.vouchers.length==1){
+                    activate(vm.vouchers[0])
+                }
+                if(vm.vouchers.length > 1){
+                    for(var k in vm.vouchers){
+                        if(!vm.vouchers[k].object.burns.burnt){
+                            activate(vm.vouchers[k])
+                        }
+                    }
+                }
 				vm.loading = false
 			},
 			function errorCallback(response) {
-                console.log(response)
-				vm.vouchers = $localStorage.vouchers
 				vm.loading = false
-
 				if(response.status == 401 || response.status == 403 || response.status == 404){
 					if(navigator && navigator.notification){
 						navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
@@ -76,18 +87,20 @@
                 function successCallback(response) {
                     console.log(response)
                     vm.vouchers.push(response.data)
-                    $localStorage.vouchers = vm.vouchers
+                    $rootScope.vouchers = vm.vouchers
+                    if(!response.data.object.burns.burnt){
+                        activate(response.data)
+                    }
                     vm.code = ''
                     $scope.voucherForm.$setPristine()
                     $scope.voucherForm.$setUntouched()
                     vm.sending = false
                 },
                 function errorCallback(response) {
-                    vm.sending = false
-                    console.log(response)
                     vm.code = ''
                     $scope.voucherForm.$setPristine()
                     $scope.voucherForm.$setUntouched()
+                    vm.sending = false
 
                     if(response.status == 401){
                         if(navigator && navigator.notification){
@@ -102,15 +115,18 @@
                     if(response.status == 403){
                         var message
                         switch (response.data.errors[0].reference) {
-                            case "voucher_used":
-                                message = "Você já usou este cupom."
-                                break
-                            case "voucher_not_found":
+                            case "not_found":
                                 message = "Este cupom não é válido."
                                 break
-                            case "voucher_expired":
-                                message = "Este cupom expirou."
+                            case "already_installed":
+                                message = "Você já usou este cupom."
+                                break
+                            case "not_authorized":
+                                message = "Você não deveria estar tentando isso."
+                                break
                         }
+
+                        console.log(navigator.notification)
 
                         if(navigator && navigator.notification){
                             navigator.notification.alert(message, false, 'Able', 'Ok')
@@ -136,15 +152,15 @@
             )
 		}
 
+        function activate(voucher){
+            $rootScope.voucher = voucher
+            $localStorage.voucher = voucher
+            vm.active = voucher
+        }
 
 
-		function toast(msg){$mdToast.show(
-			$mdToast.simple()
-			.textContent(msg)
-			.hideDelay(30000)
-			.action('Ok')
-			.theme('default')
-		)};
+
+
 	}
 
 

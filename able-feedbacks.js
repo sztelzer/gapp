@@ -25,6 +25,38 @@
 		vm.send = send
 		vm.clean = clean
 
+
+        vm.touch = touch
+        vm.untouch = untouch
+
+        function touch(path){
+            for (var k in vm.list) {
+                if (vm.list[k].path == path){
+                    vm.list[k].object.touched = true
+                    vm.touched = true
+                }
+            }
+        }
+
+        function untouch(path){
+            var touches = 0
+            for (var k in vm.list) {
+                if (vm.list[k].path == path){
+                    vm.list[k].object.touched = false
+                    vm.list[k].object.float = 0
+                }
+                if (vm.list[k].object.touched) {
+                    touches++
+                }
+            }
+            if (touches > 0) {
+                vm.touched = true
+            } else {
+                vm.touched = false
+            }
+        }
+
+
 		function get(){
 			vm.loading = true
 			var req_config = {headers: {'Authorization': auth.token}}
@@ -47,7 +79,11 @@
 					}
 
 					if(response.status == 403){
-						toast(response.data.errors[0].error)
+                        if(navigator && navigator.notification){
+							navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+						} else {
+							window.alert(response.data.errors[0].error)
+						}
 						return
 					}
 
@@ -92,7 +128,11 @@
 							}
 
 							if(response.status == 403){
-								toast(response.data.errors[0].error)
+                                if(navigator && navigator.notification){
+                                    navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+                                } else {
+                                    window.alert(response.data.errors[0].error)
+                                }
 								return
 							}
 

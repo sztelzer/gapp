@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, $mdToast, $window) {
+	function plasticsController($rootScope, $scope, $localStorage, $state, auth, $http, config, $q, $window) {
 		var vm = this;
 		vm.new = {}
 		vm.plastics = []
@@ -49,7 +49,6 @@
 			function errorCallback(response) {
 				vm.plastics = []
 				vm.loading = false
-				// toast('Não conseguimos carregar seus cartões. Tente novamente.')
 
 				if(response.status == 401){
 					if(navigator && navigator.notification){
@@ -62,7 +61,11 @@
 				}
 
 				if(response.status == 403){
-					toast(response.data.errors[0].error)
+                    if(navigator && navigator.notification){
+						navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+					} else {
+						window.alert(response.data.errors[0].error)
+					}
 					return
 				}
 
@@ -120,7 +123,11 @@
 							}
 
 							if(response.status == 403){
-								toast(response.data.errors[0].error)
+                                if(navigator && navigator.notification){
+									navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+								} else {
+									window.alert('Você precisa se logar novamente.')
+								}
 								return
 							}
 
@@ -132,14 +139,19 @@
 								return
 							}
 
-
-
 						}
 					);
 				},
 				function(rejectedToken){
 					vm.sending = false
-					toast("Este cartão não foi aceito. Verifique os dados.")
+
+                    if(navigator && navigator.notification){
+                        navigator.notification.alert("Este cartão não foi aceito. Verifique os dados.", false, 'Able', 'Ok')
+                    } else {
+                        window.alert("Este cartão não foi aceito. Verifique os dados.")
+                    }
+
+
 				}
 			)
 		}
@@ -172,7 +184,13 @@
 
 				},
 				function(response){
-					toast('Houve um erro ao remover este cartão. Tente novamente.')
+                    if(navigator && navigator.notification){
+                        navigator.notification.alert('Houve um erro ao remover este cartão. Tente novamente.', false, 'Able', 'Ok')
+                        return
+                    } else {
+                        window.alert('Houve um erro ao remover este cartão. Tente novamente.')
+                        return
+                    }
 				}
 			)
 		}
@@ -206,14 +224,6 @@
 			})
 		}
 
-		function toast(msg){$mdToast.show(
-			$mdToast.simple()
-			.textContent(msg)
-			.hideDelay(10000)
-			.action('Ok')
-			.theme('default')
-		)};
-
         function saveDocument(){
             if(Keyboard) {
                 Keyboard.close()
@@ -230,11 +240,6 @@
                 },
                 function(reject) {
                     vm.sendingDocument = false
-                    // if(reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email"){
-                    //     toast("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")
-                    // } else {
-                    //     toast("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.")
-                    // }
                 }
             );
         }

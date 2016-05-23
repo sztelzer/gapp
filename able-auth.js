@@ -17,7 +17,8 @@
 			signin: signin,
 			signout: signout,
             getUser: getUser,
-            patchUser: patchUser
+            patchUser: patchUser,
+            push: ''
 		}
 		return service
 
@@ -50,6 +51,7 @@
 						$localStorage.id = response.data.object.user;
 						service.token = response.data.object.token;
 						$localStorage.token = response.data.object.token;
+                        service.getUser()
 						resolve(response);
 					},
 					function errorCallback(response) {
@@ -63,6 +65,9 @@
 		function signout(){
 			service.token = ''
 			service.id = ''
+            if(Push){
+                Push.unregister(function(){},function(){})
+            }
 			window.localStorage.clear()
 			$window.location.reload()
 		}
@@ -75,6 +80,13 @@
                     .then(
                         function successCallback(response) {
                             service.user = response.data.object
+                            if(HelpShift){
+                                HelpShift.setNameAndEmail(service.user.name, service.user.email);
+                                HelpShift.setUserIdentifier(service.id);
+                            }
+                            if(service.push != '' && service.push != service.user.push_id){
+                                patchUser({push_id:service.push})
+                            }
                             resolve()
                         },
                         function errorCallback(response) {

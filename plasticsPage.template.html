@@ -8,11 +8,25 @@
 </div> -->
 
   <div flex="none" style="margin-top:8px"></div>
-  <div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end" ng-click="app.showSingleFAQ('22')">
+  <div flex="none" class="md-padding md-caption" layout="row" layout-align="center end" ng-click="app.showSingleFAQ('22')">
     <span><md-icon md-svg-icon="imgs/https.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais<md-icon md-svg-icon="imgs/info.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>
   </div>
+
+  <md-divider></md-divider>
+
+  <div flex="none" class="" layout="row" layout-align="start center">
+    <!-- <div flex><md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-black"></md-icon>Voltar à loja.</div> -->
+
+    <md-button class="" ng-click="$state.go('storePage.offerPage')">
+      <md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-black"></md-icon>Voltar à Loja
+    </md-button>
+
+  </div>
+
   <md-divider></md-divider>
   <div flex="none" style="height:2em;"></div>
+
+
 
 
 

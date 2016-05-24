@@ -124,6 +124,10 @@
                             case "not_authorized":
                                 message = "Você não deveria estar tentando isso."
                                 break
+                            case "self_voucher":
+                                message = "Você não pode usar o seu próprio código. Você precisa divulgar para outros ;)"
+                                break
+
                         }
 
                         console.log(navigator.notification)

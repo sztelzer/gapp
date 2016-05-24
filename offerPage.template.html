@@ -170,7 +170,7 @@
 			</div>
       <div flex>
 				<span ng-show="!cart.voucher && $root.vouchers.length" style="color:red">Selecione um cupom.</span>
-				<span ng-show="cart.voucher" style="color:green">Desconto: {{cart.discount | currency}}</span>
+				<span ng-show="cart.voucher && !cart.voucher.burns.burnt" style="color:green">Desconto: {{cart.discount | currency}}</span>
 			</div>
 			<div flex="none"><md-icon md-svg-icon="imgs/edit.svg" class="svg-black"></md-icon></div>
 		</a>

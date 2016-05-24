@@ -160,7 +160,6 @@
 			$localStorage.plastic = plastic
 			$rootScope.plastic = plastic
 			vm.plastic = plastic
-			$state.go('storePage.offerPage')
 		}
 
 		function remove(plastic){

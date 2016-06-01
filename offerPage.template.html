@@ -3,84 +3,95 @@
   <span ng-cloak>{{$root.next_day}} ({{$root.next_weekday}}) atenderemos das {{$root.next_start | minutesToTime}} às {{$root.next_end | minutesToTime}}.</span>
 </div>
 
-<md-content offer-element flex ng-cloak>
 
-	<div flex layout="column">
-		<md-card class="card-full promoted-card no-shadow"
-		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path"
-		ng-controller="promotedController"
-		ng-if="promoted.object.max > 0"
-		ng-cloak
-		>
-			<img class="md-card-image" alt="product image"
-				ng-repeat="content in promoted.object.sku.object.contents"
-				ng-if="content.object.function=='face_image'"
-				loading-src="{{'imgs/placeholder.gif'}}"
-				ng-src="{{content.object.url}}"
-				width="1080"
-				height="1080"
-				style="width:100%;height:auto;min-height:0;image-rendering:-webkit-optimize-contrast !important;image-rendering: pixelated !important;border-radius: 0px;"
-				ng-cloak
-			/>
+  <!-- <div flex="none" layout="row" style="padding-top:8px" ng-show="$root.offer.count">
+    <input ng-model="$root.search">
+  </div> -->
 
-			<div layout="row" style="border-bottom: 1px solid white" ng-cloak>
-				<md-button flex ng-click="promoted.takeOne()" class="promoted-button" aria-label="retirar" ng-cloak>
-				  <md-icon md-svg-icon="imgs/minus.svg" class="svg-black"></md-icon>
-				</md-button>
-				<div flex class="counter">{{promoted.quantity}}</div>
-				<md-button flex ng-click="promoted.putOne()" class="promoted-button" aria-label="adicionar" ng-cloak>
-				  <md-icon md-svg-icon="imgs/plus.svg" class="svg-green"></md-icon>
-				</md-button>
-			</div>
+  <md-content offer-element flex ng-cloak>
 
-			<md-card-content class="promoted-card-content" ng-cloak>
 
-          <div flex layout="row" style="margin-bottom:0px;">
-  					<div flex="none" layout="row" layout-align="start end" class="robot" ng-class="$index < 6 ? 'blue' : ($index > 11 ? 'red' : 'orange')">
-  						<md-icon md-svg-src="imgs/robot.svg" class="robot-icon"></md-icon>
-  						<div flex class="robot-text" ng-if="$index<6">Recomendo.</div>
-  						<div flex class="robot-text" ng-if="$index>=6 && $index<=11">Descubra.</div>
-  						<div flex class="robot-text" ng-if="$index>11">Aventure-se.</div>
-  					</div>
-            <div flex></div>
-            <div flex="none" layout="column" layout-align="end end">
-              <div class="promoted-price">{{promoted.object.price | currency}}</div>
+  	<div flex layout="column">
+  		<md-card class="card-full promoted-card no-shadow"
+  		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 | limitTo:offer.quantity | filter:offerSearch track by promoted.path "
+  		ng-controller="promotedController"
+  		ng-if="promoted.object.max > 0"
+  		ng-cloak
+  		>
+  			<img class="md-card-image" alt="product image"
+  				ng-repeat="content in promoted.object.sku.object.contents"
+  				ng-if="content.object.function=='face_image'"
+  				loading-src="{{'imgs/placeholder.gif'}}"
+  				ng-src="{{content.object.url}}"
+  				width="1080"
+  				height="1080"
+  				style="width:100%;height:auto;min-height:0;image-rendering:-webkit-optimize-contrast !important;image-rendering: pixelated !important;border-radius: 0px;"
+  				ng-cloak
+  			/>
+
+  			<div layout="row" style="border-bottom: 1px solid white" ng-cloak>
+  				<md-button flex ng-click="promoted.takeOne()" class="promoted-button" aria-label="retirar" ng-cloak>
+  				  <md-icon md-svg-icon="imgs/minus.svg" class="svg-black"></md-icon>
+  				</md-button>
+  				<div flex class="counter">{{promoted.quantity}}</div>
+  				<md-button flex ng-click="promoted.putOne()" class="promoted-button" aria-label="adicionar" ng-cloak>
+  				  <md-icon md-svg-icon="imgs/plus.svg" class="svg-green"></md-icon>
+  				</md-button>
+  			</div>
+
+  			<md-card-content class="promoted-card-content" ng-cloak>
+
+            <div flex layout="row" style="margin-bottom:0px;">
+    					<div flex="none" layout="row" layout-align="start end" class="robot" ng-class="$index < 6 ? 'blue' : ($index > 11 ? 'red' : 'orange')">
+    						<md-icon md-svg-src="imgs/robot.svg" class="robot-icon"></md-icon>
+    						<div flex class="robot-text" ng-if="$index<6">Recomendo.</div>
+    						<div flex class="robot-text" ng-if="$index>=6 && $index<=11">Descubra.</div>
+    						<div flex class="robot-text" ng-if="$index>11">Aventure-se.</div>
+    					</div>
+              <div flex></div>
+              <div flex="none" layout="column" layout-align="end end">
+                <div class="promoted-price">{{promoted.object.price | currency}}</div>
+              </div>
             </div>
-          </div>
 
-          <div flex="none" layout-align="start center" style="margin-bottom:1em">
-            <span flex="none" class="promoted-style">{{promoted.object.sku.object.recipe.object.taste.style}}</span>
-            <span flex="none" class="promoted-perception">{{promoted.object.sku.object.recipe.object.taste.perception}}</span>
-          </div>
+            <div flex="none" layout-align="start center" style="margin-bottom:1em">
+              <span flex="none" class="promoted-style">{{promoted.object.sku.object.recipe.object.taste.style}}</span>
+              <span flex="none" class="promoted-perception">{{promoted.object.sku.object.recipe.object.taste.perception}}</span>
+            </div>
 
-					<div flex layout="column">
-					  <div class="promoted-recipe">{{promoted.object.sku.object.recipe.object.name}}</div>
-						<div class="promoted-maker">{{promoted.object.sku.object.maker.object.name}}</div>
-					</div>
+  					<div flex layout="column">
+  					  <div class="promoted-recipe">{{promoted.object.sku.object.recipe.object.name}}</div>
+  						<div class="promoted-maker">{{promoted.object.sku.object.maker.object.name}}</div>
+  					</div>
 
-          <div flex="none" layout="row" layout-align="start center">
-            <div flex="none" class="promoted-desc" style="font-weight:500">{{promoted.object.sku.object.volume}}&nbsp;ml</div>
-            <div flex="none" class="promoted-desc" style="">{{promoted.object.sku.object.recipe.object.taste.alcohol_volume | number:2}}%&nbsp;abv</div>
-            <div flex="none" class="promoted-desc" style="">{{promoted.object.sku.object.recipe.object.taste.ibu | number:0}}&nbsp;ibu</div>
-          </div>
+            <div flex="none" layout="row" layout-align="start center">
+              <div flex="none" class="promoted-desc" style="font-weight:500">{{promoted.object.sku.object.volume}}&nbsp;ml</div>
+              <div flex="none" class="promoted-desc" style="">{{promoted.object.sku.object.recipe.object.taste.alcohol_volume | number:2}}%&nbsp;abv</div>
+              <div flex="none" class="promoted-desc" style="">{{promoted.object.sku.object.recipe.object.taste.ibu | number:0}}&nbsp;ibu</div>
+            </div>
 
-					<div flex class="promoted-content" style="position:relative"
-					ng-repeat="content in promoted.object.sku.object.contents"
-					ng-if="content.object.function=='face_text'" accordion-element ng-click="accordion.toggle()" ng-class="accordion.class">
-						  <p>{{content.object.text}}</p>
-              <div class="lastlinefill"></div>
-              <div class="lastlinesignal" ng-show="accordion.class=='short'" layout="row" layout-align="end start">Mais</div>
-              <div class="lastlinesignal" ng-show="accordion.class=='long'" layout="row" layout-align="end start">Menos</div>
-					</div>
-			</md-card-content>
-		</md-card>
-	</div>
+  					<div flex class="promoted-content" style="position:relative"
+  					ng-repeat="content in promoted.object.sku.object.contents"
+  					ng-if="content.object.function=='face_text'" accordion-element ng-click="accordion.toggle()" ng-class="accordion.class">
+  						  <p>{{content.object.text}}</p>
+                <div class="lastlinefill"></div>
+                <div class="lastlinesignal" ng-show="accordion.class=='short'" layout="row" layout-align="end start">Mais</div>
+                <div class="lastlinesignal" ng-show="accordion.class=='long'" layout="row" layout-align="end start">Menos</div>
+  					</div>
+  			</md-card-content>
+  		</md-card>
+  	</div>
 
-	<div ng-show="offer.loading" style="position:absolute;top:0;left:0;width:100%;height:50%" layout="column" layout-align="center center">
-		<md-progress-circular ng-show="offer.loading" md-mode="indeterminate"></md-progress-circular>
-	</div>
-</md-content>
+    <div flex="none" layout="row" style="padding-top:8px" ng-show="$root.offer.count">
+      <md-button ng-show="offer.quantity<=6" class="md-raised md-accent full-button" style="margin-top:0px" ng-click="offer.toggleQuantity()">Mostrar todo estoque</md-button>
+      <md-button ng-show="offer.quantity>6" class="md-raised md-accent full-button" style="margin-top:0px" ng-click="offer.toggleQuantity()">Mostrar apenas indicadas</md-button>
 
+    </div>
+
+  	<div ng-show="offer.loading" style="position:absolute;top:0;left:0;width:100%;height:50%" layout="column" layout-align="center center">
+  		<md-progress-circular ng-show="offer.loading" md-mode="indeterminate"></md-progress-circular>
+  	</div>
+  </md-content>
 
 
 <div flex='none' layout="column" layout-align='start center' style="width:100%;position:relative;box-shadow: 0px 0px 20px 0px rgba(109, 96, 92, 0.54);" ng-show="cart.quantity>0">

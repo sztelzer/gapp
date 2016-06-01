@@ -19,6 +19,17 @@
 		var vm = this
 		vm.loading = true;
 
+        vm.quantity = 6;
+        vm.toggleQuantity = toggleQuantity
+
+        function toggleQuantity() {
+            if(vm.quantity == 6){
+                vm.quantity = 99
+            } else {
+                vm.quantity = 6
+            }
+        }
+
         runOffer()
         function runOffer(){
     		if (checkOffer() == true) {

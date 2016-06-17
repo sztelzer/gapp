@@ -78,7 +78,7 @@
                         }
                         if(total<0){total=0}
                         if (initial_total != total){
-                            vm.voucher = $rootScope.voucher.path
+                            vm.voucher = voucher.path
                         }
                     }
                 }
@@ -133,23 +133,24 @@
 				)
 		}
         //if vouchers are not loaded, get all.
-        if(!$rootScope.vouchers){
-			var req_config = {headers: {'Authorization': auth.token}}
-			$http.get(config.api + '/users/' + auth.id + '/vouchers', req_config)
-			.then(
-				function successCallback(response) {
-					$rootScope.vouchers = response.data.resources
-                    $rootScope.voucher = $localStorage.voucher
-				},
-				function errorCallback(response){
-					if(response.status == 401){
-						auth.signout()
-						return
-					}
-				}
-			)
-		}
-
+        function getVouchers(force){
+            if(!$rootScope.vouchers || force){
+    			var req_config = {headers: {'Authorization': auth.token}}
+    			$http.get(config.api + '/users/' + auth.id + '/vouchers', req_config)
+    			.then(
+    				function successCallback(response) {
+    					$rootScope.vouchers = response.data.resources
+                        $rootScope.voucher = $localStorage.voucher
+    				},
+    				function errorCallback(response){
+    					if(response.status == 401){
+    						auth.signout()
+    						return
+    					}
+    				}
+    			)
+    		}
+        }
 
 
 
@@ -177,6 +178,7 @@
 			payload.plastic = $rootScope.plastic.path
 			payload.place = JSON.stringify($rootScope.place)
 			payload.offer = $rootScope.offer.path
+            payload.voucher = vm.voucher
 
 			var req_config = {headers: {'Authorization': auth.token}};
 
@@ -184,6 +186,8 @@
 				function successCallback(response) {
 					empty()
                     delete $rootScope.voucher
+                    vm.voucher = ''
+                    $rootScope.voucher = ''
 					$rootScope.last = response.data;
 					$rootScope.updateOfferStocks($rootScope.offer.path)
 					vm.sending = false

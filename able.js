@@ -416,6 +416,13 @@
 	})
 
 
+    // .filter('search', function() {
+    //     return element.name.match(/^Ma/) ? true : false;
+    // }
+
+
+
+
 
 
 	.directive('appElement', appDirective)
@@ -436,7 +443,6 @@
 		vm.state = $state
         vm.badge = 0
 
-        console.log(auth)
         if(auth.id != ""){auth.getUser()}
 
 		if(Keyboard && device.platform == 'iOS'){
@@ -454,7 +460,10 @@
         if(PushNotification){
             Push = PushNotification.init({
               android: {
-                  senderID: "828347553479"
+                  senderID: "828347553479",
+                  forceShow: true,
+                  sound: true,
+                  vibrate: true
               },
               ios: {
                   alert: "true",
@@ -464,11 +473,13 @@
             })
 
             Push.on('registration', function(data) {
+                // console.log(data)
                 HelpShift.registerDeviceToken(data.registrationId)
                 auth.push = data.registrationId
                 getNotifications()
             });
             Push.on('notification', function(data) {
+                // console.log(data)
                 HelpShift.handleRemoteNotification(data.additionalData)
             });
         }
@@ -478,11 +489,10 @@
         //init HelpShift
         if(HelpShift && device.platform){
             device.platform == 'iOS' ? config.helpshift_app_id = config.helpshift_app_id_ios : config.helpshift_app_id = config.helpshift_app_id_android
-            // var setup = {
-            //     "enableContactUs":"ALWAYS",
-            //     "gotoConversationAfterContactUs":"YES",
-            //     "hideNameAndEmail":"YES"
-            // }
+            var setup = {
+                "gotoConversationAfterContactUs":"YES",
+                "hideNameAndEmail":"YES"
+            }
             HelpShift.install(config.helpshift_api_key, config.helpshift_domain, config.helpshift_app_id)
             HelpShift.registerSessionDelegates(sessionStart,sessionEnd)
             HelpShift.registerConversationDelegates(newConversationStarted, userRepliedToConversation, userCompletedCustomerSatisfactionSurvey, didReceiveNotification, didReceiveInAppNotificationWithMessageCount, displayAttachmentFile)
@@ -516,9 +526,7 @@
 
         function setBadges(count){
             count < 0 ? count = 0 : count = count
-            if(Badge){
-                Badge.set(count)
-            }
+            Badge.set(count)
             vm.badge = count
         }
 
@@ -536,11 +544,23 @@
         function userCompletedCustomerSatisfactionSurvey(rating, message){
         }
         function didReceiveNotification(message){
-            setBadges(message)
+            // console.log("didReceiveNotification")
+            // console.log(message)
+            if(device && device.platform == "Android"){
+                setBadges(1)
+            } else {
+                setBadges(message)
+            }
             $rootScope.$digest()
         }
         function didReceiveInAppNotificationWithMessageCount(message){
-            setBadges(message)
+            // console.log("didReceiveInAppNotificationWithMessageCount")
+            // console.log(message)
+            if(device && device.platform == "Android"){
+                setBadges(1)
+            } else {
+                setBadges(message)
+            }
             $rootScope.$digest()
         }
         function displayAttachmentFile(message){

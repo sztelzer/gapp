@@ -1,4 +1,4 @@
-(function () {
+(function() {
 	'use strict';
 
 	angular
@@ -16,26 +16,26 @@
 		return directive
 	}
 
-	function accordionController($sce){
+	function accordionController($sce) {
 		var vm = this
-        vm.toggle = toggle
-        vm.short = short()
+		vm.toggle = toggle
+		vm.short = short()
 
-        function short(){
-            vm.expanded = false
-            vm.class = "short"
-            vm.signal = "... +"
-        }
+		function short() {
+			vm.expanded = false
+			vm.class = "short"
+			vm.signal = "... +"
+		}
 
-        function long(){
-            vm.expanded = true
-            vm.class = "long"
-            vm.signal = " -"
-        }
+		function long() {
+			vm.expanded = true
+			vm.class = "long"
+			vm.signal = " -"
+		}
 
-        function toggle(){
-            vm.expanded ? short() : long()
-        }
+		function toggle() {
+			vm.expanded ? short() : long()
+		}
 
 
 

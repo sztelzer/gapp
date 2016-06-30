@@ -1,4 +1,4 @@
-(function () {
+(function() {
 	// 'use strict';
 
 	angular
@@ -15,7 +15,7 @@
 		return directive
 	}
 
-	function mapController($q, $state, $rootScope, $scope){
+	function mapController($q, $state, $rootScope, $scope) {
 		var vm = this
 
 		$scope.selectedItem
@@ -30,7 +30,7 @@
 		var geocoder = $rootScope.geocoder
 		var map
 
-		if($rootScope.located){
+		if ($rootScope.located) {
 			setMap()
 			getAddress($rootScope.latitude, $rootScope.longitude)
 		} else {
@@ -51,9 +51,12 @@
 			}
 		}
 
-		function setMap(){
+		function setMap() {
 			map = new google.maps.Map(document.getElementById('mapping'), {
-				center: {'lat': $rootScope.latitude, 'lng': $rootScope.longitude},
+				center: {
+					'lat': $rootScope.latitude,
+					'lng': $rootScope.longitude
+				},
 				zoom: 18,
 				disableDefaultUI: true,
 				zoomControl: true
@@ -62,7 +65,7 @@
 		}
 
 
-		function setListeners(){
+		function setListeners() {
 			map.addListener('dragend', function() {
 				getAddress(map.getCenter().lat(), map.getCenter().lng())
 				$rootScope.latitude = map.getCenter().lat()
@@ -75,15 +78,23 @@
 			});
 
 			map.addListener('idle', function() {
-				map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
+				map.setCenter({
+					'lat': $rootScope.latitude,
+					'lng': $rootScope.longitude
+				});
 				google.maps.event.trigger(map, "resize");
 			});
 
 			map.addListener('resize', function() {
-				map.setCenter({'lat': $rootScope.latitude, 'lng': $rootScope.longitude});
+				map.setCenter({
+					'lat': $rootScope.latitude,
+					'lng': $rootScope.longitude
+				});
 			});
 
-			$scope.$watch(function w(scope){return( $rootScope.height )},function c(n,o){
+			$scope.$watch(function w(scope) {
+				return ($rootScope.height)
+			}, function c(n, o) {
 				google.maps.event.trigger(map, "resize");
 			});
 
@@ -94,11 +105,11 @@
 
 		function search(address) {
 			vm.searching = true
-			if(address) {
+			if (address) {
 				var deferred = $q.defer();
 				getAutocomplete(address).then(
-					function (predictions) {
-						if(predictions){
+					function(predictions) {
+						if (predictions) {
 							var results = [];
 							for (var i = 0, prediction; prediction = predictions[i]; i++) {
 								results.push(prediction);
@@ -120,13 +131,13 @@
 				location: loc,
 				radius: 500
 			}
-			autocomplete.getQueryPredictions(request, function (data) {
+			autocomplete.getQueryPredictions(request, function(data) {
 				deferred.resolve(data);
 			});
 			return deferred.promise;
 		}
 
-		function place(item){
+		function place(item) {
 			if (item) {
 				vm.searching = false
 				var place_id = item.place_id
@@ -136,7 +147,7 @@
 				$rootScope.locating = false
 				var deferred = $q.defer();
 				getPlace(place_id).then(
-					function (infos) {
+					function(infos) {
 						$rootScope.place.address_components = infos.address_components
 						$rootScope.latitude = infos.geometry.location.lat()
 						$rootScope.longitude = infos.geometry.location.lng()
@@ -151,14 +162,21 @@
 
 		function getPlace(place_id) {
 			var deferred = $q.defer();
-			placer.getDetails({placeId:place_id}, function (data) {
+			placer.getDetails({
+				placeId: place_id
+			}, function(data) {
 				deferred.resolve(data);
 			});
 			return deferred.promise;
 		}
 
 		function getAddress(lat, lng) {
-			geocoder.geocode({'location':{'lat':lat,'lng':lng}}, function(results, status) {
+			geocoder.geocode({
+				'location': {
+					'lat': lat,
+					'lng': lng
+				}
+			}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					$scope.selectedItem = {
 						description: results[0].formatted_address,
@@ -167,15 +185,14 @@
 					$rootScope.place = $scope.selectedItem
 					$scope.searchText = results[0].formatted_address
 					$scope.$apply()
-				} else {
-				}
+				} else {}
 			});
 		}
 
 		function setCartAddress() {
-            $rootScope.place_verified = true
+			$rootScope.place_verified = true
 			$rootScope.updateDistance()
-			// $rootScope.updateCart()
+				// $rootScope.updateCart()
 			$state.go('storePage.offerPage')
 		}
 

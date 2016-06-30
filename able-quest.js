@@ -1,4 +1,4 @@
-(function () {
+(function() {
 	'use strict';
 
 	angular
@@ -28,18 +28,20 @@
 
 
 		//load tags quest only when quest page is loaded.
-		$http.get('quest_tags.json').success(function (data){
+		$http.get('quest_tags.json').success(function(data) {
 			vm.tags = data;
 			vm.tags_length = vm.tags.length
 		});
 
 		// Este watch verifica se todo o questionário foi respondido.
 		// É chamado em cada resposta.
-		$scope.$watch(function w(scope){return( Object.keys(vm.payload).length )},function c(n,o){
+		$scope.$watch(function w(scope) {
+			return (Object.keys(vm.payload).length)
+		}, function c(n, o) {
 			vm.answered = Object.keys(vm.payload).length
 			vm.least_tags = (Object.keys(vm.payload).length < vm.tags_length) ? true : false;
 
-            //this block would roll the page, but is buggy
+			//this block would roll the page, but is buggy
 			// var element = document.getElementById('quest-content')
 			// var last_height = element.scrollHeight
 			// if(vm.least_tags == false){
@@ -54,36 +56,36 @@
 
 		});
 
-		function send(){
+		function send() {
 			vm.sending = true
 
 			auth.signupQuest(vm.user.name, vm.user.document, vm.user.email, vm.user.password, JSON.stringify(vm.payload))
-			.then(
-				function(resolve) {
-					$state.go('storePage')
-					vm.sending = false
-				},
-				function(reject) {
-					vm.sending = false
-					if(reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email"){
-                        if(navigator && navigator.notification){
-                            navigator.notification.alert("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.", false, 'Able', 'Ok')
-                            return
-                        } else {
-                            window.alert("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")
-                            return
-                        }
-					} else {
-                        if(navigator && navigator.notification){
-                            navigator.notification.alert("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.", false, 'Able', 'Ok')
-                            return
-                        } else {
-                            window.alert("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.")
-                            return
-                        }
+				.then(
+					function(resolve) {
+						$state.go('storePage')
+						vm.sending = false
+					},
+					function(reject) {
+						vm.sending = false
+						if (reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email") {
+							if (navigator && navigator.notification) {
+								navigator.notification.alert("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.", false, 'Able', 'Ok')
+								return
+							} else {
+								window.alert("Este e-mail já possui um perfil. Recupere sua senha ou use outro e-mail.")
+								return
+							}
+						} else {
+							if (navigator && navigator.notification) {
+								navigator.notification.alert("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.", false, 'Able', 'Ok')
+								return
+							} else {
+								window.alert("Não foi possível criar sua conta. Verifique a qualidade da sua conexão.")
+								return
+							}
+						}
 					}
-				}
-			);
+				);
 
 		}
 
@@ -149,12 +151,12 @@
 
 
 	function validateCpfDirective() {
-	    return {
+		return {
 			restrict: 'A',
 			require: 'ngModel',
 			link: function(scope, element, attr, ctrl) {
 				function customValidator(ngModelValue) {
-					if (testCpf(ngModelValue)){
+					if (testCpf(ngModelValue)) {
 						ctrl.$setValidity('cpf', true)
 					} else {
 						ctrl.$setValidity('cpf', false)
@@ -165,7 +167,7 @@
 			}
 
 
-	    };
+		};
 	};
 
 

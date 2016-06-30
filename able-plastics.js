@@ -1,4 +1,4 @@
-(function () {
+(function() {
 	'use strict';
 
 	angular
@@ -25,64 +25,69 @@
 		vm.remove = remove
 		vm.sending = false
 		vm.loading = true
-        vm.saveDucument = saveDocument
-        vm.sendingDocument = false
+		vm.saveDucument = saveDocument
+		vm.sendingDocument = false
 
-		if(typeof $localStorage.plastic == "undefined") {
+		if (typeof $localStorage.plastic == "undefined") {
 			$localStorage.plastic = {}
 		}
 		vm.plastic = $localStorage.plastic
 		$rootScope.plastic = $localStorage.plastic
 
 		get()
-		function get(){
-			var req_config = {headers: {'Authorization': auth.token}};
+
+		function get() {
+			var req_config = {
+				headers: {
+					'Authorization': auth.token
+				}
+			};
 			$http.get(config.api + '/users/' + auth.id + '/plastics', req_config)
-			.then(
-			function successCallback(response) {
-				vm.plastics = response.data.resources;
-				if(!vm.plastic.path && vm.plastics && vm.plastics[0]){
-					activate(vm.plastics[0])
-				}
-				vm.loading = false
-			},
-			function errorCallback(response) {
-				vm.plastics = []
-				vm.loading = false
+				.then(
+					function successCallback(response) {
+						vm.plastics = response.data.resources;
+						if (!vm.plastic.path && vm.plastics && vm.plastics[0]) {
+							activate(vm.plastics[0])
+						}
+						vm.loading = false
+					},
+					function errorCallback(response) {
+						vm.plastics = []
+						vm.loading = false
 
-				if(response.status == 401){
-					if(navigator && navigator.notification){
-						navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
-					} else {
-						window.alert('Você precisa se logar novamente.')
-					}
-					auth.signout()
-					return
-				}
+						if (response.status == 401) {
+							if (navigator && navigator.notification) {
+								navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+							} else {
+								window.alert('Você precisa se logar novamente.')
+							}
+							auth.signout()
+							return
+						}
 
-				if(response.status == 403){
-                    if(navigator && navigator.notification){
-						navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
-					} else {
-						window.alert(response.data.errors[0].error)
-					}
-					return
-				}
+						if (response.status == 403) {
+							if (navigator && navigator.notification) {
+								navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+							} else {
+								window.alert(response.data.errors[0].error)
+							}
+							return
+						}
 
-				if(navigator && navigator.notification){
-					navigator.notification.alert('Verifique sua conexão.', get, 'Able', 'Ok')
-					return
-				} else {
-					window.alert('Verifique sua conexão.')
-					get()
-					return
-				}
+						if (navigator && navigator.notification) {
+							navigator.notification.alert('Verifique sua conexão.', get, 'Able', 'Ok')
+							return
+						} else {
+							window.alert('Verifique sua conexão.')
+							get()
+							return
+						}
 
-			})
+					})
 		}
 
-		function save(){
-			if(Keyboard) {
+		function save() {
+			if (Keyboard) {
 				Keyboard.close()
 			}
 			vm.sending = true
@@ -91,7 +96,7 @@
 			var c = angular.copy(vm.new.expiry)
 
 			stripePlasticToken(a, b, c).then(
-				function(resolvedToken){
+				function(resolvedToken) {
 					var payload = {
 						self_key: new Date().getTime().toString(),
 						mask: maskPlasticNumber(a),
@@ -99,106 +104,114 @@
 						token: resolvedToken
 					}
 
-					var req_config = {headers: {'Authorization': auth.token}};
+					var req_config = {
+						headers: {
+							'Authorization': auth.token
+						}
+					};
 					$http.post(config.api + '/users/' + auth.id + '/plastics', payload, req_config)
 						.then(
-						function(response){
-							vm.new = {}
-							$scope.plasticForm.$setPristine()
-							$scope.plasticForm.$setUntouched()
-							activate(response.data)
-							get()
-							vm.sending = false
-						},
-						function(response){
-							vm.sending = false
-							if(response.status == 401){
-								if(navigator && navigator.notification){
-									navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
-								} else {
-									window.alert('Você precisa se logar novamente.')
+							function(response) {
+								vm.new = {}
+								$scope.plasticForm.$setPristine()
+								$scope.plasticForm.$setUntouched()
+								activate(response.data)
+								get()
+								vm.sending = false
+							},
+							function(response) {
+								vm.sending = false
+								if (response.status == 401) {
+									if (navigator && navigator.notification) {
+										navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+									} else {
+										window.alert('Você precisa se logar novamente.')
+									}
+									auth.signout()
+									return
 								}
-								auth.signout()
-								return
-							}
 
-							if(response.status == 403){
-                                if(navigator && navigator.notification){
-									navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
-								} else {
-									window.alert('Você precisa se logar novamente.')
+								if (response.status == 403) {
+									if (navigator && navigator.notification) {
+										navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+									} else {
+										window.alert('Você precisa se logar novamente.')
+									}
+									return
 								}
-								return
-							}
 
-							if(navigator && navigator.notification){
-								navigator.notification.alert('Verifique sua conexão.', false, 'Able', 'Ok')
-								return
-							} else {
-								window.alert('Verifique sua conexão.')
-								return
-							}
+								if (navigator && navigator.notification) {
+									navigator.notification.alert('Verifique sua conexão.', false, 'Able', 'Ok')
+									return
+								} else {
+									window.alert('Verifique sua conexão.')
+									return
+								}
 
-						}
-					);
+							}
+						);
 				},
-				function(rejectedToken){
+				function(rejectedToken) {
 					vm.sending = false
 
-                    if(navigator && navigator.notification){
-                        navigator.notification.alert("Este cartão não foi aceito. Verifique os dados.", false, 'Able', 'Ok')
-                    } else {
-                        window.alert("Este cartão não foi aceito. Verifique os dados.")
-                    }
+					if (navigator && navigator.notification) {
+						navigator.notification.alert("Este cartão não foi aceito. Verifique os dados.", false, 'Able', 'Ok')
+					} else {
+						window.alert("Este cartão não foi aceito. Verifique os dados.")
+					}
 
 
 				}
 			)
 		}
 
-		function activate(plastic){
+		function activate(plastic) {
 			$localStorage.plastic = plastic
 			$rootScope.plastic = plastic
 			vm.plastic = plastic
 		}
 
-		function remove(plastic){
+		function remove(plastic) {
 			//call delete on plastic.path
-			var req_config = {headers: {'Authorization': auth.token}};
-			$http.delete(config.api + plastic.path, req_config)
-			.then(
-				function(response){
-					if(plastic.path == vm.plastic.path){
-						$localStorage.plastic = ''
-						$rootScope.plastic = ''
-						vm.plastic = ''
-					}
-					//remove this item from the list
-					vm.plastics.slice().reverse().forEach(function(item, index, object) {
-						if (item.path == plastic.path) {
-							vm.plastics.splice(object.length - 1 - index, 1);
-						}
-					})
-
-
-				},
-				function(response){
-                    if(navigator && navigator.notification){
-                        navigator.notification.alert('Houve um erro ao remover este cartão. Tente novamente.', false, 'Able', 'Ok')
-                        return
-                    } else {
-                        window.alert('Houve um erro ao remover este cartão. Tente novamente.')
-                        return
-                    }
+			var req_config = {
+				headers: {
+					'Authorization': auth.token
 				}
-			)
+			};
+			$http.delete(config.api + plastic.path, req_config)
+				.then(
+					function(response) {
+						if (plastic.path == vm.plastic.path) {
+							$localStorage.plastic = ''
+							$rootScope.plastic = ''
+							vm.plastic = ''
+						}
+						//remove this item from the list
+						vm.plastics.slice().reverse().forEach(function(item, index, object) {
+							if (item.path == plastic.path) {
+								vm.plastics.splice(object.length - 1 - index, 1);
+							}
+						})
+
+
+					},
+					function(response) {
+						if (navigator && navigator.notification) {
+							navigator.notification.alert('Houve um erro ao remover este cartão. Tente novamente.', false, 'Able', 'Ok')
+							return
+						} else {
+							window.alert('Houve um erro ao remover este cartão. Tente novamente.')
+							return
+						}
+					}
+				)
 		}
 
 
 
-		function maskPlasticNumber(number){
+		function maskPlasticNumber(number) {
 			var a = number.substring(0, 4)
-			var b = number.substring(12,16)
+			var b = number.substring(12, 16)
 			var masked = b
 			return masked
 		}
@@ -208,12 +221,12 @@
 				number: number,
 				cvc: cvc,
 				exp_month: expiry.substring(0, 2),
-				exp_year: "20"+expiry.substring(expiry.length - 2, expiry.length),
+				exp_year: "20" + expiry.substring(expiry.length - 2, expiry.length),
 			}
 
 			return $q(function(resolve, reject) {
 				Stripe.setPublishableKey($localStorage.stripe);
-				Stripe.card.createToken(payload, function(status, response){
+				Stripe.card.createToken(payload, function(status, response) {
 					if (status < 200 || status > 299) {
 						reject(status)
 					} else {
@@ -223,25 +236,25 @@
 			})
 		}
 
-        function saveDocument(){
-            if(Keyboard) {
-                Keyboard.close()
-            }
-            vm.sendingDocument = true
+		function saveDocument() {
+			if (Keyboard) {
+				Keyboard.close()
+			}
+			vm.sendingDocument = true
 
-            var payload = {
-                document: angular.copy(vm.document)
-            }
+			var payload = {
+				document: angular.copy(vm.document)
+			}
 
-            auth.patchUser(payload).then(
-                function(resolve) {
-                    vm.sendingDocument = false
-                },
-                function(reject) {
-                    vm.sendingDocument = false
-                }
-            );
-        }
+			auth.patchUser(payload).then(
+				function(resolve) {
+					vm.sendingDocument = false
+				},
+				function(reject) {
+					vm.sendingDocument = false
+				}
+			);
+		}
 
 
 	}

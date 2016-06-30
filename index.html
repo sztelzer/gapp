@@ -9,14 +9,11 @@
 	<link type="text/css" rel="stylesheet" href="able.css">
 	<link type="text/css" rel="stylesheet" href="able-animation.css">
 	<link type="text/css" rel="stylesheet" href="components/angular-material.css">
-
 	<title>Able</title>
-	<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR&region=BR'></script>
 </head>
 
 <body layout="column" flex app-element>
 	<div class="app page {{$state.current.name}} animated" id="app" ui-view flex layout-fill></div>
-
 	<script src="cordova.js"></script>
 	<script src="components/angular.js"></script>
 	<script src='components/angular-locale_pt-br.js'></script>
@@ -30,7 +27,6 @@
 	<script src='components/geolib.js'></script>
 	<script src='components/angular-payments.js'></script>
 	<script src='components/angular.dcb-img-fallback.js'></script>
-
 	<script src='able.js'></script>
 	<script src='able-auth.js'></script>
 	<script src='able-signin.js'></script>
@@ -42,77 +38,72 @@
 	<script src='able-confirmation.js'></script>
 	<script src='able-quest.js'></script>
 	<script src='able-plastics.js'></script>
-  <script src='able-vouchers.js'></script>
-  <script src='able-profile.js'></script>
+	<script src='able-vouchers.js'></script>
+	<script src='able-profile.js'></script>
 	<script src='able-toolbar.js'></script>
-  <script src='able-accordion.js'></script>
-
-	<script src='https://js.stripe.com/v2/'></script>
-
+	<script src='able-accordion.js'></script>
 	<script>
-		angular.element(document).ready(function () {
+		angular.element(document).ready(function() {
 			if (window.cordova) {
-				console.log('cordova')
-				document.addEventListener('deviceready', function () {
-					if(navigator.onLine){
-						console.log('online')
+				document.addEventListener('deviceready', function() {
+					if (navigator.onLine) {
 						bootOnlineCordova()
 					} else {
-						navigator.notification.alert('Você precisa estar conectado para usar este aplicativo.', refreshPage, 'Able', 'Tentar Novamente')
+						// try a real connection or really fail.
+						var oReq = new XMLHttpRequest();
+						oReq.addEventListener("load", bootOnlineCordova);
+						oReq.addEventListener("error", willRefresh);
+						oReq.open("GET", "https://api-dot-heartbend.appspot.com/force_test_connection");
+						oReq.send();
 					}
 				}, false);
 			} else {
-				console.log('web')
-				if(navigator.onLine){
-					console.log('online')
-					bootOnlineBrowser()
-				} else {
-					window.alert('Você precisa estar conectado para usar este aplicativo. Vamos aguardar você se conectar. Quando estiver conectado, recarregue esta página.')
-					window.location.reload()
-				}
+				var oReq = new XMLHttpRequest();
+				oReq.addEventListener("load", bootOnlineBrowser);
+				oReq.addEventListener("error", willRefresh);
+				oReq.open("GET", "https://api-dot-heartbend.appspot.com/force_test_connection");
+				oReq.send();
 			}
 		})
 
-		function bootOnlineBrowser(){
+		function bootOnlineBrowser() {
 			Platform = "Browser"
 			Keyboard = false
-      HelpShift = false
-      PushNotification = false
-      Push = false
-      Badge = false
+			HelpShift = false
+			PushNotification = false
+			Push = false
+			Badge = false
 			angular.bootstrap(document, ['able'])
 		}
 
-		function bootOnlineCordova(){
-			// Keyboard.shrinkView(true);
-			// Keyboard.hideFormAccessoryBar(false);
-			// Keyboard.disableScrollingInShrinkView(true);
-			// Keyboard.automaticScrollToTopOnHiding = true;
-
-
+		function bootOnlineCordova() {
 			Platform = device.platform
 			Keyboard = cordova.plugins.Keyboard
-      HelpShift = window.HelpshiftPlugin
-      // PushNotification = PushNotification.init()...
-      Push = false
-      Badge = cordova.plugins.notification.badge
-
-
+			HelpShift = window.HelpshiftPlugin
+			Push = false
+			Badge = cordova.plugins.notification.badge
 			Keyboard.disableScroll(true)
-      navigator.splashscreen.hide()
-
+			navigator.splashscreen.hide()
 			angular.bootstrap(document, ['able'])
 		}
 
-		function refreshPage(){
+		function willRefresh() {
+			if (navigator && navigator.notification) {
+				navigator.notification.alert('Você precisa estar conectado para usar este aplicativo. (ref. #101)', refreshPage, 'Able', 'Tentar Novamente')
+			} else {
+				window.alert('Você precisa estar conectado para usar este aplicativo. Vamos aguardar você se conectar. Quando estiver conectado, recarregue esta página.')
+				refreshPage()
+			}
+		}
+
+		function refreshPage() {
 			window.location.reload()
 		}
 	</script>
-
-
 	<script type="text/javascript">
 		Object.size = function(obj) {
-			var size = 0, key;
+			var size = 0,
+				key;
 			for (key in obj) {
 				if (obj.hasOwnProperty(key)) size++;
 			}
@@ -123,38 +114,33 @@
 			var Soma;
 			var Resto;
 			Soma = 0;
-			switch(strCPF){
+			switch (strCPF) {
 				case "00000000000":
 				case "11111111111":
 				case "22222222222":
 				case "33333333333":
 				case "44444444444":
 				case "55555555555":
-			  case "66666666666":
+				case "66666666666":
 				case "77777777777":
 				case "88888888888":
 				case "99999999999":
-				return false;
+					return false;
 			}
-			for (i=1; i<=9; i++)
-			Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+			for (i = 1; i <= 9; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
 			Resto = (Soma * 10) % 11;
-			if ((Resto == 10) || (Resto == 11))
-			Resto = 0;
-			if (Resto != parseInt(strCPF.substring(9, 10)) )
-			return false;
+			if ((Resto == 10) || (Resto == 11)) Resto = 0;
+			if (Resto != parseInt(strCPF.substring(9, 10))) return false;
 			Soma = 0;
-			for (i = 1; i <= 10; i++)
-			Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+			for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
 			Resto = (Soma * 10) % 11;
-			if ((Resto == 10) || (Resto == 11))
-			Resto = 0;
-			if (Resto != parseInt(strCPF.substring(10, 11) ) )
-			return false;
+			if ((Resto == 10) || (Resto == 11)) Resto = 0;
+			if (Resto != parseInt(strCPF.substring(10, 11))) return false;
 			return true;
 		}
 	</script>
-
+	<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAEm-VPSgk4IkJ4QGopMMxv22togud0tZ8&libraries=places&language=pt-BR&region=BR'></script>
+	<script src='https://js.stripe.com/v2/'></script>
 </body>
 
 </html>

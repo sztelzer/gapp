@@ -16,14 +16,16 @@
 		return directive;
 	}
 
-	function toolbarController($mdSidenav, $state){
+	function toolbarController($mdSidenav, $state) {
 		var vm = this;
 		vm.toggleLeftMenu = toggleLeftMenu
 		vm.back = back
+
 		function toggleLeftMenu(menuId) {
 			$mdSidenav(menuId).toggle();
 		}
-		function back(){
+
+		function back() {
 			$state.go('storePage.offerPage')
 		}
 	}
@@ -42,7 +44,8 @@
 		var vm = this;
 		vm.user = auth.id;
 		vm.go = go
-		function go(state){
+
+		function go(state) {
 			$state.go(state);
 			$mdSidenav('able-left-menu').toggle();
 		}

@@ -1,554 +1,410 @@
 /* app css stylesheet */
 
 html, body, .app {
-	height: 100%;
-	min-height: 0% !important;
-	max-height: 100% !important;
-	overflow: hidden !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	background-color: #F4F2EF !important;
+  height: 100%;
+  min-height: 0% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #F4F2EF !important;
 }
 
 /*prevent select text on mobile*/
-*:not(input,textarea) {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	touch-callout: none;
-	user-select: none;
-	tap-highlight-color: rgba(0,0,0,0);
-}
 
+*:not(input, textarea) {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  touch-callout: none;
+  user-select: none;
+  tap-highlight-color: rgba(0, 0, 0, 0);
+}
 .md-button {
-	border-radius: 0 !important;
+  border-radius: 0 !important;
 }
-
 .md-scrool-mask {
-	z-index: 9990 !important;
+  z-index: 9990 !important;
 }
-
 .md-dialog-container {
-	z-index: 9998 !important;
+  z-index: 9998 !important;
 }
-
 .toolbar {
-	padding: 20px 0 0 0 !important;
-	margin: 0px !important;
-	height: 60px !important;
-	background-color: #0080FF !important;
-	color: #F4F2EF !important;
+  padding: 20px 0 0 0 !important;
+  margin: 0px !important;
+  height: 60px !important;
+  background-color: #0080FF !important;
+  color: #F4F2EF !important;
 }
-
 .toolbar.Android {
-	padding: 0px !important;
-	min-height: 40px !important;
-	height: 40px !important;
-	max-height: 40px !important;
+  padding: 0px !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  max-height: 40px !important;
 }
-
 md-subheader.sidenav.Android {
-	height: 40px !important;
+  height: 40px !important;
 }
-
 .toolbar-logo {
-	height:18px;
+  height: 18px;
 }
-
 .toolbar-title {
-	font-size: 0.6em;
-	font-family: 'Roboto Slab';
-	font-weight: 700;
-	color: #FFFFFF;
-	padding-top: 0.5em;
+  font-size: 0.6em;
+  font-family: 'Roboto Slab';
+  font-weight: 700;
+  color: #FFFFFF;
+  padding-top: 0.5em;
 }
-
-
 md-sidenav {
-	min-width: 18em !important;
-	max-width: 18em !important;
+  min-width: 18em !important;
+  max-width: 18em !important;
 }
-
 md-backdrop.md-opaque {
-	background-color: #000000 !important;
+  background-color: #000000 !important;
 }
-
-body > md-backdrop {
-	background-color: #F4F2EF !important;
+body> md-backdrop {
+  background-color: #F4F2EF !important;
 }
-
-md-list-item > button,
-md-list-item > button > * {
-	border-radius: 0px !important;
+md-list-item> button, md-list-item> button> * {
+  border-radius: 0px !important;
 }
-
 md-content {
-	background-color: transparent !important;
-	overflow-x: hidden !important;
+  background-color: transparent !important;
+  overflow-x: hidden !important;
 }
-
 md-card {
-	margin: 0 0 1em 0 !important;
+  margin: 0 0 1em 0 !important;
 }
-
 md-card.no-shadow {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
-
 img.md-card-image {
-	image-rendering: -webkit-optimize-contrast !important;
-	border-radius: 0 !important;
+  /*image-rendering: -webkit-optimize-contrast !important;*/
+  border-radius: 0 !important;
 }
-
-
 input.ng-touched.ng-invalid {
-	border-color: red !important;
+  border-color: red !important;
 }
-
-
 .card-action {
-	margin: 0px !important;
-	padding: 10px !important;
-	font-size: 0.8em !important;
-	line-height: 0.8em !important;
-	min-height: 1em !important;
-	min-width: 0em !important;
+  margin: 0px !important;
+  padding: 10px !important;
+  font-size: 0.8em !important;
+  line-height: 0.8em !important;
+  min-height: 1em !important;
+  min-width: 0em !important;
 }
-
 .card-title {
-	font-size: 1.2em;
-    padding: 1em 1em;
-    font-family: "roboto slab";
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	border-top: 1px solid rgba(255, 255, 255, 0.9);
-	border-radius: 0px 0px 0px 0px;
+  font-size: 1.2em;
+  padding: 1em 1em;
+  font-family: "roboto slab";
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 0px 0px 0px 0px;
 }
-
 .card-content {
-	padding: 1em 1em 0.5em 1em;
-	font-family: "roboto slab";
+  padding: 1em 1em 0.5em 1em;
+  font-family: "roboto slab";
 }
-
-
-
-
-
-
 .cart {
-	padding: 0;
-	margin: 0;
-	height: 3em;
-	width: 100%;
-	font-size: 0.8em;
-	font-weight: 300;
+  padding: 0;
+  margin: 0;
+  height: 3em;
+  width: 100%;
+  font-size: 0.8em;
+  font-weight: 300;
 }
-
-
-
 md-icon.small-icon {
-    height: 1em;
-    width: 1em;
-    margin-top: -0.25em;
-    padding-right: 0.1em;
+  height: 1em;
+  width: 1em;
+  margin-top: -0.25em;
+  padding-right: 0.1em;
 }
-
-
 .cart.opened {
-	background-color: #F4F2EF;
-	color: black;
+  background-color: #F4F2EF;
+  color: black;
 }
-
 .cart.closed {
-	background-color: #26BD49;
-	color: white;
+  background-color: #26BD49;
+  color: white;
 }
-
-.cart.closed > div > md-icon > svg {
-	fill: #ffffff !important;
+.cart.closed> div> md-icon> svg {
+  fill: #ffffff !important;
 }
-.cart.opened > div > md-icon > svg {
-	fill: #000000 !important;
+.cart.opened> div> md-icon> svg {
+  fill: #000000 !important;
 }
-
 .carting-go {
-	height: 2em;
-    width: 2em;
-    border-radius: 1em;
-    margin-right: 0.35em;
+  height: 2em;
+  width: 2em;
+  border-radius: 1em;
+  margin-right: 0.35em;
 }
-
-.carting-go > md-icon {
-	width: 100%;
-	height: 100%;
+.carting-go> md-icon {
+  width: 100%;
+  height: 100%;
 }
-
-.cart.closed > .carting-go > md-icon > svg {
-	fill: #FFFFFF;
+.cart.closed> .carting-go> md-icon> svg {
+  fill: #FFFFFF;
 }
-
-.cart.opened > .carting-go > md-icon > svg {
-	fill: #26BD49;
+.cart.opened> .carting-go> md-icon> svg {
+  fill: #26BD49;
 }
-
-
 .checkout {
-	font-size: 0.8em;
-	font-weight: 300;
-	background-color: #F4F2EF;
+  font-size: 0.8em;
+  font-weight: 300;
+  background-color: #F4F2EF;
 }
-
-
-
-
 .products {
-	padding: 0;
-	margin: 0;
-	height: 3em;
-	font-size: 0.8em;
-	font-weight: 300;
+  padding: 0;
+  margin: 0;
+  height: 3em;
+  font-size: 0.8em;
+  font-weight: 300;
 }
-
 .products.opened {
-	background-color: #F4F2EF;
-	color: black;
+  background-color: #F4F2EF;
+  color: black;
 }
-
 .products.closed {
-	background-color: rgb(0, 144, 33);
-	color: white;
+  background-color: rgb(0, 144, 33);
+  color: white;
 }
-
 .products.cartopen {
-	background-color: #F4F2EF;
-	color: black;
+  background-color: #F4F2EF;
+  color: black;
 }
-
-
-.products.closed > div > md-icon > svg {
-	fill: #ffffff !important;
+.products.closed> div> md-icon> svg {
+  fill: #ffffff !important;
 }
-
-.products.cartopen > div > center > md-icon > svg {
-    fill: #000000 !important;
+.products.cartopen> div> center> md-icon> svg {
+  fill: #000000 !important;
 }
-
-.products.opened > div > md-icon > svg {
-	fill: #000000 !important;
+.products.opened> div> md-icon> svg {
+  fill: #000000 !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .full-button {
-	width: 100%;
-	font-size: 14px !important;
-	/*height: 3em;*/
+  width: 100%;
+  font-size: 14px !important;
+  /*height: 3em;*/
 }
-
-
-.md-list-item-inner > md-icon {
-	height: 1em;
-	width: 1em;
-	padding: 0;
-    margin: -0.1em 0.5em 0 -0.25em !important;
+.md-list-item-inner> md-icon {
+  height: 1em;
+  width: 1em;
+  padding: 0;
+  margin: -0.1em 0.5em 0 -0.25em !important;
 }
-
-
-
-
-
-.svg-black > svg {
-	fill: #000000;
+.svg-black> svg {
+  fill: #000000;
 }
-
-.svg-lightgrey > svg {
-	fill: #CCCCCC;
+.svg-lightgrey> svg {
+  fill: #CCCCCC;
 }
-
-.svg-white > svg {
-	fill: #FFFFFF;
+.svg-white> svg {
+  fill: #FFFFFF;
 }
-
-.svg-blue > svg {
-	fill: #0080FF;
+.svg-blue> svg {
+  fill: #0080FF;
 }
-
-.svg-green > svg {
-	fill: #26BD49;
+.svg-green> svg {
+  fill: #26BD49;
 }
-
-.svg-red > svg {
-	fill: #FF0000;
+.svg-red> svg {
+  fill: #FF0000;
 }
-
-
-.svg-lightred > svg {
-	fill: #ff9999;
+.svg-lightred> svg {
+  fill: #ff9999;
 }
-
 .red {
-    color: red;
+  color: red;
 }
-
 .green {
-    color: #26BD49;
+  color: #26BD49;
 }
-
 .black {
-    color: black;
+  color: black;
 }
-
-
 .md-icon-button {
-	margin:0 !important;
+  margin: 0 !important;
 }
-
 .navbar-fixed-top {
-	padding: 20pt 0 0 0;
+  padding: 20pt 0 0 0;
 }
-
-
-
 div.counter {
-	font-size: 3em;
-    font-weight: 700;
-    color: #000000;
-	background-color: #F4F2EF;
-    text-align: center;
-    line-height: 1.5em;
-    padding: 0px;
-    margin: 0px;
-    overflow: hidden;
-	border-right: 1px solid white;
-	border-left: 1px solid white;
+  font-size: 3em;
+  font-weight: 700;
+  color: #000000;
+  background-color: #F4F2EF;
+  text-align: center;
+  line-height: 1.5em;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+  border-right: 1px solid white;
+  border-left: 1px solid white;
 }
-
-
 .promoted-button {
-	background-color: #F4F2EF !important;
-    padding: 0px !important;
-    margin: 0px !important;
-    overflow: hidden;
-	border: none !important;
-	border-radius: 0px !important;
+  background-color: #F4F2EF !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  overflow: hidden;
+  border: none !important;
+  border-radius: 0px !important;
 }
-
 .promoted-card-content {
-	background-color: white !important;
+  background-color: white !important;
 }
-
 .promoted-recipe {
-	font-family: "Roboto";
-	font-size: 1.5em
+  font-family: "Roboto";
+  font-size: 1.5em
 }
-
 .promoted-maker {
-    font-family: "Roboto";
-    font-size: 1em;
-    font-weight: 400;
+  font-family: "Roboto";
+  font-size: 1em;
+  font-weight: 400;
 }
-
 .promoted-desc {
-    font-family: "Roboto";
-    font-size: 1em;
-    font-weight: 400;
-    /*border: 1px solid black;*/
-    margin-right: 1em;
+  font-family: "Roboto";
+  font-size: 1em;
+  font-weight: 400;
+  /*border: 1px solid black;*/
+  margin-right: 1em;
 }
-
 .promoted-style {
-    font-family: "Roboto Slab";
-    font-size: 1em;
-    font-weight: 500;
+  font-family: "Roboto Slab";
+  font-size: 1em;
+  font-weight: 500;
 }
-
 .promoted-perception {
-    font-family: "Roboto Slab";
-    font-size: 1em;
-    font-weight: 300;
-    overflow: hidden;
+  font-family: "Roboto Slab";
+  font-size: 1em;
+  font-weight: 300;
+  overflow: hidden;
 }
-
 .promoted-price {
-    font-family: "Roboto Slab";
-    font-weight: 400;
-    font-size: 1em;
-    color: #00A000;
+  font-family: "Roboto Slab";
+  font-weight: 400;
+  font-size: 1em;
+  color: #00A000;
 }
-
-.promoted-content > p {
-	font-family: 'Roboto Slab';
-	font-weight: 300;
-    font-size: 1em;
+.promoted-content> p {
+  font-family: 'Roboto Slab';
+  font-weight: 300;
+  font-size: 1em;
 }
-
-
-
-.md-autocomplete-suggestions-container.md-default-theme li,
-.md-autocomplete-suggestions-container li {
-	color: black !important;
+.md-autocomplete-suggestions-container.md-default-theme li, .md-autocomplete-suggestions-container li {
+  color: black !important;
 }
-
 .md-autocomplete-suggestions-container li .highlight {
-	color: #26BD49 !important;
+  color: #26BD49 !important;
 }
-
 md-input-container {
-	padding-bottom: 0px !important;
-	margin-bottom: 0px !important;
+  padding-bottom: 0px !important;
+  margin-bottom: 0px !important;
 }
-
-md-input-container.no-errors div.md-errors-spacer,
-md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
-	display:none;
+md-input-container.no-errors div.md-errors-spacer, md-autocomplete md-autocomplete-wrap md-input-container div.md-errors-spacer {
+  display: none;
 }
-
 .round-cicle {
-	width: 8em;
-	height: 8em;
-	margin: 0 0 2em 0;
+  width: 8em;
+  height: 8em;
+  margin: 0 0 2em 0;
 }
-
 .card-credit {
-	font-family: "roboto";
-	font-weight: 300;
+  font-family: "roboto";
+  font-weight: 300;
 }
-
-
 .attended {
-	color: black;
+  color: black;
 }
-
 .not_attended {
-	color: red;
+  color: red;
 }
-
-
 .robot.blue .robot-text, .robot.blue .robot-icon svg path {
-	color: #0080FF !important;
-	fill: #0080FF !important;
+  color: #0080FF !important;
+  fill: #0080FF !important;
 }
-
 .robot.orange .robot-text, .robot.orange .robot-icon svg path {
-	color: #FF821C !important;
-	fill: #FF821C !important;
+  color: #FF821C !important;
+  fill: #FF821C !important;
 }
-
 .robot.red .robot-text, .robot.red .robot-icon svg path {
-	color: #E41100 !important;
-	fill: #E41100 !important;
+  color: #E41100 !important;
+  fill: #E41100 !important;
 }
-
 .robot-text {
-	font-family: "roboto slab";
-	font-weight: 300;
-	margin-left: 0.25em;
+  font-family: "roboto slab";
+  font-weight: 300;
+  margin-left: 0.25em;
 }
-
 .robot-icon {
-	margin:0 !important;
-	padding:0 !important;
-    position: relative;
-    left: -0.125em;
-    bottom: 0.2em;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  left: -0.125em;
+  bottom: 0.2em;
 }
-
 .badge {
-    width: 0.75em;
-    height: 0.75em;
-    background-color: red;
-    border: 1px solid white;
-    border-radius: 0.5em;
-    position: absolute;
-    left:1.1em;
-    top:2em;
+  width: 0.75em;
+  height: 0.75em;
+  background-color: red;
+  border: 1px solid white;
+  border-radius: 0.5em;
+  position: absolute;
+  left: 1.1em;
+  top: 2em;
 }
-
 .menu-badge {
-    width: 1em;
-    height: 1em;
-    background-color: red;
-    border-radius: 0.5em;
+  width: 1em;
+  height: 1em;
+  background-color: red;
+  border-radius: 0.5em;
 }
-
 .badge-text {
-    font-family: "Roboto";
-    font-weight: 700;
-    font-size: 0.6em;
-    color: white;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 0.6em;
+  color: white;
 }
-
-
 .promoted-content {
-    position: relative;
+  position: relative;
 }
-
 .promoted-content {
-    outline: none !important;
+  outline: none !important;
 }
-
 * {
-    outline: none !important;
+  outline: none !important;
 }
-
 .promoted-content.short {
-    height: 4.96em;
-    overflow: hidden;
+  height: 4.96em;
+  overflow: hidden;
 }
-
 .promoted-content.long {
-    height: 100%;
-    overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 }
-
 .lastlinefill {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    height: 1.32em;
-    /* background-color: red; */
-    background-image: url(imgs/linearfill.png);
-    background-size: 100%;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 1.32em;
+  /* background-color: red; */
+  background-image: url(imgs/linearfill.png);
+  background-size: 100%;
 }
-
-.promoted-content.long > div.lastlinefill {
-    display: none !important;
+.promoted-content.long> div.lastlinefill {
+  display: none !important;
 }
-
 .lastlinesignal {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    font-family: 'Roboto Slab';
-    font-size: 0.875em;
-    line-height: 1.32em;
-    font-weight: 400;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  font-family: 'Roboto Slab';
+  font-size: 0.875em;
+  line-height: 1.32em;
+  font-weight: 400;
 }
-
-
-.voucher-good {
-
-}
-
+.voucher-good {}
 .voucher-bad {
-    color: #AAAAAA;
-    text-decoration: line-through;
+  color: #AAAAAA;
+  text-decoration: line-through;
 }

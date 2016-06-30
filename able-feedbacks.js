@@ -1,4 +1,4 @@
-(function () {
+(function() {
 	'use strict';
 
 	angular
@@ -16,7 +16,7 @@
 		return directive
 	}
 
-	function feedbacksController(auth, $http, config, $q){
+	function feedbacksController(auth, $http, config, $q) {
 		var vm = this
 		vm.loading = true
 		vm.touched = false
@@ -26,81 +26,85 @@
 		vm.clean = clean
 
 
-        vm.touch = touch
-        vm.untouch = untouch
+		vm.touch = touch
+		vm.untouch = untouch
 
-        function touch(path){
-            for (var k in vm.list) {
-                if (vm.list[k].path == path){
-                    vm.list[k].object.touched = true
-                    vm.touched = true
-                }
-            }
-        }
+		function touch(path) {
+			for (var k in vm.list) {
+				if (vm.list[k].path == path) {
+					vm.list[k].object.touched = true
+					vm.touched = true
+				}
+			}
+		}
 
-        function untouch(path){
-            var touches = 0
-            for (var k in vm.list) {
-                if (vm.list[k].path == path){
-                    vm.list[k].object.touched = false
-                    vm.list[k].object.float = 0
-                }
-                if (vm.list[k].object.touched) {
-                    touches++
-                }
-            }
-            if (touches > 0) {
-                vm.touched = true
-            } else {
-                vm.touched = false
-            }
-        }
+		function untouch(path) {
+			var touches = 0
+			for (var k in vm.list) {
+				if (vm.list[k].path == path) {
+					vm.list[k].object.touched = false
+					vm.list[k].object.float = 0
+				}
+				if (vm.list[k].object.touched) {
+					touches++
+				}
+			}
+			if (touches > 0) {
+				vm.touched = true
+			} else {
+				vm.touched = false
+			}
+		}
 
 
-		function get(){
+		function get() {
 			vm.loading = true
-			var req_config = {headers: {'Authorization': auth.token}}
+			var req_config = {
+				headers: {
+					'Authorization': auth.token
+				}
+			}
 			$http.get(config.api + '/users/' + auth.id + '/feedbacks', req_config)
 				.then(
-				function successCallback(response) {
-					vm.list = response.data.resources
-					vm.loading = false
-				},
-				function errorCallback(response) {
-					vm.loading = false
-					if(response.status == 401){
-						if(navigator && navigator.notification){
-							navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
-						} else {
-							window.alert('Você precisa se logar novamente.')
+					function successCallback(response) {
+						vm.list = response.data.resources
+						vm.loading = false
+					},
+					function errorCallback(response) {
+						vm.loading = false
+						if (response.status == 401) {
+							if (navigator && navigator.notification) {
+								navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
+							} else {
+								window.alert('Você precisa se logar novamente.')
+							}
+							auth.signout()
+							return
 						}
-						auth.signout()
-						return
-					}
 
-					if(response.status == 403){
-                        if(navigator && navigator.notification){
-							navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
-						} else {
-							window.alert(response.data.errors[0].error)
+						if (response.status == 403) {
+							if (navigator && navigator.notification) {
+								navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+							} else {
+								window.alert(response.data.errors[0].error)
+							}
+							return
 						}
-						return
-					}
 
-					if(navigator && navigator.notification){
-						navigator.notification.alert('Verifique sua conexão.', get, 'Able', 'Ok')
-						return
-					} else {
-						window.alert('Verifique sua conexão.')
-						get()
-						return
+						if (navigator && navigator.notification) {
+							navigator.notification.alert('Verifique sua conexão.', get, 'Able', 'Ok')
+							return
+						} else {
+							window.alert('Verifique sua conexão.')
+							get()
+							return
+						}
 					}
-				}
-			); //end then
+				); //end then
 		}
 		get()
 
-		function send(){
+		function send() {
 			vm.touched = false;
 			vm.list.slice().reverse().forEach(function(item, index, object) {
 				if (item.object.touched == true) {
@@ -108,17 +112,17 @@
 					item.done = true;
 					item.sending = true;
 					put(item).then(
-						function(resolve){
+						function(resolve) {
 							item.done = true;
 							item.sending = true;
 							vm.clean();
 						},
-						function(reject){
+						function(reject) {
 							item.done = false;
 							item.sending = false;
 							vm.touched = true;
-							if(response.status == 401){
-								if(navigator && navigator.notification){
+							if (response.status == 401) {
+								if (navigator && navigator.notification) {
 									navigator.notification.alert('Você precisa se logar novamente.', false, 'Able', 'Ok')
 								} else {
 									window.alert('Você precisa se logar novamente.')
@@ -127,16 +131,16 @@
 								return
 							}
 
-							if(response.status == 403){
-                                if(navigator && navigator.notification){
-                                    navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
-                                } else {
-                                    window.alert(response.data.errors[0].error)
-                                }
+							if (response.status == 403) {
+								if (navigator && navigator.notification) {
+									navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')
+								} else {
+									window.alert(response.data.errors[0].error)
+								}
 								return
 							}
 
-							if(navigator && navigator.notification){
+							if (navigator && navigator.notification) {
 								navigator.notification.alert('Verifique sua conexão.', false, 'Able', 'Ok')
 							} else {
 								window.alert('Verifique sua conexão.')
@@ -147,7 +151,7 @@
 			}); //end foreach
 		}
 
-		function clean(){
+		function clean() {
 			vm.list.slice().reverse().forEach(function(item, index, object) {
 				if (item.done == true) {
 					vm.list.splice(object.length - 1 - index, 1);
@@ -156,20 +160,27 @@
 		}
 
 
-		function put(feedback){
-			var req_config = {headers: {'Authorization': auth.token}};
+		function put(feedback) {
+			var req_config = {
+				headers: {
+					'Authorization': auth.token
+				}
+			};
 			var path = feedback.path;
-			var payload = {float: feedback.object.float, open: "false"};
+			var payload = {
+				float: feedback.object.float,
+				open: "false"
+			};
 
 			return $q(function(resolve, reject) {
 				$http.patch(config.api + path, payload, req_config)
 					.then(
-					function successCallback(response) {
-						resolve(response.data);
-					},
-					function errorCallback(response) {
-						reject();
-					});
+						function successCallback(response) {
+							resolve(response.data);
+						},
+						function errorCallback(response) {
+							reject();
+						});
 			});
 		}
 

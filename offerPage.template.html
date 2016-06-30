@@ -10,10 +10,11 @@
 
   <md-content offer-element flex ng-cloak>
 
+<!-- | limitTo:offer.quantity | filter:offerSearch -->
 
   	<div flex layout="column">
   		<md-card class="card-full promoted-card no-shadow"
-  		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 | limitTo:offer.quantity | filter:offerSearch track by promoted.path "
+  		ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path "
   		ng-controller="promotedController"
   		ng-if="promoted.object.max > 0"
   		ng-cloak
@@ -25,10 +26,10 @@
   				ng-src="{{content.object.url}}"
   				width="1080"
   				height="1080"
-  				style="width:100%;height:auto;min-height:0;image-rendering:-webkit-optimize-contrast !important;image-rendering: pixelated !important;border-radius: 0px;"
+  				style="width:100%;height:auto;min-height:0;border-radius: 0px;"
   				ng-cloak
   			/>
-
+<!-- image-rendering:-webkit-optimize-contrast !important;image-rendering: pixelated !important -->
   			<div layout="row" style="border-bottom: 1px solid white" ng-cloak>
   				<md-button flex ng-click="promoted.takeOne()" class="promoted-button" aria-label="retirar" ng-cloak>
   				  <md-icon md-svg-icon="imgs/minus.svg" class="svg-black"></md-icon>
@@ -82,11 +83,10 @@
   		</md-card>
   	</div>
 
-    <div flex="none" layout="row" style="padding-top:8px" ng-show="$root.offer.count">
+    <!-- <div flex="none" layout="row" style="padding-top:8px" ng-show="$root.offer.count">
       <md-button ng-show="offer.quantity<=6" class="md-raised md-accent full-button" style="margin-top:0px" ng-click="offer.toggleQuantity()">Mostrar todo estoque</md-button>
       <md-button ng-show="offer.quantity>6" class="md-raised md-accent full-button" style="margin-top:0px" ng-click="offer.toggleQuantity()">Mostrar apenas indicadas</md-button>
-
-    </div>
+    </div> -->
 
   	<div ng-show="offer.loading" style="position:absolute;top:0;left:0;width:100%;height:50%" layout="column" layout-align="center center">
   		<md-progress-circular ng-show="offer.loading" md-mode="indeterminate"></md-progress-circular>

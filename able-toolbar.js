@@ -1,10 +1,6 @@
 (function() {
 	'use strict';
-
-	angular
-		.module('able')
-		.directive('leftMenu', leftMenuDirective)
-		.directive('toolbarElement', toolbarDirective)
+	angular.module('able').directive('leftMenu', leftMenuDirective).directive('toolbarElement', toolbarDirective)
 
 	function toolbarDirective() {
 		var directive = {
@@ -50,5 +46,4 @@
 			$mdSidenav('able-left-menu').toggle();
 		}
 	}
-
 })();

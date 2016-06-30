@@ -1,10 +1,6 @@
 (function() {
 	'use strict';
-
-	angular
-		.module('able')
-		.directive('accordionElement', accordionDirective)
-
+	angular.module('able').directive('accordionElement', accordionDirective)
 
 	function accordionDirective() {
 		var directive = {
@@ -36,11 +32,5 @@
 		function toggle() {
 			vm.expanded ? short() : long()
 		}
-
-
-
 	}
-
-
-
 })();

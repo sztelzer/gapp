@@ -1,9 +1,6 @@
 (function() {
 	// 'use strict';
-
-	angular
-		.module('able')
-		.directive('mapElement', mapDirective)
+	angular.module('able').directive('mapElement', mapDirective)
 
 	function mapDirective() {
 		var directive = {
@@ -17,19 +14,16 @@
 
 	function mapController($q, $state, $rootScope, $scope) {
 		var vm = this
-
 		$scope.selectedItem
 		$scope.searchText
 		$scope.search = search
 		$scope.place = place
 		vm.setCartAddress = setCartAddress
 		vm.loading = true
-
 		var placer = new google.maps.places.PlacesService(document.getElementById('mapping2'))
 		var autocomplete = $rootScope.autocomplete
 		var geocoder = $rootScope.geocoder
 		var map
-
 		if ($rootScope.located) {
 			setMap()
 			getAddress($rootScope.latitude, $rootScope.longitude)
@@ -64,19 +58,16 @@
 			setListeners()
 		}
 
-
 		function setListeners() {
 			map.addListener('dragend', function() {
 				getAddress(map.getCenter().lat(), map.getCenter().lng())
 				$rootScope.latitude = map.getCenter().lat()
 				$rootScope.longitude = map.getCenter().lng()
 			});
-
 			map.addListener('drag', function() {
 				$rootScope.latitude = map.getCenter().lat()
 				$rootScope.longitude = map.getCenter().lng()
 			});
-
 			map.addListener('idle', function() {
 				map.setCenter({
 					'lat': $rootScope.latitude,
@@ -84,40 +75,33 @@
 				});
 				google.maps.event.trigger(map, "resize");
 			});
-
 			map.addListener('resize', function() {
 				map.setCenter({
 					'lat': $rootScope.latitude,
 					'lng': $rootScope.longitude
 				});
 			});
-
 			$scope.$watch(function w(scope) {
 				return ($rootScope.height)
 			}, function c(n, o) {
 				google.maps.event.trigger(map, "resize");
 			});
-
 			vm.loading = false
-
 		}
-
 
 		function search(address) {
 			vm.searching = true
 			if (address) {
 				var deferred = $q.defer();
-				getAutocomplete(address).then(
-					function(predictions) {
-						if (predictions) {
-							var results = [];
-							for (var i = 0, prediction; prediction = predictions[i]; i++) {
-								results.push(prediction);
-							}
-							deferred.resolve(results);
+				getAutocomplete(address).then(function(predictions) {
+					if (predictions) {
+						var results = [];
+						for (var i = 0, prediction; prediction = predictions[i]; i++) {
+							results.push(prediction);
 						}
+						deferred.resolve(results);
 					}
-				);
+				});
 				return deferred.promise;
 			}
 			return
@@ -146,16 +130,14 @@
 				$rootScope.located = true
 				$rootScope.locating = false
 				var deferred = $q.defer();
-				getPlace(place_id).then(
-					function(infos) {
-						$rootScope.place.address_components = infos.address_components
-						$rootScope.latitude = infos.geometry.location.lat()
-						$rootScope.longitude = infos.geometry.location.lng()
-						$rootScope.accuracy = 0
-						map.panTo(infos.geometry.location)
-						$rootScope.addressed = true
-					}
-				);
+				getPlace(place_id).then(function(infos) {
+					$rootScope.place.address_components = infos.address_components
+					$rootScope.latitude = infos.geometry.location.lat()
+					$rootScope.longitude = infos.geometry.location.lng()
+					$rootScope.accuracy = 0
+					map.panTo(infos.geometry.location)
+					$rootScope.addressed = true
+				});
 				return deferred.promise;
 			}
 		}
@@ -195,10 +177,5 @@
 				// $rootScope.updateCart()
 			$state.go('storePage.offerPage')
 		}
-
-
 	}
-
-
-
 })();

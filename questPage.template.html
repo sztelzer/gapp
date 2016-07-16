@@ -1,17 +1,17 @@
 <div element-quest flex layout-fill layout="column" quest-page>
-	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak ng-class="$root.platform">
+	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-class="$root.platform">
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
 			<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white"></md-icon>
 		</md-button> <img flex="none" src="imgs/able.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Criar Perfil</div>
 		<div flex="none" style="width:78px"></div>
 	</md-toolbar>
-	<md-content flex id="quest-content" ng-cloak>
+	<md-content flex id="quest-content">
 		<div layout="row" layout-align="start start" style="margin:16px;" class="robot blue">
 			<md-icon md-svg-src="imgs/robot.svg" class="robot-icon" style="width:3em;height:3em"></md-icon>
 			<div flex class="robot-text" style="color: black !important; font-weight: 500;">Me conte suas preferências, vou selecionar as melhores cervejas para seu paladar.</div>
 		</div>
-		<form name="questForm" novalidate ng-cloak>
+		<form name="questForm" novalidate>
 			<div style="margin-top:8px"></div>
 			<!-- ng-hide="$index > quest.answered" -->
 			<md-card flex class="card-full md-whiteframe-8dp" ng-repeat="tag in quest.tags">

@@ -408,3 +408,24 @@ md-input-container.no-errors div.md-errors-spacer, md-autocomplete md-autocomple
   color: #AAAAAA;
   text-decoration: line-through;
 }
+.profilecode {
+  padding: 0.2em;
+  margin: 0.4em 0em;
+  background-color: white;
+  border-radius: 0.2em;
+  font-family: "roboto slab", sans-serif;
+  font-size: 2em;
+  color: #26BD49;
+  font-weight: bold;
+}
+.closed_notice {
+  width: 100%;
+  color: white;
+  background-color: #b70000;
+  font-size: 0.75em;
+  line-height: 0.75em;
+  height: 1.35em;
+  padding: 4px 0px;
+  text-align: center;
+  font-weight: 100;
+}

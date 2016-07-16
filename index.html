@@ -61,7 +61,7 @@
 				var oReq = new XMLHttpRequest();
 				oReq.addEventListener("load", bootOnlineBrowser);
 				oReq.addEventListener("error", willRefresh);
-				oReq.open("GET", "https://api-dot-heartbend.appspot.com/force_test_connection");
+				oReq.open("GET", "http://127.0.0.1:8081/force_test_connection");
 				oReq.send();
 			}
 		})

@@ -1,8 +1,20 @@
 <div layout="column" flex="none" layout-fill>
-	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-cloak ng-class="$root.platform">
-		<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button" aria-label="Menu" ng-cloak>
-			<md-icon md-svg-icon="imgs/menu.svg" class="svg-white"></md-icon>
-		</md-button>
+
+
+	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-class="$root.platform">
+
+		<span style="width:40px;height:40px;position:relative">
+			<span ng-hide="$state.includes('storePage.mapPage')">
+				<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button animate-left" aria-label="Menu" ng-show="$state.includes('storePage.offerPage')">
+					<md-icon md-svg-icon="imgs/menu.svg" class="svg-white"></md-icon>
+				</md-button>
+
+				<md-button ng-click="toolbar.back()" class="md-icon-button animate-left" aria-label="Back" ng-show="!$state.includes('storePage.offerPage')">
+					<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white"></md-icon>
+				</md-button>
+			</span>
+		</span>
+
 		<div flex="none" class="badge" ng-click="toolbar.toggleLeftMenu('able-left-menu')" ng-show="app.badge>0">
 			<div class="badge-text">
 				<center>{{app.badge}}</center>
@@ -11,17 +23,20 @@
 		<div flex class="toolbar-title" layout="row" layout-align="center center">{{app.state.current.data.title}}</div>
 		<div flex="none" style="width:83px"></div>
 	</md-toolbar>
-	<div flex cart-element ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout='column' ng-cloak></div>
-	<div flex ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout='column' ng-cloak></div>
-	<div flex ui-view ng-hide="$state.includes('storePage.offerPage') || $state.includes('storePage.mapPage')" layout='column' ng-cloak></div>
+
+
+
+	<div flex cart-element ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout='column'></div>
+	<div flex ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout='column'></div>
+	<div flex ui-view ng-hide="$state.includes('storePage.offerPage') || $state.includes('storePage.mapPage')" layout='column'></div>
 </div>
 <md-sidenav left-menu style="z-index:9000" layout="column" class="md-sidenav-left animated" md-component-id="able-left-menu">
 	<md-subheader class="sidenav" style="background-color:#00468c;height:56px" class="md-caption" ng-class="$root.platform"></md-subheader>
 	<md-list flex="none">
-		<md-list-item ng-click="leftmenu.go('storePage.offerPage')">
+		<!-- <md-list-item ng-click="leftmenu.go('storePage.offerPage')">
 			<md-icon md-svg-icon="imgs/robot.svg" class="svg-black"></md-icon>
 			<p>Indicações</p>
-		</md-list-item>
+		</md-list-item> -->
 		<md-list-item ng-click="leftmenu.go('storePage.feedbacksPage')">
 			<md-icon md-svg-icon="imgs/grade.svg" class="svg-black"></md-icon>
 			<p>Avaliações</p>
@@ -56,8 +71,8 @@
 		<!-- <md-list-item ng-click="app.showConversation()"><md-icon md-svg-icon="imgs/ic_launch_black_48px.svg" class="svg-black"></md-icon><p>http://able.cool</p></md-list-item> --></md-list>
 	<md-list flex> </md-list>
 	<md-list flex="none">
-		<md-list-item class="md-caption">http://able.cool
-			<br/> Almeida Neto Comércio de Bebidas Ltda. São Paulo/SP CNPJ 23.500.558/0001-31</br> + United Beverages of America, LLC. Boston/MA</md-list-item>
+		<md-list-item class="md-caption">www.able.cool
+			<br/> Almeida Neto Comércio de Bebidas Ltda<br/>São Paulo/SP CNPJ 23.500.558/0001-31</md-list-item>
 	</md-list>
 </md-sidenav>
 <!-- <div flex="none" layout="row" style="width:100%">

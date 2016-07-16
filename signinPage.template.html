@@ -1,12 +1,12 @@
 <div signin-element layout-fill layout="column" signin-page>
-	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak ng-class="$root.platform">
+	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-class="$root.platform">
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
 			<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white"></md-icon>
 		</md-button> <img flex="none" src="imgs/able.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Login</div>
 		<div flex="none" style="width:83px"></div>
 	</md-toolbar>
-	<md-content flex layout="column" layout-align="center center" ng-cloak class="md-padding">
+	<md-content flex layout="column" layout-align="center center" class="md-padding">
 		<md-input-container flex='none' class="md-block" style="width:100%">
 			<label>E-mail</label>
 			<input type="email" name="email" ng-model="signin.email" minlength="6" maxlength="256" ng-pattern="/^.+@.+\..+$/" /> </md-input-container>

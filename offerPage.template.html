@@ -58,11 +58,13 @@
 	</div>
 </md-content>
 
-
-<div flex='none' layout="column" layout-align='start center' style="width:100%;position:relative;box-shadow: 0px 0px 20px 0px rgba(109, 96, 92, 0.54);" ng-show="cart.quantity>0">
+<!-- ALL CART BLOCK -->
+<div flex='none' layout="column" layout-align='start center' class="maincart" style="width:100%;position:relative;box-shadow: 0px 0px 20px 0px rgba(109, 96, 92, 0.54);" ng-show="cart.quantity>0">
 	<div layout="row" ng-show="cart.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
+
+	<!-- FIRST LINE RESUME (expander buttons) -->
 	<div flex="none" layout="row" style="width:100%;position:relative;">
 		<a flex="20" layout="row" layout-align="start center" ng-click="cart.productsOpen = !cart.productsOpen" class="products" ng-class="cart.productsOpen ? 'opened' : (cart.open ? 'cartopen' : 'closed') " md-ink-ripple="cart.productsOpen?'#000000':'#FFFFFF'" style="position:relative;border-right:1px solid #26BD49; padding-left:8px">
 			<div flex></div>
@@ -113,12 +115,16 @@
 			</div>
 		</a>
 	</div>
-	<div flex='none' class="productList md-padding md-caption" ng-show="cart.productsOpen" ng-class="cart.productsOpen?'products-opened':'products-closed'" style="width:100%;background-color:white" layout="column">
+
+	<!-- CART LISTING -->
+	<div class="productList md-padding md-caption" ng-show="cart.productsOpen" ng-class="cart.productsOpen?'products-opened':'products-closed'" style="width:100%;background-color:white">
 		<div layout="row" layout-align="space-between center" style="width:100%" ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.sku.object.recipe.object.taste.drinkability':1 track by promoted.path" ng-if="promoted.quantity">
 			<div>{{promoted.quantity}}x {{promoted.object.sku.object.recipe.object.name}} {{promoted.object.sku.object.volume}}ml</div>
 			<div>{{promoted.object.sku.object.recipe.object.taste.style}}</div>
 		</div>
 	</div>
+
+	<!-- CHECKOUT -->
 	<div flex='none' class="checkout" ng-show="cart.open" ng-class="cart.open?'opened':'closed'" style="width:100%;" layout="column">
 		<a class="" style="width:100%;min-height:3em;padding:8px 8px" layout="row" layout-align="start center" ng-click="$state.go('storePage.mapPage')">
 			<div flex="none">
@@ -130,7 +136,7 @@
 				<md-icon md-svg-icon="imgs/edit.svg" class="svg-black"></md-icon>
 			</div>
 		</a>
-		<a class="" style="width:100%;height:3em;padding:0 8px" layout="row" layout-align="start center" ng-click="$state.go('storePage.plasticsPage')">
+		<a class="" style="width:100%;min-height:3em;padding:0 8px" layout="row" layout-align="start center" ng-click="$state.go('storePage.plasticsPage')">
 			<div flex="none">
 				<md-icon md-svg-icon="imgs/credit_card.svg" class="svg-black" style="margin-right:8px"></md-icon>
 			</div>
@@ -141,9 +147,11 @@
 				<md-icon md-svg-icon="imgs/edit.svg" class="svg-black"></md-icon>
 			</div>
 		</a>
-		<div flex="none" layout="row" style="padding-top:8px">
+		<div flex="none" layout="row" style="min-height:3em;padding-top:8px">
 			<!-- <md-button class="md-raised md-accent full-button" style="margin-top:0px" ng-click="cart.send()" ng-disabled="!cart.plastic || !$root.plastic.path || !cart.place || cart.sending || !$root.attended">Próximo</md-button> -->
 			<md-button class="md-raised md-accent full-button" style="margin-top:0px" ng-click="cart.send()" ng-disabled="!cart.plastic || !$root.plastic.path || !cart.place || cart.sending || $root.not_attending || !$root.attended">Enviar Pedido</md-button>
 		</div>
 	</div>
+
+
 </div>

@@ -2,10 +2,10 @@
 	'use strict';
 	angular.module("able", ['ngMaterial', 'ngMessages', 'ngAnimate', 'ngStorage', 'ui.router', 'ct.ui.router.extras', 'ngAria', 'angularPayments', 'dcbImgFallback', ]).value('config', {
 			//heartbend
-			api: 'http://127.0.0.1:8081',
-			company_path: '/companies/5066549580791808',
-			// api: 'https://api-dot-heartbend.appspot.com',
-			// company_path: '/companies/5654313976201216',
+			// api: 'http://127.0.0.1:8081',
+			// company_path: '/companies/5066549580791808',
+			api: 'https://api-dot-heartbend.appspot.com',
+			company_path: '/companies/5654313976201216',
 			node_function: 'productConsumerDispatch',
 			offers_count: 6,
 			//helpshift

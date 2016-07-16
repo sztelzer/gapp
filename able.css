@@ -429,3 +429,11 @@ md-input-container.no-errors div.md-errors-spacer, md-autocomplete md-autocomple
   text-align: center;
   font-weight: 100;
 }
+
+.order_ok {
+	border-left: 4px solid lime;
+}
+
+.order_not_ok {
+	border-left: 4px solid red;
+}

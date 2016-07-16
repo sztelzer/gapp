@@ -182,29 +182,58 @@
 @keyframes checkoutout {
 	0% {
 		max-height: 12em;
-		/*padding-top: 8px;*/
-		/*padding-bottom: 8px;*/
-		/*transform: translate3d(0, 0, 0);*/
 	}
 	100% {
 		max-height: 0em;
-		/*padding-top: 0px;*/
-		/*padding-bottom: 0px;*/
-		/*transform: translate3d(0, 100%, 0);*/
 	}
 }
 
 @keyframes checkoutin {
 	0% {
 		max-height: 0em;
-		/*padding-top: 0px;*/
-		/*padding-bottom: 0px;*/
-		/*transform: translate3d(0, 100%, 0);*/
 	}
 	100% {
 		max-height: 12em;
-		/*padding-top: 8px;*/
-		/*padding-bottom: 8px;*/
-		/*transform: translate3d(0, 0, 0);*/
+	}
+}
+
+
+.promoted-counter.ng-hide-remove {
+	animation: 0.5s counterin ease;
+}
+
+.promoted-counter.ng-hide-add {
+	animation: 0.5s counterout ease;
+}
+
+.promoted-button.ng-hide-remove {
+	animation: 0.5s counterin ease;
+}
+
+.promoted-button.ng-hide-add {
+	animation: 0.5s counterout ease;
+}
+
+
+
+@keyframes counterout {
+	0% {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+	100% {
+		opacity: 0;
+		transform: translate3d(0, -2em, 0);
+	}
+}
+
+@keyframes counterin {
+	0% {
+		opacity: 0;
+		transform: translate3d(0, -2em, 0);
+	}
+	100% {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
 	}
 }

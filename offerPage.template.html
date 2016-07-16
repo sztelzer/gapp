@@ -5,18 +5,30 @@
 <md-content offer-element flex>
 	<!-- | limitTo:offer.quantity | filter:offerSearch -->
 	<div flex layout="column">
-		<md-card class="card-full promoted-card no-shadow" ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path " ng-controller="promotedController" ng-if="promoted.object.max > 0"> <img class="md-card-image" alt="product image" ng-repeat="content in promoted.object.sku.object.contents" ng-if="content.object.function=='face_image'" loading-src="{{'imgs/placeholder.gif'}}" ng-src="{{content.object.url}}" width="1080" height="1080"
-							style="width:100%;height:auto;min-height:0;border-radius: 0px;" />
-			<!-- image-rendering:-webkit-optimize-contrast !important;image-rendering: pixelated !important -->
-			<div layout="row" style="border-bottom: 1px solid white">
-				<md-button flex ng-click="promoted.takeOne()" class="promoted-button" aria-label="retirar">
-					<md-icon md-svg-icon="imgs/minus.svg" class="svg-black"></md-icon>
-				</md-button>
-				<div flex class="counter">{{promoted.quantity}}</div>
-				<md-button flex ng-click="promoted.putOne()" class="promoted-button" aria-label="adicionar">
-					<md-icon md-svg-icon="imgs/plus.svg" class="svg-green"></md-icon>
-				</md-button>
+		<md-card class="card-full promoted-card no-shadow" ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path " ng-controller="promotedController" ng-if="promoted.object.max > 0">
+
+			<div style="position:relative">
+				<img class="md-card-image" alt="product image" ng-repeat="content in promoted.object.sku.object.contents" ng-if="content.object.function=='face_image'" loading-src="{{'imgs/placeholder.gif'}}" ng-src="{{content.object.url}}" width="1080" height="1080" style="width:100%;height:auto;min-height:0;border-radius: 0px;" />
+
+				<div flex layout="row" layout-align="space-between end" class="promoted-buttons">
+
+					<div flex="none">
+						<div flex="none" layout="row" layout-align="center center" ng-show="promoted.quantity" ng-click="promoted.takeOne()" md-ink-ripple="#ffffff" class="promoted-button" aria-label="retirar">
+							<md-icon md-svg-icon="imgs/minus.svg"></md-icon>
+						</div>
+					</div>
+
+					<div flex="none" layout="column" layout-align="end center">
+						<div class="promoted-counter" ng-show="promoted.quantity">{{promoted.quantity}}</div>
+						<div flex="none" layout="row" layout-align="center center" ng-click="promoted.putOne()" md-ink-ripple="#ffffff" class="promoted-button" aria-label="adicionar">
+							<md-icon md-svg-icon="imgs/plus.svg"></md-icon>
+						</div>
+					</div>
+
+				</div>
 			</div>
+
+
 			<md-card-content class="promoted-card-content">
 				<div flex layout="row" style="margin-bottom:0px;">
 					<div flex="none" layout="row" layout-align="start end" class="robot" ng-class="$index < 6 ? 'blue' : ($index > 11 ? 'red' : 'orange')">

@@ -244,12 +244,17 @@ md-icon.small-icon {
 .promoted-button {
 	position:relative;
   background-color: rgba(0, 0, 0, 0.5);
-  /*overflow: hidden;*/
   border-radius: 50%;
 	width: 4em;
 	height: 4em;
 	margin: 0 1.5em 1.5em 1.5em;
 }
+
+.promoted-button:active {
+background-color: rgba(0, 128, 255, 0.5);
+
+}
+
 
 .promoted-counter {
 	background-color: #0080ff;
@@ -444,14 +449,14 @@ md-input-container.no-errors div.md-errors-spacer, md-autocomplete md-autocomple
   color: #26BD49;
   font-weight: bold;
 }
-.closed_notice {
+.closed-notice {
   width: 100%;
   color: white;
-  background-color: #b70000;
-  font-size: 0.75em;
-  line-height: 0.75em;
-  height: 1.35em;
-  padding: 4px 0px;
+  background-color: #d01717;
+  font-size: 0.7em;
+  line-height: 0.8em;
+  /*height: 1.35em;*/
+  padding: 10px 0px 4px 0;
   text-align: center;
   font-weight: 100;
 }

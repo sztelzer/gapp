@@ -3,32 +3,34 @@
 
 	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-class="$root.platform">
 
-		<span style="width:40px;height:40px;position:relative">
-			<span ng-hide="$state.includes('storePage.mapPage')">
-				<md-button ng-click="toolbar.toggleLeftMenu('able-left-menu')" class="md-icon-button animate-left" aria-label="Menu" ng-show="$state.includes('storePage.offerPage')">
-					<md-icon md-svg-icon="imgs/menu.svg" class="svg-white"></md-icon>
-				</md-button>
+		<div style="width:36px;height:36px;position:relative">
+			<div ng-if="!$state.includes('storePage.mapPage')" style="width:36px;height:36px;padding:6px;" class="menu-icon">
+				<div ng-click="toolbar.toggleLeftMenu('able-left-menu')" ng-if="$state.includes('storePage.offerPage')" class="menu-icon">
+					<md-icon md-svg-icon="imgs/menu.svg" class="svg-white" style="width:24px;height:24px;"></md-icon>
+				</div>
 
-				<md-button ng-click="toolbar.back()" class="md-icon-button animate-left" aria-label="Back" ng-show="!$state.includes('storePage.offerPage')">
-					<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white"></md-icon>
-				</md-button>
-			</span>
-		</span>
+				<div ng-click="toolbar.back()" ng-if="!$state.includes('storePage.offerPage')" class="menu-icon">
+					<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white" style="width:24px;height:24px;"></md-icon>
+				</div>
+			</div>
+		</div>
 
-		<div flex="none" class="badge" ng-click="toolbar.toggleLeftMenu('able-left-menu')" ng-show="app.badge>0">
+		<div flex="none" class="badge" ng-click="toolbar.toggleLeftMenu('able-left-menu')" ng-if="app.badge > 0">
 			<div class="badge-text">
 				<center>{{app.badge}}</center>
 			</div>
-		</div> <img flex="none" src="imgs/able.svg" class="toolbar-logo">
+		</div>
+
+		<img flex="none" src="imgs/able.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">{{app.state.current.data.title}}</div>
-		<div flex="none" style="width:83px"></div>
+		<div flex="none" style="width:79px"></div>
 	</md-toolbar>
 
 
 
-	<div flex cart-element ui-view="offer" ng-show="$state.includes('storePage.offerPage')" layout='column'></div>
-	<div flex ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout='column'></div>
-	<div flex ui-view ng-hide="$state.includes('storePage.offerPage') || $state.includes('storePage.mapPage')" layout='column'></div>
+	<div flex ui-view="offer" cart-element ng-show="$state.includes('storePage.offerPage')" layout='column' ng-cloak></div>
+	<div flex ui-view="map" ng-show="$state.includes('storePage.mapPage')" layout='column' ng-cloak></div>
+	<div flex ui-view ng-if="!$state.includes('storePage.offerPage') && !$state.includes('storePage.mapPage')" layout='column' ng-cloak></div>
 </div>
 <md-sidenav left-menu style="z-index:9000" layout="column" class="md-sidenav-left animated" md-component-id="able-left-menu">
 	<md-subheader class="sidenav" style="background-color:#00468c;height:56px" class="md-caption" ng-class="$root.platform"></md-subheader>

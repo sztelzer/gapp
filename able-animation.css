@@ -64,176 +64,195 @@
 
 
 
-.animate-left.ng-hide-remove {
-	animation: 0.25s in ease;
+
+
+/*icone da barra superior*/
+.menu-icon {
+	position:absolute;
+}
+.menu-icon.ng-leave,
+.menu-icon.ng-enter {
+	transition: all 0.5s ease;
 	position:absolute;
 }
 
-.animate-left.ng-hide-add {
-	animation: 0.25s out ease;
-	position:absolute;
+.menu-icon.ng-leave.ng-leave-active,
+.menu-icon.ng-enter {
+	transform: translate3d(-36px, 0, 0);
 }
 
-@keyframes out {
-	0% {
-		transform: translate3d(0, 0, 0);
-	}
-	100% {
-		transform: translate3d(-200%, 0, 0);
-	}
-}
-
-@keyframes in {
-	0% {
-		transform: translate3d(-200%, 0, 0);
-	}
-	100% {
-		transform: translate3d(0, 0, 0);
-	}
+.menu-icon.ng-leave,
+.menu-icon.ng-enter.ng-enter-active {
+	transform: translate3d(0, 0, 0);
 }
 
 
 
 
 
-.maincart.ng-hide-remove {
-	animation: 0.25s cartin ease;
-	position:absolute;
+
+
+/*promoted-counters*/
+.promoted-counter.ng-leave,
+.promoted-counter.ng-enter {
+	transition: all 0.25s;
 }
 
-.maincart.ng-hide-add {
-	animation: 0.25s cartout ease;
-	position:absolute;
+.promoted-counter.ng-leave.ng-leave-active,
+.promoted-counter.ng-enter {
+	opacity: 0;
+	transform: translate3d(0, -2em, 0);
 }
 
-/**/
-
-.productList.ng-hide-remove {
-	animation: 0.25s expandheight ease-in;
+.promoted-counter.ng-leave,
+.promoted-counter.ng-enter.ng-enter-active {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
 }
 
-.productList.ng-hide-add {
-	animation: 0.25s collapseheight ease;
+/*promoted-button-minus*/
+.promoted-button-minus.ng-leave,
+.promoted-button-minus.ng-enter {
+	transition: all 0.25s;
 }
 
-/**/
-
-.checkout.ng-hide-remove {
-	animation: 0.25s checkoutin ease;
-	/*overflow: hidden;*/
+.promoted-button-minus.ng-leave.ng-leave-active,
+.promoted-button-minus.ng-enter {
+	opacity: 0;
+	transform: translate3d(0, -2em, 0);
 }
 
-.checkout.ng-hide-add {
-	animation: 0.5s checkoutout ease;
-	/*overflow: hidden;*/
-}
-
-
-
-
-@keyframes cartout {
-	0% {
-		transform: translate3d(0, 0, 0);
-	}
-	100% {
-		transform: translate3d(0, 100%, 0);
-	}
-}
-
-@keyframes cartin {
-	0% {
-		transform: translate3d(0, 100%, 0);
-	}
-	100% {
-		transform: translate3d(0, 0, 0);
-	}
-}
-
-@keyframes collapseheight {
-	0% {
-		max-height: 136px;
-		padding-top: 8px;
-		padding-bottom: 8px;
-		/*transform: translate3d(0, 0, 0);*/
-	}
-	100% {
-		max-height: 0px;
-		padding-top: 0px;
-		padding-bottom: 0px;
-		/*transform: translate3d(0, 100%, 0);*/
-	}
-}
-
-@keyframes expandheight {
-	0% {
-		max-height: 0px;
-		padding-top: 0px;
-		padding-bottom: 0px;
-		/*transform: translate3d(0, 100%, 0);*/
-	}
-	100% {
-		max-height: 136px;
-		padding-top: 8px;
-		padding-bottom: 8px;
-		/*transform: translate3d(0, 0, 0);*/
-	}
-}
-
-@keyframes checkoutout {
-	0% {
-		max-height: 12em;
-	}
-	100% {
-		max-height: 0em;
-	}
-}
-
-@keyframes checkoutin {
-	0% {
-		max-height: 0em;
-	}
-	100% {
-		max-height: 12em;
-	}
-}
-
-
-.promoted-counter.ng-hide-remove {
-	animation: 0.5s counterin ease;
-}
-
-.promoted-counter.ng-hide-add {
-	animation: 0.5s counterout ease;
-}
-
-.promoted-button.ng-hide-remove {
-	animation: 0.5s counterin ease;
-}
-
-.promoted-button.ng-hide-add {
-	animation: 0.5s counterout ease;
+.promoted-button-minus.ng-leave,
+.promoted-button-minus.ng-enter.ng-enter-active {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
 }
 
 
 
-@keyframes counterout {
-	0% {
-		opacity: 1;
-		transform: translate3d(0, 0, 0);
-	}
-	100% {
-		opacity: 0;
-		transform: translate3d(0, -2em, 0);
-	}
+
+
+
+
+
+
+
+/*Cart all*/
+.main-cart.ng-leave,
+.main-cart.ng-enter {
+	transition: transform 0.5s ease-in-out;
+	position:absolute !important;
+	top:100vh !important;
 }
 
-@keyframes counterin {
-	0% {
-		opacity: 0;
-		transform: translate3d(0, -2em, 0);
-	}
-	100% {
-		opacity: 1;
-		transform: translate3d(0, 0, 0);
-	}
+.main-cart.ng-leave.ng-leave-active,
+.main-cart.ng-enter {
+	transform: translate3d(0, 0%, 0);
+}
+
+.main-cart.ng-leave,
+.main-cart.ng-enter.ng-enter-active {
+	transform: translate3d(0, -100%, 0);
+}
+
+/*Cart top resume line*/
+/*.cart-resume.ng-leave,
+.cart-resume.ng-enter {
+	transition: max-height 0.125s;
+}
+
+.cart-resume.ng-leave.ng-leave-active,
+.cart-resume.ng-enter {
+	max-height: 0px;
+}
+
+.cart-resume.ng-leave,
+.cart-resume.ng-enter.ng-enter-active {
+	max-height: 38px;
+}*/
+
+
+/*product list block*/
+.products-list.ng-leave,
+.products-list.ng-enter {
+	transition: all 0.25s ease;
+}
+
+.products-list.ng-leave.ng-leave-active,
+.products-list.ng-enter {
+	max-height: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.products-list.ng-leave {
+	max-height: 136px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+.products-list.ng-enter.ng-enter-active {
+	max-height: 256px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+
+
+/*each product listed*/
+.product-listed.ng-enter {
+	transition: height 0.1s, opacity 0.2s 0.1s;
+}
+
+.product-listed.ng-leave {
+  transition: opacity 0.1s, height 0.2s 0.1s;
+}
+
+.product-listed.ng-leave.ng-leave-active,
+.product-listed.ng-enter {
+  opacity:0;
+  height:0;
+}
+
+.product-listed.ng-leave,
+.product-listed.ng-enter.ng-enter-active {
+  opacity:1;
+  height:14px;
+}
+
+
+
+
+
+/*CHECKOUT (map,card,send)*/
+.checkout.ng-leave,
+.checkout.ng-enter {
+	transition: max-height 0.5s;
+}
+
+.checkout.ng-leave.ng-leave-active,
+.checkout.ng-enter {
+	max-height: 0em;
+}
+
+.checkout.ng-leave,
+.checkout.ng-enter.ng-enter-active {
+	max-height: 140px;
+}
+
+
+
+/*Closed Notice*/
+.closed-notice.ng-leave,
+.closed-notice.ng-enter {
+	transition: transform 0.1s;
+}
+
+.closed-notice.ng-leave.ng-leave-active,
+.closed-notice.ng-enter {
+	transform: translate3d(0, -100%, 0);
+}
+
+.closed-notice.ng-leave,
+.closed-notice.ng-enter.ng-enter-active {
+	transform: translate3d(0, 0, 0);
 }

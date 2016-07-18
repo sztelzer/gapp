@@ -1,30 +1,33 @@
-<div ng-show="$root.not_attending" class="closed_notice" ng-click="app.showSingleFAQ('23')">
+<div flex="none" ng-if="$root.not_attending" class="closed-notice md-whiteframe-8dp" ng-click="app.showSingleFAQ('23')" ng-cloak>
+	Infelizmente não podemos entregar neste momento.<br/>
 	{{$root.next_day}} ({{$root.next_weekday}}) entregaremos das {{$root.next_start | minutesToTime}} às {{$root.next_end | minutesToTime}}<md-icon md-svg-icon="imgs/info.svg" class="svg-white" style="height:1.5em;position:relative;top:-0.15em;"></md-icon>
 </div>
 
-<md-content offer-element flex>
+<md-content offer-element flex ng-cloak>
 	<!-- | limitTo:offer.quantity | filter:offerSearch -->
 	<div flex layout="column">
 		<md-card class="card-full promoted-card no-shadow" ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.rank':1 track by promoted.path " ng-controller="promotedController" ng-if="promoted.object.max > 0">
 
 			<div style="position:relative">
 				<img class="md-card-image" alt="product image" ng-repeat="content in promoted.object.sku.object.contents" ng-if="content.object.function=='face_image'" loading-src="{{'imgs/placeholder.gif'}}" ng-src="{{content.object.url}}" width="1080" height="1080" style="width:100%;height:auto;min-height:0;border-radius: 0px;" />
-
 				<div flex layout="row" layout-align="space-between end" class="promoted-buttons">
-
+					<!-- left space -->
 					<div flex="none">
-						<div flex="none" layout="row" layout-align="center center" ng-show="promoted.quantity" ng-click="promoted.takeOne()" md-ink-ripple="#ffffff" class="promoted-button" aria-label="retirar">
+						<!-- remove one -->
+						<div flex="none" layout="row" layout-align="center center" ng-if="promoted.quantity" ng-click="promoted.takeOne()" class="promoted-button promoted-button-minus" aria-label="retirar">
 							<md-icon md-svg-icon="imgs/minus.svg"></md-icon>
 						</div>
 					</div>
 
+					<!-- right space -->
 					<div flex="none" layout="column" layout-align="end center">
-						<div class="promoted-counter" ng-show="promoted.quantity">{{promoted.quantity}}</div>
-						<div flex="none" layout="row" layout-align="center center" ng-click="promoted.putOne()" md-ink-ripple="#ffffff" class="promoted-button" aria-label="adicionar">
+						<!-- counter -->
+						<div class="promoted-counter" ng-if="promoted.quantity">{{promoted.quantity}}</div>
+						<!-- add one -->
+						<div flex="none" layout="row" layout-align="center center" ng-click="promoted.putOne()" class="promoted-button" aria-label="adicionar">
 							<md-icon md-svg-icon="imgs/plus.svg"></md-icon>
 						</div>
 					</div>
-
 				</div>
 			</div>
 
@@ -71,14 +74,14 @@
 </md-content>
 
 <!-- ALL CART BLOCK -->
-<div flex='none' layout="column" layout-align='start center' class="maincart" style="width:100%;position:relative;box-shadow: 0px 0px 20px 0px rgba(109, 96, 92, 0.54);" ng-show="cart.quantity>0">
+<div flex='none' layout="column" layout-align='start center' class="main-cart" ng-if="cart.quantity" style="width:100%;position:relative;box-shadow: 0px 0px 20px 0px rgba(109, 96, 92, 0.54);">
 	<div layout="row" ng-show="cart.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
 
 	<!-- FIRST LINE RESUME (expander buttons) -->
-	<div flex="none" layout="row" style="width:100%;position:relative;">
-		<a flex="20" layout="row" layout-align="start center" ng-click="cart.productsOpen = !cart.productsOpen" class="products" ng-class="cart.productsOpen ? 'opened' : (cart.open ? 'cartopen' : 'closed') " md-ink-ripple="cart.productsOpen?'#000000':'#FFFFFF'" style="position:relative;border-right:1px solid #26BD49; padding-left:8px">
+	<div flex="none" layout="row" class="cart-resume" style="width:100%;position:relative;">
+		<a flex="20" layout="row" layout-align="start center" ng-click="cart.productsOpen = !cart.productsOpen" class="products" ng-class="cart.productsOpen ? 'opened' : (cart.open ? 'cartopen' : 'closed') " style="position:relative;border-right:1px solid #26BD49; padding-left:8px">
 			<div flex></div>
 			<div flex="none">
 				<md-icon md-svg-icon="imgs/receipt.svg" class="small-icon"></md-icon>
@@ -92,7 +95,7 @@
 				</center>
 			</div>
 		</a>
-		<a flex="80" layout="row" ng-click="cart.open = !cart.open" class="cart" layout-align="start center" ng-class="cart.open?'opened':'closed'" md-ink-ripple="cart.open?'#000000':'#FFFFFF'" style="position:relative">
+		<a flex="80" layout="row" ng-click="cart.open = !cart.open" class="cart" layout-align="start center" ng-class="cart.open?'opened':'closed'" style="position:relative">
 			<div flex></div>
 			<div flex="none">
 				<md-icon md-svg-icon="imgs/bike.svg" class="small-icon svg-white"></md-icon>
@@ -129,16 +132,16 @@
 	</div>
 
 	<!-- CART LISTING -->
-	<div class="productList md-padding md-caption" ng-show="cart.productsOpen" ng-class="cart.productsOpen?'products-opened':'products-closed'" style="width:100%;background-color:white">
-		<div layout="row" layout-align="space-between center" style="width:100%" ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.sku.object.recipe.object.taste.drinkability':1 track by promoted.path" ng-if="promoted.quantity">
+	<div class="products-list md-padding md-caption" ng-if="cart.productsOpen" ng-class="cart.productsOpen?'products-opened':'products-closed'" style="width:100%;background-color:white">
+		<div class="product-listed" layout="row" layout-align="space-between center" style="width:100%" ng-repeat="promoted in $root.offer.object.promoteds | orderBy:'object.sku.object.recipe.object.taste.drinkability':1 track by promoted.path" ng-if="promoted.quantity">
 			<div>{{promoted.quantity}}x {{promoted.object.sku.object.recipe.object.name}} {{promoted.object.sku.object.volume}}ml</div>
 			<div>{{promoted.object.sku.object.recipe.object.taste.style}}</div>
 		</div>
 	</div>
 
 	<!-- CHECKOUT -->
-	<div flex='none' class="checkout" ng-show="cart.open" ng-class="cart.open?'opened':'closed'" style="width:100%;" layout="column">
-		<a class="" style="width:100%;min-height:3em;padding:8px 8px" layout="row" layout-align="start center" ng-click="$state.go('storePage.mapPage')">
+	<div flex='none' class="checkout" ng-if="cart.open" ng-class="cart.open?'opened':'closed'" style="width:100%;" layout="column">
+		<a class="" style="width:100%;min-height:3em;padding:0 8px" layout="row" layout-align="start center" ng-click="$state.go('storePage.mapPage')">
 			<div flex="none">
 				<md-icon md-svg-icon="imgs/place.svg" class="svg-black" style="margin-right:8px"></md-icon>
 			</div>

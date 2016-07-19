@@ -173,7 +173,7 @@
 
 
 /*product list block*/
-.products-list.ng-leave,
+/*.products-list.ng-leave,
 .products-list.ng-enter {
 	transition: all 0.25s ease;
 }
@@ -196,10 +196,10 @@
 	padding-bottom: 8px;
 }
 
-
+*/
 
 /*each product listed*/
-.product-listed.ng-enter {
+/*.product-listed.ng-enter {
 	transition: height 0.1s, opacity 0.2s 0.1s;
 }
 
@@ -217,14 +217,14 @@
 .product-listed.ng-enter.ng-enter-active {
   opacity:1;
   height:14px;
-}
+}*/
 
 
 
 
 
 /*CHECKOUT (map,card,send)*/
-.checkout.ng-leave,
+/*.checkout.ng-leave,
 .checkout.ng-enter {
 	transition: max-height 0.5s;
 }
@@ -237,7 +237,7 @@
 .checkout.ng-leave,
 .checkout.ng-enter.ng-enter-active {
 	max-height: 140px;
-}
+}*/
 
 
 

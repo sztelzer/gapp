@@ -468,3 +468,7 @@ md-input-container.no-errors div.md-errors-spacer, md-autocomplete md-autocomple
 .order_not_ok {
 	border-left: 4px solid red;
 }
+
+md-progress-linear .md-container {
+    background-color: #26BD49;
+}

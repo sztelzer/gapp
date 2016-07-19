@@ -1,4 +1,10 @@
 <div element-quest flex layout-fill layout="column" quest-page>
+
+	<div class="progressOverlayAnimate" ng-if="quest.sending" style="position:absolute;background-color:#F4F2EF;z-index:99" flex layout-fill layout="column" layout-align="center center">
+		<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+	</div>
+
+
 	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-class="$root.platform">
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
 			<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white"></md-icon>
@@ -62,4 +68,5 @@
 			</div>
 		</form>
 	</md-content>
+
 </div>

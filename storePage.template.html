@@ -4,12 +4,12 @@
 	<md-toolbar flex='none' toolbar-element md-component-id="able-toolbar" class="md-toolbar-tools toolbar md-whiteframe-8dp" layout="row" layout-align="space-between center" ng-class="$root.platform">
 
 		<div style="width:36px;height:36px;position:relative">
-			<div ng-if="!$state.includes('storePage.mapPage')" style="width:36px;height:36px;padding:6px;" class="menu-icon">
-				<div ng-click="toolbar.toggleLeftMenu('able-left-menu')" ng-if="$state.includes('storePage.offerPage')" class="menu-icon">
+			<div ng-if="!$state.includes('storePage.mapPage')" style="width:36px;height:36px;" class="menu-icon">
+				<div ng-click="toolbar.toggleLeftMenu('able-left-menu')" ng-if="$state.includes('storePage.offerPage')" class="menu-icon" style="width:36px;height:36px;padding:6px">
 					<md-icon md-svg-icon="imgs/menu.svg" class="svg-white" style="width:24px;height:24px;"></md-icon>
 				</div>
 
-				<div ng-click="toolbar.back()" ng-if="!$state.includes('storePage.offerPage')" class="menu-icon">
+				<div ng-click="toolbar.back()" ng-if="!$state.includes('storePage.offerPage')" class="menu-icon" style="width:36px;height:36px;padding:6px">
 					<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white" style="width:24px;height:24px;"></md-icon>
 				</div>
 			</div>

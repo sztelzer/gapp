@@ -26,10 +26,6 @@
 		$rootScope.voucher = $localStorage.voucher
 		get()
 
-		if(typeof auth.user.code == "undefined"){
-			auth.getUser()
-		}
-
 		function get() {
 			var req_config = {
 				headers: {
@@ -123,9 +119,6 @@
 							break
 						case "self_voucher":
 							message = "Você não pode usar o seu próprio código. Você precisa divulgar para outros ;)"
-							break
-						case "already_installed_series":
-							message = "Você já usou um cupom deste tipo :("
 							break
 					}
 					console.log(navigator.notification)

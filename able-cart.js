@@ -1,8 +1,6 @@
 (function() {
 	'use strict';
-	angular.module('able')
-	.directive('cartElement', cartDirective)
-	.controller('promotedController', promotedController)
+	angular.module('able').directive('cartElement', cartDirective).controller('promotedController', promotedController)
 
 	function promotedController($scope, $rootScope) {
 		$scope.promoted.putOne = putOne
@@ -44,7 +42,7 @@
 		vm.total
 		vm.discount
 		vm.voucher
-
+			//pass over offers, checking what we have selected
 		function updateCart() {
 			if ($rootScope.offer && $rootScope.offer.object) {
 				var promoteds = $rootScope.offer.object.promoteds
@@ -242,8 +240,23 @@
 			}
 			updateCart()
 		}
-
-
-
+		// function errors(error){
+		// 	switch (error.reference) {
+		// 		case 'payment':
+		// 			return "O pagamento não foi aceito."
+		// 			break
+		// 		case 'time':
+		// 			return "Oops, não entregamos neste horário."
+		// 			break
+		// 		case 'distance':
+		// 			return "Oops, não entregamos neste local."
+		// 			break
+		// 		case 'quantity':
+		// 			return "Houve um erro inesperado. Reinicie o aplicativo."
+		// 			break
+		// 		default:
+		// 			return "Houve um erro inesperado. Reinicie o aplicativo."
+		// 	}
+		// }
 	} //end controller
 })();

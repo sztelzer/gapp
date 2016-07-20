@@ -1,4 +1,4 @@
-<div map-element flex layout="column">
+<div map-element flex layout="column" ng-cloak>
 	<div flex layout="column" style="position:relative">
 		<div flex id="mapping" style="height:100%"></div>
 		<div style="position:absolute;top:50%;left:50%">
@@ -12,9 +12,9 @@
 		</div>
 	</div>
 	<div id="mapping2"></div>
-	<md-content flex="none" flex="none" layout="column" style="width:100%">
+	<md-content flex="none" flex="none" layout="column" style="width:100%" ng-cloak>
 		<md-autocomplete flex md-no-cache="true" md-search-text="searchText" md-selected-item="selectedItem" md-search-text-change="search(searchText)" md-selected-item-change="place(item)" md-items="item in search(searchText)" md-item-text="item.description"
-						md-min-length="3" md-floating-label="Endereço com Número" md-autofocus="true" md-autoselect="true" ng-class="no-errors">
+						md-min-length="3" md-floating-label="Endereço com Número" md-autofocus="true" md-autoselect="true" ng-class="no-errors" ng-cloak>
 			<md-item-template> <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.description}}</span> </md-item-template>
 		</md-autocomplete>
 		<div flex layout="row">

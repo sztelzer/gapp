@@ -229,58 +229,27 @@ md-icon.small-icon {
 .navbar-fixed-top {
   padding: 20pt 0 0 0;
 }
-
-
-
-
-
-.promoted-buttons {
-	position:absolute;
-	bottom: 0px;
-	width:100%;
+div.counter {
+  font-size: 3em;
+  font-weight: 700;
+  color: #000000;
+  background-color: #F4F2EF;
+  text-align: center;
+  line-height: 1.5em;
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+  border-right: 1px solid white;
+  border-left: 1px solid white;
 }
-
-
 .promoted-button {
-	position:relative;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-	width: 4em;
-	height: 4em;
-	margin: 0 1.5em 1.5em 1.5em;
+  background-color: #F4F2EF !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  overflow: hidden;
+  border: none !important;
+  border-radius: 0px !important;
 }
-
-.promoted-button:active {
-background-color: rgba(0, 128, 255, 0.5);
-
-}
-
-
-.promoted-counter {
-	background-color: #0080ff;
-	color: white;
-	overflow: hidden;
-	border-radius: 50%;
-	width: 1.5em;
-	height: 1.5em;
-	padding:0;
-	margin:0 0 0.25em 0;
-	font-family:"Roboto Slab", sans-serif;
-	font-size: 2em;
-	font-weight: bold;
-	text-align:center;
-	line-height: 1.5em;
-}
-
-/*.promoted-button > .md-ripple-container, .promoted-button > .md-ripple-container > * {
-	border-radius: 50% !important;
-}*/
-
-/*.promoted-button > md-icon > svg > path {
-	fill:white !important;
-}*/
-
-
 .promoted-card-content {
   background-color: white !important;
 }
@@ -438,37 +407,4 @@ md-input-container.no-errors div.md-errors-spacer, md-autocomplete md-autocomple
 .voucher-bad {
   color: #AAAAAA;
   text-decoration: line-through;
-}
-.profilecode {
-  padding: 0.2em;
-  margin: 0.4em 0em;
-  background-color: white;
-  border-radius: 0.2em;
-  font-family: "roboto slab", sans-serif;
-  font-size: 2em;
-  color: #26BD49;
-  font-weight: bold;
-}
-.closed-notice {
-  width: 100%;
-  color: white;
-  background-color: #d01717;
-  font-size: 0.7em;
-  line-height: 0.8em;
-  /*height: 1.35em;*/
-  padding: 10px 0px 4px 0;
-  text-align: center;
-  font-weight: 100;
-}
-
-.order_ok {
-	border-left: 4px solid lime;
-}
-
-.order_not_ok {
-	border-left: 4px solid red;
-}
-
-md-progress-linear .md-container {
-    background-color: #26BD49;
 }

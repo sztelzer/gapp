@@ -2,22 +2,18 @@
 	<div layout="row" ng-show="plastics.loading" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
-	<!-- <div ng-show="!plastics.loading && !plastics.plastics" class="md-padding">
+	<!-- <div ng-show="!plastics.loading && !plastics.plastics" class="md-padding" ng-cloak>
   	<strong>Nenhum cartão salvo.</strong> Aqui você gerencia os cartões salvos para utilização na loja.
 	</div> -->
 	<div flex="none" style="margin-top:8px"></div>
 	<div flex="none" class="md-padding md-caption" layout="row" layout-align="center end" ng-click="app.showSingleFAQ('22')"> <span><md-icon md-svg-icon="imgs/https.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais<md-icon md-svg-icon="imgs/info.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon></span>		</div>
 	<md-divider></md-divider>
-
-	<!-- <div flex="none" class="" layout="row" layout-align="start center">
+	<div flex="none" class="" layout="row" layout-align="start center">
 		<md-button class="" ng-click="$state.go('storePage.offerPage')">
-			<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-black"></md-icon>
-			Voltar à Loja
-		</md-button>
+			<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-black"></md-icon>Voltar à Loja </md-button>
 	</div>
-	<md-divider></md-divider> -->
-
-	<!-- <div flex="none" style="height:2em;"></div> -->
+	<md-divider></md-divider>
+	<div flex="none" style="height:2em;"></div>
 	<!-- PLASTICS ELEMENT -->
 	<div flex="none" plastics-element>
 		<!-- DOCUMENT -->
@@ -26,7 +22,7 @@
 				<div flex="none"> <strong>Adicionar Documento</strong>
 					<div class="md-caption">Antes de salvar seu primeito cartão, preencha seu CPF para a emissão de notas fiscais das compras realizadas.</div>
 				</div>
-				<form layout="column" name="documentForm">
+				<form layout="column" name="documentForm" ng-cloak>
 					<md-input-container flex class="no-errors">
 						<label>CPF</label>
 						<input type="tel" name="document" ng-model="plastics.document" validate-cpf minlength="11" maxlength="11" ng-required="true" required ng-blur="Keyboard.close()" />
@@ -47,7 +43,7 @@
 		<!-- CARDS GROUP -->
 		<div ng-show="app.auth.user.document">
 			<!-- CARDS -->
-			<div flex="none" class="md-padding"> <strong>Cartões de Crédito</strong>
+			<div flex="none" class="md-padding" ng-cloak> <strong>Cartões de Crédito</strong>
 				<!-- <div class="md-caption" ng-show="plastics.plastics.length">Estes são seus cartões salvos. Eles estão seguros</div> -->
 				<div class="md-caption" ng-hide="plastics.plastics.length">Você não possui nenhum cartão salvo.</div>
 			</div>
@@ -69,10 +65,10 @@
 			<!-- END CARDS -->
 			<!-- NEW CARD -->
 			<md-card flex="none" class="card-full card-credit md-padding background-white no-shadow" style="position:relative;background-color:white;margin:0!important">
-				<div flex="none"> <strong>Adicionar Cartão</strong>
+				<div flex="none" ng-cloak> <strong>Adicionar Cartão</strong>
 					<div class="md-caption">Aceitamos cartões de crédito Visa e Mastercard.</div>
 				</div>
-				<form layout="column" name="plasticForm">
+				<form layout="column" name="plasticForm" ng-cloak>
 					<md-input-container flex="none" class="no-errors">
 						<label>Número do Cartão</label>
 						<input type="tel" name="number" ng-model="plastics.new.number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class='creditForm.number.$card.type' ng-required="true" required/> </md-input-container>
@@ -97,16 +93,15 @@
 		<!-- END CARDS -->
 	</div>
 	<!-- END PLASTICS ELEMENT -->
-
 	<md-divider></md-divider>
 	<div flex="none" style="height:2em;"></div>
 	<!-- VOUCHERS ELEMENT -->
 	<div flex="none" vouchers-element>
-		<div flex="none">
-			<div flex="none" class="md-padding"> <strong>Cupons</strong>
+		<div flex="none" ng-show="app.auth.user.document">
+			<div flex="none" class="md-padding" ng-cloak> <strong>Cupons</strong>
 				<div class="md-caption" ng-hide="vouchers.vouchers.length">Você não possui nenhum coupon salvo.</div>
 			</div>
-			<div ng-repeat="voucher in vouchers.vouchers track by voucher.path" ng-if="!voucher.object.burns.burnt || voucher.object.burns.before_start || voucher.object.burns.blocked">
+			<div ng-repeat="voucher in vouchers.vouchers track by voucher.path" ng-if="!voucher.object.burns.burnt || voucher.object.burns.before_start">
 				<md-card flex="none" layout="column" class="card-full md-padding no-shadow" style="margin-top:0px;position:relative;margin-bottom:0px !important">
 					<div flex layout="row" layout-align="start center">
 						<div flex="none">
@@ -121,22 +116,15 @@
 						<md-icon flex="none" md-svg-icon="imgs/alarm.svg" class="svg-green" style="height: 1em;position:relative;top:0em;padding:0"></md-icon>
 						<div flex class="md-caption">Início: {{voucher.object.start | date : 'dd/MM/yyyy'}}</div>
 					</div>
-
-					<div flex layout="row" layout-align="start center" ng-show="voucher.object.burns.blocked">
-						<md-icon flex="none" md-svg-icon="imgs/alarm.svg" class="svg-green" style="height: 1em;position:relative;top:0em;padding:0"></md-icon>
-						<div flex class="md-caption">Seu amigo ainda não usou o cupom dele.</div>
-					</div>
-
-
 					<!-- <span ng-show="voucher.object.value_available > 0" class="md-caption">Valor disponível: {{voucher.object.value_available | currency}}</span> --></div>
 			</md-card>
 		</div>
 		<!-- NEW VOUCHER -->
 		<md-card flex="none" class="card-full md-padding no-shadow" style="position:relative;background-color:white;margin:0!important">
-			<div flex="none"> <strong>Adicionar Cupom</strong>
+			<div flex="none" ng-cloak> <strong>Adicionar Cupom</strong>
 				<div class="md-caption">Garanta promoções especiais.</div>
 			</div>
-			<form layout="column" name="voucherForm">
+			<form layout="column" name="voucherForm" ng-cloak>
 				<md-input-container flex="none" class="no-errors">
 					<label>Código do Cupom</label>
 					<input name="code" ng-model="vouchers.code" ng-required="true" required minlength="8" maxlength="16" ng-blur="Keyboard.close()" />
@@ -153,15 +141,6 @@
 			<md-button class="md-raised md-accent full-button" ng-click="vouchers.save()" ng-disabled="voucherForm.$invalid || vouchers.sending">Adicionar Cupom</md-button>
 		</div>
 		<md-divider></md-divider>
-
-		<div class="md-padding"> <strong>Indique e ganhe cupons!</strong>
-			<div class="profilecode md-whiteframe-1dp"><center>{{app.auth.user.code}}</center></div>
-			<div class="md-caption" ng-click="app.showSingleFAQ('22')">
-				Passe este código para seus amigos. Eles ganharão cupons de desconto de R$20,00 e, quando os utilizarem, você também terá vários cupons de R$20,00!
-				Saiba mais<md-icon md-svg-icon="imgs/info.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon>
-			</div>
-		</div>
-
 	</div>
 	<!-- END VOUCHERS ELEMENT -->
 </md-content>

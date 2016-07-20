@@ -2,18 +2,18 @@
 	<div layout="row" ng-show="profile.loading" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
-	<!-- <div ng-show="!plastics.loading && !plastics.plastics" class="md-padding">
+	<!-- <div ng-show="!plastics.loading && !plastics.plastics" class="md-padding" ng-cloak>
 			<strong>Nenhum cartão salvo.</strong> Aqui você gerencia os cartões salvos para utilização na loja.
 		</div> -->
 	<!-- <div flex="none" class="md-padding md-caption" flex="none" layout="row" layout-align="center end">
 			<span><md-icon md-svg-icon="imgs/https.svg" class="svg-green" style="height: 1.5em;position:relative;top:-0.25em;"></md-icon>Você está em segurança. Saiba mais.</span>
 		</div> -->
-	<div flex="none" class="md-padding"> <strong>Sua conta: {{app.auth.user.email}}</strong>
+	<div flex="none" class="md-padding" ng-cloak> <strong>Sua conta: {{app.auth.user.email}}</strong>
 		<div class="md-caption">Por segurança, o e-mail de sua conta só pode ser alterado através do nosso atendimento.</div>
 	</div>
 	<md-card flex="none" class="card-full md-padding background-white no-shadow" style="position:relative">
 		<!-- <div class="md-caption"><center>Antes de salvar um cartão, preencha seu CPF para a emissão de notas fiscais das compras realizadas.</center></div> -->
-		<form layout="column" name="profileForm">
+		<form layout="column" name="profileForm" ng-cloak>
 			<md-input-container flex class="no-errors">
 				<label>Nome Completo</label>
 				<input name="name" ng-model="profile.user.name" minlength="10" maxlength="64" ng-required="true" required ng-blur="Keyboard.close()" />
@@ -45,26 +45,15 @@
 		<md-button class="md-raised md-accent full-button" ng-click="profile.save()" ng-disabled="profileForm.$invalid || profile.sending || profileForm.$pristine">Salvar alterações</md-button>
 	</div>
 	<md-divider></md-divider>
-
-	<div flex="none" layout="column" class="md-padding"> <strong>Indique e ganhe descontos</strong>
-		<div class="profilecode md-whiteframe-1dp"><center>{{profile.user.code}}</center></div>
-		<div class="md-caption" ng-click="app.showSingleFAQ('22')">
-			Passe este código para seus amigos. Eles ganharão cupons de desconto de R$20,00 e, quando os utilizarem, você também terá vários cupons de R$20,00!
-			Saiba mais<md-icon md-svg-icon="imgs/info.svg" class="svg-lightgrey" style="height:1.5em;position:relative;top:-0.15em;"></md-icon>
-		</div>
-	</div>
-
-
-	<md-divider></md-divider>
 	<div flex="none" class="md-padding"> <strong>Alterar senha</strong>
-		<div class="md-caption">Para alterar sua senha clique no botão abaixo e enviaremos um e-mail para <strong>{{app.auth.user.email}}</strong>. Siga as instruções recebidas. Ao voltar ao aplicativo você terá que se logar com sua nova senha.</div>
+		<div class="md-caption"> Para alterar sua senha clique no botão abaixo e enviaremos um e-mail para <strong>{{app.auth.user.email}}</strong>. Siga as instruções recebidas. Ao voltar ao aplicativo você terá que se logar com sua nova senha. </div>
 	</div>
 	<div flex="none" layout="row">
 		<md-button class="md-raised md-primary full-button" ng-click="profile.resetPass()">Enviar pedido de alteração de senha</md-button>
 	</div>
 	<md-divider></md-divider>
 	<div flex="none" class="md-padding"> <strong>Desconectar conta</strong>
-		<div class="md-caption">Você será levado para a tela inicial e todas as informações de sua conta neste dispositivo serão apagadas. Não se preocupe, tudo está protegido. Use para trocar de usuário.</div>
+		<div class="md-caption"> Você será levado para a tela inicial e todas as informações de sua conta neste dispositivo serão apagadas. Não se preocupe, tudo está protegido. Use para trocar de usuário. </div>
 	</div>
 	<div flex="none" layout="row">
 		<md-button class="md-raised md-warn full-button" ng-click="app.auth.signout()">Desconectar Conta</md-button>

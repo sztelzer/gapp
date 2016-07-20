@@ -148,7 +148,6 @@
 					}
 				}
 				$rootScope.offer.object.promoteds = oldPromos
-				$rootScope.offer.object.node_resource = response.data.object.node_resource
 				$localStorage.stripe = response.data.object.stripe_key
 				$rootScope.offer.object.good_until_date = new Date().setTime($rootScope.offer.object.good_until)
 				$rootScope.workingTime()

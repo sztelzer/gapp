@@ -1,15 +1,11 @@
 (function() {
 	'use strict';
-	angular.module("able", ['ngMaterial', 'ngMessages', 'ngAnimate', 'ngStorage', 'ui.router', 'ct.ui.router.extras', 'ngAria', 'angularPayments', 'dcbImgFallback', ])
-	.value('config', {
+	angular.module("able", ['ngMaterial', 'ngMessages', 'ngAnimate', 'ngStorage', 'ui.router', 'ct.ui.router.extras', 'ngAria', 'angularPayments', 'dcbImgFallback', ]).value('config', {
 			//heartbend
-
 			// api: 'http://127.0.0.1:8081',
 			// company_path: '/companies/5066549580791808',
-
 			api: 'https://api-dot-heartbend.appspot.com',
 			company_path: '/companies/5654313976201216',
-
 			node_function: 'productConsumerDispatch',
 			offers_count: 6,
 			//helpshift
@@ -18,10 +14,12 @@
 			helpshift_app_id_ios: 'able_platform_20151202232813761-cc37683499f9965',
 			helpshift_app_id_android: 'able_platform_20151216171356528-7e3568cf679c8cd',
 			helpshift_app_id: ''
-		}).config(function($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $anchorScrollProvider) {
+		}).config(function($compileProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider, $localStorageProvider, $animateProvider, $anchorScrollProvider) {
 			$compileProvider.debugInfoEnabled(false);
 			$anchorScrollProvider.disableAutoScrolling(true)
+				// $animateProvider.classNameFilter( /\banimated\b|\bmd-sidenav-backdrop\b|\bmd-bottom\b|\bng-animate\b/ );
 			$localStorageProvider.setKeyPrefix('able_');
+			// $mdGestureProvider.skipClickHijack(); //corrects erratic ngTouch+mdButton in mobile
 			$httpProvider.useApplyAsync(false);
 			$urlRouterProvider.otherwise("/");
 			$stateProvider.state('startPage', {
@@ -68,7 +66,7 @@
 					}
 				},
 				data: {
-					title: "",
+					title: "Indicações",
 					requireLogin: true,
 					accessLogged: true
 				}
@@ -145,6 +143,7 @@
 				'contrastDarkColors': undefined,
 				'contrastLightColors': undefined // could also specify this if default was 'dark'
 			});
+			$mdThemingProvider.theme('default').primaryPalette('blueAble')
 			$mdThemingProvider.definePalette('redAble', {
 				'50': 'FF6666',
 				'100': 'FF6666',
@@ -164,6 +163,7 @@
 				'contrastDarkColors': undefined,
 				'contrastLightColors': undefined // could also specify this if default was 'dark'
 			});
+			$mdThemingProvider.theme('default').warnPalette('redAble')
 			$mdThemingProvider.definePalette('greenAble', {
 				'50': '26BD49',
 				'100': '26BD49',
@@ -183,6 +183,7 @@
 				'contrastDarkColors': undefined,
 				'contrastLightColors': undefined // could also specify this if default was 'dark'
 			});
+			$mdThemingProvider.theme('default').accentPalette('greenAble')
 			$mdThemingProvider.definePalette('ivoryAble', {
 				'50': 'F4F2EF',
 				'100': 'F4F2EF',
@@ -202,13 +203,7 @@
 				'contrastDarkColors': undefined,
 				'contrastLightColors': undefined // could also specify this if default was 'dark'
 			});
-			$mdThemingProvider.theme('default').primaryPalette('blueAble')
 			$mdThemingProvider.theme('default').backgroundPalette('ivoryAble')
-			$mdThemingProvider.theme('default').accentPalette('greenAble')
-			$mdThemingProvider.theme('default').warnPalette('redAble')
-
-
-
 		}).run(function($rootScope, $state, auth, $window, $interval, config, $mdDialog) {
 			$rootScope.platform = Platform
 			$rootScope.geocoder = new google.maps.Geocoder()
@@ -312,20 +307,23 @@
 					$rootScope.updateDistance()
 				} else {
 					var distance = $rootScope.distance
-					var contribution = $rootScope.products_value ? $rootScope.products_value * 0.20 : 0
-
-					var full_freight = (distance / 1000 * 1.862) + 7.90 //greater than 11000 loggi ja(2)
-					if (distance < 7500) {
-						full_freight = (distance / 1000 * 1.862) + 14.90 //(loggi presto)
-					} else if (distance < 11000) {
-						full_freight = 22.90 //between 75000 and 11000 loggi ja(1)
+					if (distance > 11000) {
+						var contribution = $rootScope.products_value ? $rootScope.products_value * 0.20 : 0
+						var full_freight = (distance / 1000 * 1.862) + 7.90
+						var freight = full_freight - contribution
+						if (freight <= 0) {
+							freight = 0
+						}
+						$rootScope.freight = +(freight).toFixed(2)
+					} else {
+						var contribution = $rootScope.products_value ? $rootScope.products_value * 0.20 : 0
+						var full_freight = 22.90
+						var freight = full_freight - contribution
+						if (freight <= 0) {
+							freight = 0
+						}
+						$rootScope.freight = +(freight).toFixed(2)
 					}
-
-					var freight = full_freight - contribution
-					if (freight <= 0) {
-						freight = 0
-					}
-					$rootScope.freight = +(freight).toFixed(2)
 				}
 			}
 			$rootScope.workingTime = function() {
@@ -410,12 +408,6 @@
 			window.addEventListener('native.keyboardhide', keyboardWindowResize)
 			Keyboard.close()
 		}
-
-		// $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-   // 		//assign the "from" parameter to something
-		// 	$rootScope.backState = from
-		// });
-
 
 		function keyboardWindowResize(e) {
 			var h = window.innerHeight

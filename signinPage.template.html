@@ -1,17 +1,12 @@
-<div class="progressOverlayAnimate" ng-if="signin.sending" style="position:absolute;background-color:#F4F2EF;z-index:99" flex layout-fill layout="column" layout-align="center center">
-	<md-progress-circular md-mode="indeterminate"></md-progress-circular>
-</div>
-
 <div signin-element layout-fill layout="column" signin-page>
-	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-class="$root.platform">
+	<md-toolbar flex="none" class="toolbar" layout="row" layout-align="start center" ng-cloak ng-class="$root.platform">
 		<md-button ui-sref="startPage" ng-click class="md-icon-button" aria-label="Voltar">
 			<md-icon md-svg-icon="imgs/arrow_left.svg" class="svg-white"></md-icon>
 		</md-button> <img flex="none" src="imgs/able.svg" class="toolbar-logo">
 		<div flex class="toolbar-title" layout="row" layout-align="center center">Login</div>
 		<div flex="none" style="width:83px"></div>
 	</md-toolbar>
-
-	<md-content flex layout="column" layout-align="center center" class="md-padding">
+	<md-content flex layout="column" layout-align="center center" ng-cloak class="md-padding">
 		<md-input-container flex='none' class="md-block" style="width:100%">
 			<label>E-mail</label>
 			<input type="email" name="email" ng-model="signin.email" minlength="6" maxlength="256" ng-pattern="/^.+@.+\..+$/" /> </md-input-container>
@@ -21,7 +16,11 @@
 		<div flex='none' layout="row" layout-align="space-between center" style="width:100%">
 			<md-button flex="none" ng-click="signin.reset()">Recuperar Senha</md-button>
 			<div flex="5"></div>
-			<md-button flex class="md-raised md-accent" ng-click="signin.signin()">Entrar</md-button>
+			<md-button flex class="md-raised md-accent" ng-click="signin.signin()">Entrar
+				<div layout="row" ng-show="signin.working" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgb(38, 189, 73);;">
+					<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
+				</div>
+			</md-button>
 		</div>
 	</md-content>
 </div>

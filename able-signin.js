@@ -18,18 +18,20 @@
 		vm.password = ''
 		vm.signin = signin
 		vm.reset = reset
-		vm.sending = false
+		vm.working = false
+		vm.workingReset = false
 
 		function signin() {
-			vm.sending = true;
+			vm.working = true;
 			var signin = auth.signin(vm.email, vm.password);
 			signin.then(function(resolve) {
 				$state.go('storePage.offerPage')
 				vm.email = ''
 				vm.password = ''
 			}, function(reject) {
+				// console.log(reject)
 				vm.password = ''
-				vm.sending = false;
+				vm.working = false;
 				if (reject.status == -1) {
 					if (navigator && navigator.notification) {
 						navigator.notification.alert("Verifique sua conexão.", false, 'Able', 'Ok')
@@ -47,7 +49,6 @@
 		}
 
 		function reset() {
-			vm.sending = true
 			var emailPattern = new RegExp(/^.+@.+\..+$/)
 			if (!emailPattern.test(vm.email)) {
 				if (navigator && navigator.notification) {
@@ -55,21 +56,18 @@
 				} else {
 					window.alert("Digite um e-mail válido no campo E-mail.")
 				}
-				vm.sending = false
 				return
 			}
 			var payload = {
 				'email': vm.email
 			};
 			$http.patch(config.api + '/tokens', payload).then(function successCallback(response) {
-				vm.sending = false
 				if (navigator && navigator.notification) {
 					navigator.notification.alert("Enviamos um e-mail com instruções de recuperação da senha para " + vm.email, false, 'Able', 'Ok')
 				} else {
 					window.alert("Enviamos um e-mail com instruções de recuperação da senha para " + vm.email)
 				}
 			}, function errorCallback(response) {
-				vm.sending = false
 				if (response.data && response.data.errors && response.data.errors[0]) {
 					if (navigator && navigator.notification) {
 						navigator.notification.alert(response.data.errors[0].error, false, 'Able', 'Ok')

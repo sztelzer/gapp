@@ -2,19 +2,21 @@
 	<div flex layout="row" ng-show="feedbacks.loading" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 1);">
 		<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 	</div>
-	<md-content flex ng-cloak layout="column" class="md-padding" style="overflow-x:hidden !important" ng-cloak>
-		<div ng-show="!feedbacks.list.length" flex="none" class="md-padding" ng-cloak> <strong>Nenhuma avaliação pendente.</strong> Quando você receber nossos produtos você poderá avaliá-los aqui. É muito importante que você tenha experimentado cada cerveja, pois sua avaliação impactará diretamente e automaticamente no ranking dos produtos
+	<md-content flex layout="column" class="md-padding" style="overflow-x:hidden !important">
+		<div ng-show="!feedbacks.list.length" flex="none" class="md-padding"> <strong>Nenhuma avaliação pendente.</strong> Quando você receber nossos produtos você poderá avaliá-los aqui. É muito importante que você tenha experimentado cada cerveja, pois sua avaliação impactará diretamente e automaticamente no ranking dos produtos
 			selecionados para você. </div>
-		<md-card ng-repeat="feedback in feedbacks.list" flex="none" class="md-padding" layout="column" style="background-color:#ffffff !important; position:relative" ng-cloak>
+		<md-card ng-repeat="feedback in feedbacks.list" flex="none" class="md-padding" layout="column" style="background-color:#ffffff !important; position:relative">
 			<div layout="row" ng-show="feedback.sending" layout-align="center center" style="z-index:9000;position:absolute;width:100%;height:100%;top:0;left:0;background-color: rgba(255, 255, 255, 0.84);">
 				<md-progress-circular flex="none" md-mode="indeterminate"></md-progress-circular>
 			</div>
 			<div layout="column" layout-align="start start">
-				<div flex='none'> <img class="md-card-image md-whiteframe-0dp" alt="image" ng-repeat="content in feedback.object.contents" ng-if="content.object.function=='face_image'" ng-src="{{content.object.url}}" /> </div>
+				<div flex='none'>
+					<img class="md-card-image md-whiteframe-0dp" alt="image" ng-repeat="content in feedback.object.contents" ng-if="content.object.function=='face_image'" ng-src="{{content.object.url}}" />
+				</div>
 			</div>
 			<div layout="row" style="width:100%">
 				<div flex="20" style="margin-top:3px">
-					<md-button class="md-icon-button" ng-click="feedbacks.untouch(feedback.path)">
+					<md-button class="md-icon-button" ng-click="feedbacks.untouch(feedback.path)" aria-label="untouch">
 						<md-icon md-svg-icon="imgs/close.svg" class="svg-black" style=""></md-icon>
 					</md-button>
 				</div>
@@ -35,7 +37,7 @@
 			</div>
 		</md-card>
 	</md-content>
-	<div ng-show="feedbacks.touched" flex="none" layout="row" layout-align="end center" ng-cloak>
+	<div ng-show="feedbacks.touched" flex="none" layout="row" layout-align="end center">
 		<md-button class="md-raised md-primary full-button" ng-click="feedbacks.send()">Enviar avaliados</md-button>
 	</div>
 </div>

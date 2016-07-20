@@ -33,25 +33,13 @@
 		}, function c(n, o) {
 			vm.answered = Object.keys(vm.payload).length
 			vm.least_tags = (Object.keys(vm.payload).length < vm.tags_length) ? true : false;
-			//this block would roll the page, but is buggy
-			// var element = document.getElementById('quest-content')
-			// var last_height = element.scrollHeight
-			// if(vm.least_tags == false){
-			// 	$timeout(function() {
-			// 		element.scrollTop = element.scrollHeight;
-			// 	}, 500, false);
-			// } else {
-			// 	$timeout(function() {
-			// 		element.scrollTop = last_height + 100;
-			// 	}, 500, false);
-			// }
 		});
 
 		function send() {
 			vm.sending = true
 			auth.signupQuest(vm.user.name, vm.user.document, vm.user.email, vm.user.password, JSON.stringify(vm.payload)).then(function(resolve) {
 				$state.go('storePage')
-				vm.sending = false
+				// vm.sending = false
 			}, function(reject) {
 				vm.sending = false
 				if (reject.data && reject.data.errors && reject.data.errors[0].reference == "repeated_email") {

@@ -27,6 +27,10 @@
 	<script src='components/geolib.js'></script>
 	<script src='components/angular-payments.js'></script>
 	<script src='components/angular.dcb-img-fallback.js'></script>
+	<script src='components/TweenLite.js'></script>
+	<script src='components/TweenLite-CSSPlugin.js'></script>
+	<script src='components/TweenLite-TimelineLite.js'></script>
+
 	<script src='able.js'></script>
 	<script src='able-auth.js'></script>
 	<script src='able-signin.js'></script>
@@ -42,6 +46,8 @@
 	<script src='able-profile.js'></script>
 	<script src='able-toolbar.js'></script>
 	<script src='able-accordion.js'></script>
+	<script src='able-animations.js'></script>
+
 	<script>
 		angular.element(document).ready(function() {
 			if (window.cordova) {
@@ -61,7 +67,7 @@
 				var oReq = new XMLHttpRequest();
 				oReq.addEventListener("load", bootOnlineBrowser);
 				oReq.addEventListener("error", willRefresh);
-				oReq.open("GET", "https://api-dot-heartbend.appspot.com/force_test_connection");
+				oReq.open("GET", "http://127.0.0.1:8081/force_test_connection");
 				oReq.send();
 			}
 		})
